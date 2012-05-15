@@ -1,0 +1,13 @@
+Behaviors:
+  tile bounded
+  animated
+  gravity
+  tile collision detector (emits :tile_collided, data)
+  collidable
+  touching tile
+  mover
+  jumper
+  kb_movement / kb_jump (use generic input behavior?)
+
+  death
+    - needs to turn off other behaviors
