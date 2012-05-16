@@ -17,8 +17,16 @@ Gamebox.configure do |config|
   config.gb_gfx_path = GAMEBOX_PATH + "data/graphics/"
   config.gb_fonts_path = GAMEBOX_PATH + "data/fonts"
   
-  # config.stages = [:demo]
-  # config.game_name = "Untitled Game"
+  # config.stages = [
+  #   :title_screen,
+  #   :level_opening,
+  #   :level_play,
+  #   :level_closing,
+  #   :game_over,
+  #   :game_won
+  # ]
+  config.stages = [:level_play]
+  config.game_name = "Foxy"
 end
 
 [GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }

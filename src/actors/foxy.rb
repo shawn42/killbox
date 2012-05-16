@@ -2,6 +2,7 @@ define_actor :foxy do
   has_attributes view: :graphical_actor_view
   has_behaviors do
     positioned
+    layered ZOrder::Player
     animated
     input_stater(
       KbLeft => :move_left,

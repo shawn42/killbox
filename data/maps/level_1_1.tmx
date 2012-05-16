@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
+  <image source="../graphics/map/tileset.png" width="256" height="608"/>
+ </tileset>
+ <tileset firstgid="609" name="Foxy" tilewidth="30" tileheight="39">
+  <image source="../graphics/foxy/idle.png" width="30" height="39"/>
+ </tileset>
+ <layer name="terrain" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Qt0oEURSA4VlzFswZFMw2CmYrwWwlmG3MsXHNmXX3BXT3JYy9sTf2xt4Ilkb8hRm8yqDFCG5xi4879wzM+Zl4RVHiJUmSJEmSJEmSpD+3ZFKUZaxgFWtYN/1/l2aDlk1sYRs72HWivj1a9nGAQxzh2In6Tmg5xRnOcYFLJ+q7ouUaN7jFHe7/qe9BZ+8jsyc84wWveIML7zrRJZyBytd54B91fXzTFW5whwc84QVv+MAXfvBHgLp7BKPCqX3v+92oIAQjBKEIQzgiEIkoRCMGsYhDK/+wDe3oMP1+N9KXgExVIpKQjBSkIg3pyICFXfOwwoYhDGMQ5h/uRvqyhL5s5CAXechHAQpRhAV2LcIuNFqFZ8u3uU1lpK9Y6CtBKcpQjgpUogrVymeL2GTXmTnUuUNlpK9G6KtFHerRgEY0oRktOn0au06n2Gukr03o03SjB73oQz8GlM8OPY4f5kb6zDp9YxjHBCYxhWnMYBZzBvZJkqTvHUtwBRMAGQAA
+  </data>
+ </layer>
+ <objectgroup name="actors" width="40" height="40">
+  <object name="foxy" type="foxy" gid="609" x="300" y="435"/>
+ </objectgroup>
+</map>
