@@ -1,7 +1,8 @@
 class DemoStage < Stage
   def setup
     super
-    @player = spawn :player, x: 10, y:30
+    create_actor :fps, x:10, y:10
+    @foxy = create_actor :foxy, x: 100, y:300
   end
 end
 
