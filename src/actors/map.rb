@@ -14,7 +14,6 @@ define_actor :map do
     
     draw do |target, x_off, y_off, z|
       unless actor.map_image
-        puts "HERE"
         map_data = actor.map_data
         tile_size = map_data.tile_size
         # TODO how to get these?
