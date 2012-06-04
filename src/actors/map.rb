@@ -24,8 +24,9 @@ define_actor :map do
         actor.map_image = wrapped_screen.record width, height do
           map_data.tile_grid.each.with_index do |row, y|
             row.each.with_index do |tile, x|
-              binding.pry unless tileset[tile.gfx_index]
-              wrapped_screen.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z 
+              unless tile.nil?
+                wrapped_screen.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z
+              end
             end
           end
         end
