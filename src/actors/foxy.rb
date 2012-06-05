@@ -4,7 +4,7 @@ define_actor :foxy do
     positioned
     layered ZOrder::Player
     animated
-    input_stater(
+    input_mapper(
       KbLeft => :move_left,
       KbRight => :move_right,
       KbUp => :attempt_jump
@@ -18,6 +18,24 @@ define_actor :foxy do
 end
 
 class MapInspector
+
+  def overlap_tiles(map, box)
+    tile_grid = map.tile_grid
+    tile_size = map.tile_size
+
+    start_x = box.x / tile_sie.to_i
+    start_y = box.y / tile_sie.to_i
+    end_x = (box.x + box.width) / tile_sie.to_i
+    end_y = (box.y + box.height) / tile_sie.to_i
+
+    (start_x..end_x).each do |row|
+      (start_y..end_y).each do |col|
+        tile = tile_grid[row][col]
+        yield tile, row, col
+      end
+    end
+
+  end
 
   def solid?(map, x,y)
     tile_grid = map.tile_grid

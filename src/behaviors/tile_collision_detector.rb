@@ -18,13 +18,8 @@ define_behavior :tile_collision_detector do
 
       map = actor.map.map_data
       
-      map.tile_grid.each.with_index do |row, y|
-        row.each.with_index do |tile, x|
-          if tile && map_inspector.solid?(map,x,y)
-
-
-          end
-        end
+      map_inspector.overlap_tiles(map, box_of_interest) do |tile|
+        
       end
 
       # TODO check map / tiles for collisions
