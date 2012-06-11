@@ -7,6 +7,13 @@ define_behavior :tile_bound do
       # send event to tiles that collided?
       actor.x += actor.vel.x
       actor.y += actor.vel.y
+
+      puts "VEL: #{actor.vel}"
+      puts "ACCEL: #{actor.accel}"
+      puts "="*80
+
+      # EEK.. TODO XXX where should this live?
+      actor.accel = vec2(0,0)
     end
   end
 end

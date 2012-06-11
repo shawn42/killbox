@@ -14,8 +14,8 @@ define_behavior :mover do
       elsif actor.move_left?
         actor.accel += vec2(-actor.speed, 0)
       end
+      puts "MOVEMENT"
 
-      p actor.accel
       actor.vel += actor.accel
 
       # TODO jump...

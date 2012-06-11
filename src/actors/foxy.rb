@@ -9,10 +9,10 @@ define_actor :foxy do
       KbRight => :move_right,
       KbUp => :attempt_jump
     )
-    mover speed: 0.14, max_speed: 2
+    friction amount: 0.99
+    mover speed: 0.44, max_speed: 2
     bound_by_box
     tile_bound
-    friction amount: 0.1
     tile_collision_detector #(emits :tile_collided, data)
     #gravity dir: vec2(0,0.01)
   end
