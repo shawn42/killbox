@@ -1,4 +1,4 @@
-require_relative 'helper'
+require_relative 'spec_helper'
 
 describe LineClipper do
   describe ".cohen_sutherland_line_clip" do

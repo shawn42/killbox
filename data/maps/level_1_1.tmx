@@ -17,6 +17,6 @@
   </data>
  </layer>
  <objectgroup name="actors" width="40" height="40">
-  <object name="foxy" type="foxy" gid="609" x="275" y="405"/>
+  <object name="foxy" type="foxy" gid="609" x="259" y="384"/>
  </objectgroup>
 </map>

@@ -1,11 +1,12 @@
 define_behavior :tile_bound do
   setup do
-    actor.has_attributes vel: vec2(0,0)
+    raise "vel required" unless actor.has_attribute? :vel
     actor.when :tile_collisions do |collision_data|
-      collision_data[:collisions].each do |collision|
-      end
+      # puts collision_data.inspect
       # TODO move actor, truncate velocity if required
       # send event to tiles that collided?
+      actor.x += actor.vel.x
+      actor.y += actor.vel.y
     end
   end
 end
