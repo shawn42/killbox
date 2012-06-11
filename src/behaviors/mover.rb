@@ -2,7 +2,7 @@ define_behavior :mover do
   requires :director
   setup do
     actor.has_attributes speed: opts[:speed],
-                         accel: opts[:accel],
+                         accel: vec2(0,0),
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0)
 
@@ -10,10 +10,13 @@ define_behavior :mover do
 
       # TODO performance of creating vecs here instead of modifying in place?
       if actor.move_right?
-        actor.vel += vec2(actor.accel * time * actor.speed, 0)
+        actor.accel += vec2(actor.speed, 0)
       elsif actor.move_left?
-        actor.vel -= vec2(actor.accel * time * actor.speed, 0)
+        actor.accel += vec2(-actor.speed, 0)
       end
+
+      p actor.accel
+      actor.vel += actor.accel
 
       # TODO jump...
 
