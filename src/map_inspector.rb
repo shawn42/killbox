@@ -43,6 +43,10 @@ class MapInspector
   end
 
   def line_tile_collision(map, line, row, col)
+
+    trow = map.tile_grid[row]
+    return false unless trow && trow[col]
+
     tile_size = map.tile_size
     b1 = vec2(row * tile_size, col * tile_size)
     b2 = vec2(b1.x + tile_size, b1.y + tile_size)

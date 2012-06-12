@@ -14,7 +14,7 @@ define_actor :foxy do
     bound_by_box
     tile_bound
     tile_collision_detector #(emits :tile_collided, data)
-    #gravity dir: vec2(0,0.01)
+    gravity dir: vec2(0,2)
   end
 
 end

@@ -3,9 +3,8 @@ define_behavior :gravity do
   setup do
     actor.has_attributes gravity: opts[:dir]
 
-    director.when :update do |time|
-      puts "GRAVITY!"
-      actor.accel += (actor.gravity * time)
+    director.when :update do |time, time_secs|
+      actor.accel += (actor.gravity * time_secs)
     end
 
     actor.when :remove_me do

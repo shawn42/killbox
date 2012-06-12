@@ -29,6 +29,7 @@ define_behavior :tile_collision_detector do
       map_inspector.overlap_tiles(map, bb) do |tile, row, col|
         current_points.zip(extrapolated_points).each do |line|
           map_inspector.line_tile_collision(map, line, row, col) do |collision|
+            binding.pry
             unless collisions.any?{|c| c[:row] == collision[:row] && c[:col] == collision[:col] }
               collisions ||= []
               collisions << collision
