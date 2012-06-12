@@ -10,7 +10,7 @@ define_actor :foxy do
       KbUp => :attempt_jump
     )
     friction amount: 0.01
-    mover speed: 11, max_speed: 2
+    accelerator speed: 11, max_speed: 4
     bound_by_box
     tile_bound
     tile_collision_detector #(emits :tile_collided, data)

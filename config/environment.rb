@@ -32,6 +32,12 @@ end
 [GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }
 require "gamebox_application"
 
+
+require_all Dir.glob("src/*.rb").reject{ |f| f.match("src/app.rb") }
+directory_load_order = %w(behaviors actors)
+directory_load_order.each do |dir|
+  require_all "src/#{dir}/**/*.rb"
+end
 require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec/") || f.match("src/app.rb")}
 
 

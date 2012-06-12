@@ -1,4 +1,4 @@
-define_behavior :mover do
+define_behavior :accelerator do
   requires :director
   setup do
     actor.has_attributes speed: opts[:speed],
@@ -18,8 +18,7 @@ define_behavior :mover do
       actor.vel += actor.accel
 
       # TODO jump...
-
-      # actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
+      actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
     end
 
     actor.when :remove_me do
