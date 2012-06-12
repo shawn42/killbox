@@ -6,21 +6,19 @@ define_behavior :mover do
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0)
 
-    director.when :update do |time|
+    director.when :update do |time, time_secs|
 
       # TODO performance of creating vecs here instead of modifying in place?
       if actor.move_right?
-        actor.accel += vec2(actor.speed, 0)
+        actor.accel += vec2(actor.speed * time_secs, 0)
       elsif actor.move_left?
-        actor.accel += vec2(-actor.speed, 0)
+        actor.accel += vec2(-actor.speed * time_secs, 0)
       end
-      puts "MOVEMENT"
 
       actor.vel += actor.accel
 
       # TODO jump...
 
-      # trucate to speed
       # actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
     end
 
