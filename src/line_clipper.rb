@@ -25,7 +25,11 @@ class LineClipper
     end
     code
   end
-   
+
+  def self.clip(px0, py0, px1, py1, box)
+    cohen_sutherland_line_clip(px0, py0, px1, py1, box)
+  end
+
   # Cohen–Sutherland clipping algorithm clips a line from
   # P0 = (x0, y0) to P1 = (x1, y1) against a rectangle
   def self.cohen_sutherland_line_clip(px0, py0, px1, py1, box)

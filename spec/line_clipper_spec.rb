@@ -8,6 +8,12 @@ describe LineClipper do
         [5, 0, 10, 0]
     end
 
+    it 'returns a line that touches' do
+      clip_box = Rect.new 5, 0, 10, 10
+      LineClipper.cohen_sutherland_line_clip(3, 0, 5, 0, clip_box).should == 
+        [5, 0, 5, 0]
+    end
+
     it 'true if line is completely contained' do
       clip_box = Rect.new 0, 0, 10, 10
       LineClipper.cohen_sutherland_line_clip(1, 1, 9, 9, clip_box).should == true
