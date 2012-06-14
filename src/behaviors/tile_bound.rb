@@ -14,24 +14,31 @@ define_behavior :tile_bound do
 
         # puts "#{collisions.size} #{collisions.inspect}"
         collisions.each do |collision|
-          fudge = 0.01
+          point_index = collision[:point_index]
+          fudge = 0.8
           case collision[:tile_face]
           when :top
-            # puts "TOP    : #{collision.inspect}"
             # some edge case here
-            new_y = (collision[:hit][1] - actor.height - fudge)
-            hit_bottom = true
+            if point_index == 2 || point_index == 3
+              new_y = (collision[:hit][1] - actor.height - fudge)
+              hit_bottom = true
+            end
           when :bottom
-            new_y = collision[:hit][1] + fundge
-            hit_top = true
+            if point_index == 0 || point_index == 1
+              new_y = collision[:hit][1] + fudge
+              hit_top = true
+            end
           when :left
-            puts "left collision #{collision} #{actor.x} #{actor.width}"
-            new_x = (collision[:hit][0] - actor.width - fudge)
-            hit_right = true
+            if point_index == 1 || point_index == 2
+              puts "LEFT    : #{collision.inspect}"
+              new_x = (collision[:hit][0] - actor.width - fudge)
+              hit_right = true
+            end
           when :right
-            puts "right collision #{collision} #{actor.x} #{actor.width}"
-            new_x = collision[:hit][0] + fudge
-            hit_left = true
+            if point_index == 0 || point_index == 3
+              new_x = collision[:hit][0] + fudge
+              hit_left = true
+            end
           end
         end
 
@@ -57,8 +64,11 @@ define_behavior :tile_bound do
 
       # TODO move actor, truncate velocity if required
       # send event to tiles that collided?
-      actor.x += actor.vel.x
-      actor.y += actor.vel.y
+      
+      # if collisions.nil? || (!collisions.nil? && collisions.empty?)
+        actor.x += actor.vel.x
+        actor.y += actor.vel.y
+      # end
 
       # EEK.. TODO XXX where should this live?
       actor.accel = vec2(0,0)

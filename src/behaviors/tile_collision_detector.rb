@@ -31,6 +31,7 @@ define_behavior :tile_collision_detector do
           map_inspector.line_tile_collision(map, line, row, col) do |collision|
             unless collisions && collisions.any?{|c| c[:row] == collision[:row] && c[:col] == collision[:col] }
               collisions ||= []
+              collision[:point_index] = i
               collisions << collision
             end
           end

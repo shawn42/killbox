@@ -76,42 +76,6 @@ class MapInspector
 
   end
 
-  def _line_tile_collision(map, line, row, col)
-
-    trow = map.tile_grid[row]
-    return false unless trow && trow[col]
-
-    tile_size = map.tile_size
-    b1 = vec2(col * tile_size, row * tile_size)
-    b2 = vec2(b1.x + tile_size, b1.y + tile_size)
-
-    # TODO make this pass in vec2 array for the line? to prevent array object GC
-    # TODO make the algo use a Rect
-    l1 = vec2(line[0][0],line[0][1])
-    l2 = vec2(line[1][0],line[1][1])
-    
-    # returns true if line (l1, l2) intersects with the box (b1, b2)
-    # returns intersection point
-    return false if (l2.x < b1.x && l1.x < b1.x)
-    return false if (l2.x > b2.x && l1.x > b2.x)
-    return false if (l2.y < b1.y && l1.y < b1.y)
-    return false if (l2.y > b2.y && l1.y > b2.y)
-      # inside?
-    yield row: row, col: col, tile_face: :inside if (l1.x > b1.x && l1.x < b2.x && l1.y > b1.y && l1.y < b2.y)
-
-    hit = intersection_of( l1.x-b1.x, l2.x-b1.x, l1, l2) 
-    return false unless hit && in_box?( hit, b1, b2, :x_axis )
-    hit = intersection_of( l1.y-b1.y, l2.y-b1.y, l1, l2 )
-    return false unless hit && in_box?( hit, b1, b2, :x_axis )
-    hit = intersection_of( l1.x-b2.x, l2.x-b2.x, l1, l2 )
-    return false unless hit && in_box?( hit, b1, b2, :x_axis )
-    hit = intersection_of( l1.y-b2.y, l2.y-b2.y, l1, l2 )
-    return false unless hit && in_box?( hit, b1, b2, :x_axis )
-
-    direction = calculate_direction(box, hit)
-    yield row: row, col: col, tile_face: direction
-  end
-
   def solid?(map, x,y)
     tile_grid = map.tile_grid
     tile_size = map.tile_size
