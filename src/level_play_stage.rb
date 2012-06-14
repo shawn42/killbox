@@ -4,6 +4,8 @@ class LevelPlayStage < Stage
 
   def setup
     super
+    $debug_drawer = DebugDraw.new
+
     # TODO XXX hack until all other stages are in place
     init_session
 
@@ -21,5 +23,26 @@ class LevelPlayStage < Stage
 
     # viewport.follow @foxy, [0,0], [100,100]
   end
+
+  def draw(target)
+    super
+    $debug_drawer.draw_blocks.each do |name, dblock|
+      dblock.call target
+    end
+  end
 end
 
+class DebugDraw
+  attr_reader :draw_blocks
+  def initialize
+    clear
+  end
+
+  def clear
+    @draw_blocks = {}
+  end
+
+  def draw(name, &block)
+    @draw_blocks[name] = block
+  end
+end
