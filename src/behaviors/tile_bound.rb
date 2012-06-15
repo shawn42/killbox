@@ -20,7 +20,7 @@ define_behavior :tile_bound do
           when :top
             # some edge case here
             if point_index == 4 || point_index == 5
-              new_y = (collision[:hit][1] - actor.height - fudge)
+              new_y = (collision[:hit][1] - actor.height - fudge + 3)
               # $debug_drawer.draw(:top_collision) do |target|
               #   c = Color::RED
               #   target.draw_line 0, new_y + actor.height, 2_000, new_y + actor.height, c, 99_999
@@ -70,6 +70,10 @@ define_behavior :tile_bound do
       # EEK.. TODO XXX where should this live?
       actor.accel = vec2(0,0)
 
+      # DEBUG!
+      if actor.y > 600
+        actor.y = 100
+      end
     end
   end
 end

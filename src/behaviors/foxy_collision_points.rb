@@ -28,8 +28,8 @@ define_behavior :foxy_collision_points do
         vec2(x+w,               y+quarter_h),
         vec2(x+w,               y+three_quarter_h),
 
-        vec2(x+three_quarter_w, y+h),
-        vec2(x+quarter_w,       y+h),
+        vec2(x+three_quarter_w, y+h-3),
+        vec2(x+quarter_w,       y+h-3),
 
         vec2(x,                 y+three_quarter_h),
         vec2(x,                 y+quarter_h),

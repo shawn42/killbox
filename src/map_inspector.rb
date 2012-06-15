@@ -42,6 +42,7 @@ class MapInspector
     end
   end
 
+  # TODO this will come from the map import eventually
   def solid?(index)
     case index
     when 3..13, 100..101
