@@ -10,12 +10,12 @@ define_actor :foxy do
       KbRight => :move_right,
       KbUp => :attempt_jump
     )
+    grounded
     gravity dir: vec2(0,30)
     friction amount: 0.01
 
     accelerator speed: 11, max_speed: 8
 
-    # not sure where this goes
     foxy_collision_points
 
     bound_by_box

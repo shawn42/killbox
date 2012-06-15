@@ -5,14 +5,9 @@ define_behavior :accelerator do
                          accel: vec2(0,0),
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0),
-                         jumping: false,
                          max_jump_force: 400,
                          jumping_force: 0
                         
-
-    actor.when :hit_bottom do
-      actor.jumping = false
-    end
 
     director.when :update do |time, time_secs|
 
@@ -24,9 +19,9 @@ define_behavior :accelerator do
       end
 
       # TODO should jumping be its own behavior?
-      if actor.attempt_jump? && !actor.jumping
+      puts "ACC GROUND: [#{actor.on_ground}]"
+      if actor.attempt_jump? && actor.on_ground
         actor.jumping_force = actor.max_jump_force
-        actor.jumping = true
       end
 
       unless actor.jumping_force <= 0
@@ -39,6 +34,8 @@ define_behavior :accelerator do
       actor.vel += actor.accel
 
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
+      # XXX how do I do this in the correct order?
+      actor.on_ground = false
     end
 
     actor.when :remove_me do
