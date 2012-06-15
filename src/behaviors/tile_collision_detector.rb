@@ -19,18 +19,21 @@ define_behavior :tile_collision_detector do
       collisions = nil
       map = actor.map.map_data
       vel = actor.vel
+
       bb = actor.bb
       ext_bb = bb.move vel.x, vel.y
+      # current_points = [ bb.tl, bb.tr, bb.br, bb.bl ]
+      # extrapolated_points = [ ext_bb.tl, ext_bb.tr, ext_bb.br, ext_bb.bl ]
 
-      current_points = [ bb.tl, bb.tr, bb.br, bb.bl ]
-      extrapolated_points = [ ext_bb.tl, ext_bb.tr, ext_bb.br, ext_bb.bl ]
-      # $debug_drawer.draw("foxy_bb") do |target|
-      #   c = Color::RED
-      #   target.draw_box bb.tl[0], bb.tl[1], bb.br[0], bb.br[1], c, 99_999
-      # end
+      collision_points = actor.collision_points.map do |point|
+        from = point.to_a
+        to = (point + vel).to_a
+        [from, to]
+      end
 
       map_inspector.overlap_tiles(map, bb.union(ext_bb)) do |tile, row, col|
-        current_points.zip(extrapolated_points).each.with_index do |line, i|
+
+        collision_points.each.with_index do |line, i|
 
           map_inspector.line_tile_collision(map, line, row, col) do |collision|
 

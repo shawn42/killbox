@@ -19,7 +19,7 @@ define_behavior :tile_bound do
           case collision[:tile_face]
           when :top
             # some edge case here
-            if point_index == 2 || point_index == 3
+            if point_index == 3
               new_y = (collision[:hit][1] - actor.height - fudge)
               # $debug_drawer.draw(:top_collision) do |target|
               #   c = Color::RED
@@ -28,7 +28,7 @@ define_behavior :tile_bound do
               hit_bottom = true
             end
           when :bottom
-            if point_index == 0 || point_index == 1
+            if point_index == 0
               new_y = collision[:hit][1] + fudge
               hit_top = true
             end
@@ -43,7 +43,7 @@ define_behavior :tile_bound do
               hit_right = true
             end
           when :right
-            if point_index == 0 || point_index == 3
+            if point_index == 4 || point_index == 5
               new_x = collision[:hit][0] + fudge
               hit_left = true
             end
