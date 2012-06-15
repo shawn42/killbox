@@ -42,10 +42,19 @@ class MapInspector
     end
   end
 
+  def solid?(index)
+    case index
+    when 3..13, 100..101
+      true
+    else
+      false
+    end
+  end
+
   def line_tile_collision(map, line, row, col)
 
     trow = map.tile_grid[row]
-    return unless trow && trow[col]
+    return unless trow && trow[col] && solid?(trow[col].gfx_index)
 
     tile_size = map.tile_size
     tile_x = col * tile_size
@@ -76,7 +85,7 @@ class MapInspector
 
   end
 
-  def solid?(map, x,y)
+  def _solid?(map, x,y)
     tile_grid = map.tile_grid
     tile_size = map.tile_size
 
