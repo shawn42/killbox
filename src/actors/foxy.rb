@@ -11,7 +11,7 @@ define_actor :foxy do
       KbUp => :attempt_jump
     )
     friction amount: 0.01
-    accelerator speed: 11, max_speed: 4
+    accelerator speed: 11, max_speed: 8
 
     # not sure where this goes
     foxy_collision_points

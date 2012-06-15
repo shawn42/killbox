@@ -16,17 +16,23 @@ define_behavior :foxy_collision_points do
       w = actor.width
       h = actor.height
       # TODO save these off
-      half_w = w * 0.5
+      quarter_w = w * 0.25
       quarter_h = h * 0.25
       three_quarter_h = h - quarter_h
+      three_quarter_w = w - quarter_w
 
       [
-        vec2(x+half_w,     y),
-        vec2(x+w,          y+quarter_h),
-        vec2(x+w,          y+three_quarter_h),
-        vec2(x+half_w,     y+h),
-        vec2(x,            y+three_quarter_h),
-        vec2(x,            y+quarter_h),
+        vec2(x+quarter_w,       y),
+        vec2(x+three_quarter_w, y),
+
+        vec2(x+w,               y+quarter_h),
+        vec2(x+w,               y+three_quarter_h),
+
+        vec2(x+three_quarter_w, y+h),
+        vec2(x+quarter_w,       y+h),
+
+        vec2(x,                 y+three_quarter_h),
+        vec2(x,                 y+quarter_h),
       ]
     end
   end

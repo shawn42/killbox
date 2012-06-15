@@ -19,7 +19,7 @@ define_behavior :tile_bound do
           case collision[:tile_face]
           when :top
             # some edge case here
-            if point_index == 3
+            if point_index == 4 || point_index == 5
               new_y = (collision[:hit][1] - actor.height - fudge)
               # $debug_drawer.draw(:top_collision) do |target|
               #   c = Color::RED
@@ -28,12 +28,12 @@ define_behavior :tile_bound do
               hit_bottom = true
             end
           when :bottom
-            if point_index == 0
+            if point_index == 0 || point_index == 1
               new_y = collision[:hit][1] + fudge
               hit_top = true
             end
           when :left
-            if point_index == 1 || point_index == 2
+            if point_index == 2 || point_index == 3
               # puts "LEFT    : #{collision.inspect}"
               new_x = (collision[:hit][0] - actor.width - fudge)
               # $debug_drawer.draw(:right_collision) do |target|
@@ -43,7 +43,7 @@ define_behavior :tile_bound do
               hit_right = true
             end
           when :right
-            if point_index == 4 || point_index == 5
+            if point_index == 6 || point_index == 7
               new_x = collision[:hit][0] + fudge
               hit_left = true
             end
@@ -51,17 +51,11 @@ define_behavior :tile_bound do
         end
 
         if new_y
-          # puts "moving actor from #{actor.y} to #{new_y}"
           actor.y = new_y
-          # actor.vel.y = 0 
-          # actor.accel.y = 0 
         end
 
         if new_x
-          # puts "moving actor from #{actor.x} to #{new_x}"
           actor.x = new_x
-          # actor.vel.x = 0 
-          # actor.accel.x = 0 
         end
 
         actor.emit :hit_top if hit_top
@@ -70,18 +64,12 @@ define_behavior :tile_bound do
         actor.emit :hit_right if hit_right
       end
 
-      # TODO move actor, truncate velocity if required
-      # send event to tiles that collided?
-      
-      # if collisions.nil? || (!collisions.nil? && collisions.empty?)
       actor.x += actor.vel.x unless hit_left || hit_right
       actor.y += actor.vel.y unless hit_top || hit_bottom
-      # end
 
       # EEK.. TODO XXX where should this live?
       actor.accel = vec2(0,0)
 
-      # puts "actor y : #{actor.y}"
     end
   end
 end
