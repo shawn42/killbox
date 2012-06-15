@@ -6,7 +6,9 @@ define_behavior :accelerator do
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0),
                          jumping: false,
+                         max_jump_force: 400,
                          jumping_force: 0
+                        
 
     actor.when :hit_bottom do
       actor.jumping = false
@@ -23,19 +25,20 @@ define_behavior :accelerator do
 
       # TODO should jumping be its own behavior?
       if actor.attempt_jump? && !actor.jumping
-        puts "JUMPING"
-        actor.jumping_force = 5
+        actor.jumping_force = actor.max_jump_force
         actor.jumping = true
       end
 
-      actor.accel.y -= actor.jumping_force * time_secs * 1.2
       unless actor.jumping_force <= 0
-        actor.jumping_force -= time_secs
+        actor.accel.y -= actor.jumping_force * time_secs
+        max = actor.max_jump_force
+        jf = actor.jumping_force
+        actor.jumping_force -= 9.0 * jf / max * time
       end
 
       actor.vel += actor.accel
 
-      # actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
+      actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
     end
 
     actor.when :remove_me do
