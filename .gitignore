@@ -11,5 +11,4 @@ tmp
 tags
 ctags
 .bundle
-*.lock
 vendor
