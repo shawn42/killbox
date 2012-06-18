@@ -49,13 +49,8 @@ define_behavior :tile_bound do
           end
         end
 
-        if new_y
-          actor.y = new_y
-        end
-
-        if new_x
-          actor.x = new_x
-        end
+        actor.y = new_y if new_y
+        actor.x = new_x if new_x
 
         actor.emit :hit_top if hit_top
         actor.emit :hit_bottom if hit_bottom
@@ -67,9 +62,10 @@ define_behavior :tile_bound do
       actor.y += actor.vel.y unless hit_top || hit_bottom
 
       # DEBUG!
-      if actor.y > 600
-        actor.y = 100
-      end
+      actor.y = 100 if actor.y > 600
+      actor.y = 600 if actor.y < 0
+      actor.x = 0 if actor.x > 600
+      actor.x = 600 if actor.x < 0
     end
   end
 end
