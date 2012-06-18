@@ -43,19 +43,21 @@ class MapInspector
   end
 
   # TODO this will come from the map import eventually
-  def solid?(index)
-    case index
+  def solid?(map, row, col)
+    trow = map.tile_grid[row]
+    return false if trow.nil?
+    tile = trow[col]
+    return false if tile.nil?
+
+    case tile.gfx_index
     when 3..13, 100..101
       true
-    else
-      false
     end
   end
 
   def line_tile_collision(map, line, row, col)
 
-    trow = map.tile_grid[row]
-    return unless trow && trow[col] && solid?(trow[col].gfx_index)
+    return unless solid?(map, row, col)
 
     tile_size = map.tile_size
     tile_x = col * tile_size

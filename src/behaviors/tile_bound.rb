@@ -1,8 +1,10 @@
 define_behavior :tile_bound do
+  requires :map_inspector
   setup do
     raise "vel required" unless actor.has_attribute? :vel
     actor.when :tile_collisions do |collisions|
       if collisions
+        map = actor.map.map_data
         new_x = nil
         new_y = nil
 
@@ -12,40 +14,38 @@ define_behavior :tile_bound do
         hit_left = false
         hit_right = false
 
-        # puts "#{collisions.size} #{collisions.inspect}"
         collisions.each do |collision|
           point_index = collision[:point_index]
           fudge = 0.01
           case collision[:tile_face]
           when :top
             # some edge case here
-            if point_index == 4 || point_index == 5
-              new_y = (collision[:hit][1] - actor.height - fudge + 3)
-              # $debug_drawer.draw(:top_collision) do |target|
-              #   c = Color::RED
-              #   target.draw_line 0, new_y + actor.height, 2_000, new_y + actor.height, c, 99_999
-              # end
-              hit_bottom = true
+            if point_index == 2 || point_index == 3
+              unless map_inspector.solid?(map, collision[:row] - 1, collision[:col])
+                new_y = (collision[:hit][1] - actor.height - fudge)
+                hit_bottom = true
+              end
             end
           when :bottom
-            if point_index == 0 || point_index == 1
-              new_y = collision[:hit][1] + fudge
-              hit_top = true
+            unless map_inspector.solid?(map, collision[:row] + 1, collision[:col])
+              if point_index == 0 || point_index == 1
+                new_y = collision[:hit][1] + fudge
+                hit_top = true
+              end
             end
           when :left
-            if point_index == 2 || point_index == 3
-              # puts "LEFT    : #{collision.inspect}"
-              new_x = (collision[:hit][0] - actor.width - fudge)
-              # $debug_drawer.draw(:right_collision) do |target|
-              #   c = Color::RED
-              #   target.draw_line new_x + actor.width, 0, new_x + actor.width, 2_000, c, 99_999
-              # end
-              hit_right = true
+            unless map_inspector.solid?(map, collision[:row], collision[:col] - 1)
+              if point_index == 1 || point_index == 2
+                new_x = (collision[:hit][0] - actor.width - fudge)
+                hit_right = true
+              end
             end
           when :right
-            if point_index == 6 || point_index == 7
-              new_x = collision[:hit][0] + fudge
-              hit_left = true
+            unless map_inspector.solid?(map, collision[:row], collision[:col] + 1)
+              if point_index == 3 || point_index == 0
+                new_x = collision[:hit][0] + fudge
+                hit_left = true
+              end
             end
           end
         end

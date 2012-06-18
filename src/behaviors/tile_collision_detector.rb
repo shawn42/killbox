@@ -38,19 +38,9 @@ define_behavior :tile_collision_detector do
           map_inspector.line_tile_collision(map, line, row, col) do |collision|
 
             l = collision[:hit]
-            if l.is_a?(Array)
-              if i == 1
-                # $debug_drawer.draw("clipping_line #{i}") do |target|
-                #   c = Color::RED
-                #   target.draw_line line[0][0], line[0][1], l[0], l[1], c, 99_999
-                # end
-              end
-            end
-            # unless collisions && collisions.any?{|c| c[:row] == collision[:row] && c[:col] == collision[:col] }
-              collisions ||= []
-              collision[:point_index] = i
-              collisions << collision
-            # end
+            collisions ||= []
+            collision[:point_index] = i
+            collisions << collision
           end
 
         end
