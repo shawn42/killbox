@@ -37,7 +37,6 @@ define_behavior :tile_collision_detector do
 
           map_inspector.line_tile_collision(map, line, row, col) do |collision|
 
-            l = collision[:hit]
             collisions ||= []
             collision[:point_index] = i
             collisions << collision

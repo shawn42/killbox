@@ -8,7 +8,6 @@ define_behavior :tile_bound do
         new_x = nil
         new_y = nil
 
-        # for events
         hit_top = false
         hit_bottom = false
         hit_left = false
@@ -20,7 +19,7 @@ define_behavior :tile_bound do
           case collision[:tile_face]
           when :top
             # some edge case here
-            if point_index == 2 || point_index == 3
+            if point_index == 3 || point_index == 4
               unless map_inspector.solid?(map, collision[:row] - 1, collision[:col])
                 new_y = (collision[:hit][1] - actor.height - fudge)
                 hit_bottom = true
@@ -35,14 +34,14 @@ define_behavior :tile_bound do
             end
           when :left
             unless map_inspector.solid?(map, collision[:row], collision[:col] - 1)
-              if point_index == 1 || point_index == 2
+              if point_index == 1 || point_index == 2 || point_index == 3
                 new_x = (collision[:hit][0] - actor.width - fudge)
                 hit_right = true
               end
             end
           when :right
             unless map_inspector.solid?(map, collision[:row], collision[:col] + 1)
-              if point_index == 3 || point_index == 0
+              if point_index == 4 || point_index == 5 || point_index == 0
                 new_x = collision[:hit][0] + fudge
                 hit_left = true
               end
@@ -66,9 +65,6 @@ define_behavior :tile_bound do
 
       actor.x += actor.vel.x unless hit_left || hit_right
       actor.y += actor.vel.y unless hit_top || hit_bottom
-
-      # EEK.. TODO XXX where should this live?
-      actor.accel = vec2(0,0)
 
       # DEBUG!
       if actor.y > 600

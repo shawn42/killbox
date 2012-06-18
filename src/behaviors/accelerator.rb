@@ -19,7 +19,6 @@ define_behavior :accelerator do
       end
 
       # TODO should jumping be its own behavior?
-      puts "ACC GROUND: [#{actor.on_ground}]"
       if actor.attempt_jump? && actor.on_ground
         actor.jumping_force = actor.max_jump_force
       end
@@ -36,6 +35,9 @@ define_behavior :accelerator do
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
       # XXX how do I do this in the correct order?
       actor.on_ground = false
+      # EEK.. TODO XXX where should this live?
+      actor.accel = vec2(0,0)
+
     end
 
     actor.when :remove_me do
