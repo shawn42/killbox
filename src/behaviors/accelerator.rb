@@ -30,6 +30,10 @@ define_behavior :accelerator do
         actor.jumping_force -= 9.0 * jf / max * time
       end
 
+      actor.when :hit_top do
+        actor.jumping_force = 0
+      end
+
       actor.vel += actor.accel
 
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed

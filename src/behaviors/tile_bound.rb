@@ -56,6 +56,14 @@ define_behavior :tile_bound do
         actor.emit :hit_bottom if hit_bottom
         actor.emit :hit_left if hit_left
         actor.emit :hit_right if hit_right
+        if hit_top || hit_bottom
+          actor.accel.y = 0
+          actor.vel.y = 0
+        end
+        if hit_left || hit_right
+          actor.accel.x = 0
+          actor.vel.x = 0
+        end
       end
 
       actor.x += actor.vel.x unless hit_left || hit_right
