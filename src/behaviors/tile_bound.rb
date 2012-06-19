@@ -19,7 +19,7 @@ define_behavior :tile_bound do
           case collision[:tile_face]
           when :top
             # some edge case here
-            if point_index == 3 || point_index == 4
+            if point_index == 4 || point_index == 5
               unless map_inspector.solid?(map, collision[:row] - 1, collision[:col])
                 new_y = (collision[:hit][1] - actor.height - fudge)
                 hit_bottom = true
@@ -34,14 +34,14 @@ define_behavior :tile_bound do
             end
           when :left
             unless map_inspector.solid?(map, collision[:row], collision[:col] - 1)
-              if point_index == 1 || point_index == 2 || point_index == 3
+              if point_index == 1 || point_index == 2 || point_index == 3 || point_index == 4
                 new_x = (collision[:hit][0] - actor.width - fudge)
                 hit_right = true
               end
             end
           when :right
             unless map_inspector.solid?(map, collision[:row], collision[:col] + 1)
-              if point_index == 4 || point_index == 5 || point_index == 0
+              if point_index == 5 || point_index == 6 || point_index == 7 || point_index == 0
                 new_x = collision[:hit][0] + fudge
                 hit_left = true
               end
