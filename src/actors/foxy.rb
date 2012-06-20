@@ -4,14 +4,13 @@ define_actor :foxy do
   has_behaviors do
     positioned
     layered ZOrder::Player
-    # animated_with_spritemap file: 'foxy.png' rows: 5, cols: 8, actions: {
-    #   idle:         0,
-    #   jumping:      4,
-    #   falling:      5,
-    #   hurt:         6..8,
-    #   knocked_down: 21..23,
-    # }
-    animated
+    animated_with_spritemap file: 'foxy.png', rows: 9, cols: 3, actions: {
+      idle:         0,
+      jumping:      4,
+      falling:      5,
+      hurt:         6..8,
+      knocked_down: 21..23,
+    }
     input_mapper(
       KbLeft => :move_left,
       KbRight => :move_right,
