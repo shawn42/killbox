@@ -8,7 +8,7 @@ define_behavior :accelerator do
                          max_jump_force: 400,
                          jumping_force: 0
                         
-
+    # TODO flip_h can be changed to x_scale that GAV understands
     director.when :update do |time, time_secs|
       # TODO performance of creating vecs here instead of modifying in place?
       if actor.move_right?
