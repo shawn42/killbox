@@ -7,6 +7,7 @@ define_behavior :grounded do
 
     actor.when :hit_bottom do
       # puts "HIT GROUND"
+      actor.action = :idle unless actor.action == :idle
       actor.on_ground = true
     end
 

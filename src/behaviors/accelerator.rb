@@ -10,14 +10,15 @@ define_behavior :accelerator do
                         
 
     director.when :update do |time, time_secs|
-      actor.action = :idle
       # TODO performance of creating vecs here instead of modifying in place?
       if actor.move_right?
         actor.accel += vec2(actor.speed * time_secs, 0)
         actor.flip_h = false
+        actor.action = :walking_right unless actor.action == :walking_right
       elsif actor.move_left?
         actor.flip_h = true
         actor.accel += vec2(-actor.speed * time_secs, 0)
+        actor.action = :walking_left unless actor.action == :walking_left
       end
 
       # TODO should jumping be its own behavior?
@@ -36,9 +37,13 @@ define_behavior :accelerator do
 
       actor.when :hit_top do
         actor.jumping_force = 0
-        actor.action = :idle
+        actor.action = :idle unless actor.action == :idle
       end
 
+      if (0.0-actor.vel[1]).abs <= 0.001
+        actor.action = :idle unless actor.action == :idle
+      end
+      
       actor.vel += actor.accel
 
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed

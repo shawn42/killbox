@@ -4,8 +4,6 @@ define_behavior :animated_with_spritemap do
     @frame_update_time ||= 60
     @frame_time = 0
 
-    # all animated actors have to have an idle animation
-    # data/graphics/ship/idle/1.png
     @frame_num = 0
 
     actor.has_attributes action: :idle, animating: true, flip_h: false
@@ -25,6 +23,7 @@ define_behavior :animated_with_spritemap do
     end
 
     actor.when :action_changed do |old_action, new_action|
+        puts new_action
       action_changed old_action, new_action
       actor.animating = @frames[new_action].size > 1
     end
@@ -48,6 +47,7 @@ define_behavior :animated_with_spritemap do
     def next_frame
       action_set = @frames[actor.action]
       @frame_num = (@frame_num + 1) % action_set.size unless action_set.nil?
+      puts @frame_num
     end
 
     def action_changed(old_action, new_action)
