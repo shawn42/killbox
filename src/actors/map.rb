@@ -20,8 +20,8 @@ define_actor :map do
         map_data = actor.map_data
         tile_size = map_data.tile_size
         # TODO how to get these?
-        width = 60 * tile_size
-        height = width
+        width = map_data.tile_grid.size * tile_size
+        height = map_data.tile_grid.first.size * tile_size
         tileset = actor.tileset
 
         actor.map_image = wrapped_screen.record width, height do

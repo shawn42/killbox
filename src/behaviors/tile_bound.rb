@@ -1,5 +1,5 @@
 define_behavior :tile_bound do
-  requires :map_inspector
+  requires :map_inspector, :viewport
   setup do
     raise "vel required" unless actor.has_attribute? :vel
     actor.when :tile_collisions do |collisions|
@@ -70,10 +70,11 @@ define_behavior :tile_bound do
       actor.y += actor.vel.y unless hit_top || hit_bottom
 
       # DEBUG!
-      actor.y = 100 if actor.y > 600
-      actor.y = 600 if actor.y < 0
-      actor.x = 0 if actor.x > 600
-      actor.x = 600 if actor.x < 0
+      vb = Rect.new(viewport.boundary)
+      actor.y = 10 if actor.y > vb.bottom
+      actor.y = 600 if actor.y < vb.y
+      actor.x = 0 if actor.x > vb.right
+      actor.x = vb.right-100 if actor.x < vb.x
     end
   end
 end

@@ -11,22 +11,14 @@ class MapInspector
 
     (start_x..end_x).each do |col|
       (start_y..end_y).each do |row|
-        col_tiles = tile_grid[col]
+        col_tiles = tile_grid[row]
         if col_tiles
-          tile = col_tiles[row]
+          tile = col_tiles[col]
           yield tile, row, col
         end
       end
     end
 
-  end
-
-  def intersection_of(dst1, dst2, p1, p2 )
-    return p1 + (p2-p1) * ( -dst1/(dst2-dst1) ) unless ((dst1 * dst2) >= 0) || dst1 == dst2
-  end
-
-  def in_box?(hit, b1, b2, axis)
-    (axis==:x_axis && hit.y > b1.y && hit.y < b2.y) || (axis==:y_axis && hit.x > b1.x && hit.x < b2.x)
   end
 
   EPSILON = 0.001
