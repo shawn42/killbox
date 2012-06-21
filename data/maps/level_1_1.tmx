@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="60" height="40" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
   <image source="../graphics/map/tileset.png" width="256" height="608"/>
   <tile id="2">
@@ -11,12 +11,17 @@
  <tileset firstgid="609" name="Foxy" tilewidth="30" tileheight="39">
   <image source="../graphics/foxy/idle.png" width="30" height="39"/>
  </tileset>
- <layer name="terrain" width="40" height="40">
+ <layer name="Background" width="60" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3USU8UQRjG8epRVNyICyqIJkRc8eYKeBM38AYILhdl3NCLzrgvBPELyPAlVOCuondBvbNe9IIgicJFBeO/Y1W6qBTSFQ5wqCf5VXdVz1v1ziQ9Qvj4+Pj4+Pj4+Pj4+PiECQxZGvNZHM8ZXuAl2tCOjiB+/Uz9zdYrhtd4g068xbt51N97hi504wM+4tMc9rdQE857GHrRh34MYHCm/hJCJBLx+vvM8MXh++o9hvdDDF8xjBF8w6i23w/L3qvobXXM/sYYxoNoL0X/TKF89j34d6/6C9d+4hd+YwKT+AOOFxdxSbvmiKnrOZb+Fsi9w/d1ERZjiZTtSNUsxTIsxwqslGffwm3tWijpczNrsBa5WIf12CDlOVI1+diIAmzCZpznN7yAeiSD6edmtqAIW7EN27FD2ulI1exCMXajiTOfoBlPkUIaN3DTMjezB3uxD/txAAelEkeqphRlOIRnnNmCjNZjs3bfZKybOYxyHMFRHMNx6YQjVVOBSpwUUS96TxnLWqtcN1OFatTgFGpRJ512pGrO4CzOWfpTMpY+bb9fPZIiescv44p01ZGqacA1XBdRHzatljUzKaRF9I7fwV3pniNVcx8P8BCP8BiNIvo/+R8fH5/4+Qsesku/ABkAAA==
+   H4sIAAAAAAAAC+2TAQqDMAxFu6PO7QLTXWDTC3T2wMvAQgiJk2GFwXvwiYkf7bc2JQAAAAAAAAAAAAAAAID2DKeU7qJRNInOok50EV1Xem9ua+TrNviOyltrnd9EvdN7c1sjX7/Bd1TeWVRU/xA9l977NlnNbY18dZ4D39Qor32/3t+a+/P+19Lbe/bb2Kp92ZmX4Hllp7w2n81azB4Mgey66zxv9Okz4/n22l/vuTqrt95I9t8fzfWaT/8Hus+N82rNzlqjM/1t/qtPrwcA4F94A/git/KAJQAA
   </data>
  </layer>
- <objectgroup name="actors" width="40" height="40">
+ <layer name="terrain" width="60" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3Vy1NSYRjH8QMCgmJNCohAzjDeyZ1Zme200mpnpZmt1C5u81L9R3bbl9XeyvbZZV+WM7SzrOl7hvcdTgwMvFMeSZ/fzOeRAR/O+fEyg2VJJJL/NR4hhBBCCCGEEELsCz6GHwHUIogQ6lCPMBqQtnKcu8uM+3iAh3iEx57d71ROlBFDM+JoQQJJpBxdC/s+YTzFCp7hOV5UYd90iXvqYnSjB5mCnsX6rjJe4hVeYw1vqrCv0WdTgv3aW8Y63uE9PuBjub5ey/LaeDyL6zi4wx38XCzg/bvO9vOfGJ+xgS/4ik1H329Fuh/iuo3e3HssYLHI9+ZfyjKiXC+GJkSK9M467tO+l2ue3F/9/2nVZQvf8QPb+Ilfnj/PznmGbp6prQY++3wRQC2CSsiQ3qlDPcJowAHVRZ+d8wzdOlOtCRFEEUMz4kqLIb2TQBIpHEarVT1pQzs60IkudCs9hvROBkfQ62KPStOHo+jHMRzHCWXAkN45iUGccrFHpRnCME7jDM5iRBk1pHfO4TwuuNij0ozhIi7hMsYxoVwxpHcmcRVTLvaoNNOYsfK/CTdwU7llSO/MudrALLcxb+V/E5ZwR7lrSO/cc7WBRCKR7M38BgrQVZmAJQAA
+  </data>
+ </layer>
+ <objectgroup name="actors" width="60" height="40" visible="0">
   <object name="foxy" type="foxy" gid="609" x="171" y="367"/>
  </objectgroup>
 </map>

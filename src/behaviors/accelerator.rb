@@ -6,18 +6,16 @@ define_behavior :accelerator do
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0),
                          max_jump_force: 400,
-                         jumping_force: 0
+                         jumping_force: 0,
+                         flip_h: false
                         
-    # TODO flip_h can be changed to x_scale that GAV understands
     director.when :update do |time, time_secs|
       # TODO performance of creating vecs here instead of modifying in place?
       if actor.move_right?
         actor.accel += vec2(actor.speed * time_secs, 0)
-        actor.x -= actor.image.width unless actor.x_scale == 1
-        actor.x_scale = 1
+        actor.flip_h = false
       elsif actor.move_left?
-        actor.x += actor.image.width unless actor.x_scale == -1
-        actor.x_scale = -1
+        actor.flip_h = true
         actor.accel += vec2(-actor.speed * time_secs, 0)
       end
 
@@ -44,17 +42,16 @@ define_behavior :accelerator do
       end
       
       if (actor.vel[0]) > 0.01
-        actor.action = :walking_right
+        actor.action = :walking_right unless actor.action == :walking_right
       elsif (actor.vel[0]) < -0.01
-        actor.action = :walking_left
+        actor.action = :walking_left unless actor.action == :walking_left
       end
       
       if actor.vel[1] < 0.05
         actor.action = :jumping unless actor.action == :jumping
-      elsif actor.vel[1] > 0.1
+      elsif actor.vel[1] > 0.1 && !actor.on_ground
         actor.action = :falling unless actor.action == :falling
       end
-      
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
       # XXX how do I do this in the correct order?
       actor.on_ground = false

@@ -39,6 +39,6 @@ directory_load_order.each do |dir|
   require_all "src/#{dir}/**/*.rb"
 end
 require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec/") || f.match("src/app.rb")}
-
+Gosu::enable_undocumented_retrofication
 
 

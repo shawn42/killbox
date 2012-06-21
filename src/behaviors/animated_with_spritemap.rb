@@ -7,9 +7,7 @@ define_behavior :animated_with_spritemap do
     @frame_num = 0
 
     actor.has_attributes action: :idle, 
-                         animating: true, 
-                         x_scale: @opts[:x_scale] || 1,
-                         y_scale: @opts[:y_scale] || 1
+                         animating: true
 
     actor.has_attributes :image, :width, :height
 
@@ -26,7 +24,6 @@ define_behavior :animated_with_spritemap do
     end
 
     actor.when :action_changed do |old_action, new_action|
-        # puts new_action
       action_changed old_action, new_action
       actor.animating = @frames[new_action].size > 1
     end
@@ -50,7 +47,6 @@ define_behavior :animated_with_spritemap do
     def next_frame
       action_set = @frames[actor.action]
       @frame_num = (@frame_num + 1) % action_set.size unless action_set.nil?
-      # puts @frame_num
     end
 
     def action_changed(old_action, new_action)

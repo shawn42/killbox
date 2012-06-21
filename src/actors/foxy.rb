@@ -1,5 +1,4 @@
 define_actor :foxy do
-  has_attributes view: :graphical_actor_view
 
   has_behaviors do
     positioned
@@ -35,3 +34,26 @@ define_actor :foxy do
 
 end
 
+
+define_actor_view :foxy_view do
+
+  draw do |target, x_off, y_off, z|
+    img = actor.image
+    return if img.nil?
+
+    x = actor.x
+    y = actor.y
+
+    offset_x = x+x_off
+    offset_y = y+y_off
+    x_scale = 1
+    
+    if actor.flip_h
+      x_scale = -1
+      offset_x += actor.width
+    end
+    
+    img.draw offset_x, offset_y, z, x_scale, 1
+  end
+
+end

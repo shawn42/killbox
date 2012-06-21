@@ -8,6 +8,10 @@ define_behavior :bound_by_box do
                                       actor.width, actor.height)
 
     actor.when :x_changed do
+      # $debug_drawer.draw :bb do |target|
+        # target.draw_box actor.bb.x, actor.bb.y, actor.bb.right, actor.bb.bottom, Color::RED, 99
+      # end
+        
       actor.bb.x = actor.x
     end
     actor.when :y_changed do
