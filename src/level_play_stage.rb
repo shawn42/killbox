@@ -26,6 +26,8 @@ class LevelPlayStage < Stage
 
   def draw(target)
     super
+    @color ||= Color.new 255, 41, 145, 179
+    target.fill_screen @color, -1
     $debug_drawer.draw_blocks.each do |name, dblock|
       dblock.call target
     end
