@@ -8,7 +8,7 @@ define_actor :foxy do
       idle:         2,
       walking_right:21..23,
       walking_left: 21..23,
-      jumping:      3..7,
+      jumping:      6..7,
       falling:      8,
       hurt:         9..11,
       knocked_down: 24..26,

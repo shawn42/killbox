@@ -6,7 +6,10 @@ define_behavior :animated_with_spritemap do
 
     @frame_num = 0
 
-    actor.has_attributes action: :idle, animating: true, flip_h: false
+    actor.has_attributes action: :idle, 
+                         animating: true, 
+                         x_scale: @opts[:x_scale] || 1,
+                         y_scale: @opts[:y_scale] || 1
 
     actor.has_attributes :image, :width, :height
 
