@@ -2,6 +2,7 @@ define_actor :foxy do
 
   has_behaviors do
     positioned
+    audible
     layered ZOrder::Player
     animated_with_spritemap file: 'foxy.png', rows: 9, cols: 3, actions: {
       idle:         2,

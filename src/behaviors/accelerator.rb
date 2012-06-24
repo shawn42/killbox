@@ -22,6 +22,7 @@ define_behavior :accelerator do
       # TODO should jumping be its own behavior?
       if actor.attempt_jump? && actor.on_ground
         actor.jumping_force = actor.max_jump_force
+        actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
       end
 
       unless (0-actor.jumping_force).abs <= 0.001
