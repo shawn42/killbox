@@ -2,9 +2,8 @@ define_behavior :friction do
   requires :director
   setup do
     actor.has_attributes friction: opts[:amount]
-    director.when :update do |time_millis, time_secs|
-      # TODO only if on the ground?
-      if actor.vel.magnitude > 0.001
+    director.when :first do |time_millis, time_secs|
+      if actor.on_ground and actor.vel.magnitude <= 0.001
         # apply friction per 5 ms
         (time_millis / 5.0).ceil.times do
           actor.vel.magnitude *= (1 - [actor.friction, 1].min)
@@ -14,7 +13,6 @@ define_behavior :friction do
           actor.vel = vec2(0,0) if actor.vel.magnitude < 0.3
         end
       end
-
     end
 
     actor.when :remove_me do

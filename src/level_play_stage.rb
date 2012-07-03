@@ -4,6 +4,7 @@ class LevelPlayStage < Stage
 
   def setup
     super
+    director.update_slots = [:first, :before, :update, :last]
     $debug_drawer = DebugDraw.new
 
     # TODO XXX hack until all other stages are in place
