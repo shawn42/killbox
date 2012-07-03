@@ -3,7 +3,7 @@ define_behavior :friction do
   setup do
     actor.has_attributes friction: opts[:amount]
     director.when :first do |time_millis, time_secs|
-      if actor.on_ground and actor.vel.magnitude <= 0.001
+      if actor.on_ground and actor.vel.magnitude > 0.001
         # apply friction per 5 ms
         (time_millis / 5.0).ceil.times do
           actor.vel.magnitude *= (1 - [actor.friction, 1].min)
