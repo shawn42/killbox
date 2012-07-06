@@ -2,18 +2,20 @@ define_behavior :accelerator do
   requires :director
   setup do
     actor.has_attributes speed: opts[:speed],
+                         air_speed: opts[:air_speed],
                          accel: vec2(0,0),
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0),
                          flip_h: false
                         
     director.when :first do |time, time_secs|
+      speed = actor.on_ground ? actor.speed : actor.air_speed
       if actor.move_right?
-        actor.accel += vec2(actor.speed * time_secs, 0)
+        actor.accel += vec2(speed * time_secs, 0)
         actor.flip_h = false
       elsif actor.move_left?
         actor.flip_h = true
-        actor.accel += vec2(-actor.speed * time_secs, 0)
+        actor.accel += vec2(-speed * time_secs, 0)
       end
 
       actor.vel += actor.accel
@@ -47,7 +49,12 @@ define_behavior :accelerator do
       elsif actor.vel[1] > 0.1 && !actor.on_ground
         actor.action = :falling unless actor.action == :falling
       end
+
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
+      if (!actor.move_left? && !actor.move_right?) #&& actor.accel.magnitude < (1 * time_secs)
+        # stop short
+        actor.vel = vec2(0,0) if actor.vel.magnitude < 0.3
+      end
     end
 
     actor.when :remove_me do

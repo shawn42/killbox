@@ -3,20 +3,26 @@ define_behavior :friction do
   setup do
     actor.has_attributes friction: opts[:amount]
     director.when :first do |time_millis, time_secs|
+
+      # new hotness
       if actor.on_ground and actor.vel.magnitude > 0.001
-        # apply friction per 5 ms
-        (time_millis / 5.0).ceil.times do
-          actor.vel.magnitude *= (1 - [actor.friction, 1].min)
-        end
-        if (!actor.move_left? && !actor.move_right?) && actor.accel.magnitude < (1 * time_secs)
-          # stop short
-          actor.vel = vec2(0,0) if actor.vel.magnitude < 0.3
-        end
+        time_to_stop_in_ms = 100
+
+        friction = 1 - min(actor.friction, 1)
+        velocity_removal_percentage = time_millis.to_f / time_to_stop_in_ms
+
+        friction_force = -(actor.vel * velocity_removal_percentage * friction)
+
+        actor.accel += friction_force
       end
     end
 
     actor.when :remove_me do
       director.unsubscribe_all self
     end
+  end
+
+  helpers do
+    include MinMaxHelpers
   end
 end
