@@ -4,7 +4,7 @@ define_behavior :friction do
     actor.has_attributes friction: opts[:amount]
     director.when :first do |time_millis, time_secs|
 
-      # new hotness
+      # TODO ground vs air friction?
       if actor.on_ground and actor.vel.magnitude > 0.001
         time_to_stop_in_ms = 100
 

@@ -10,10 +10,10 @@ define_behavior :accelerator do
                         
     director.when :first do |time, time_secs|
       speed = actor.on_ground ? actor.speed : actor.air_speed
-      if actor.move_right?
+      if actor.move_right? && actor.vel.x < (actor.max_speed / 3.0)
         actor.accel += vec2(speed * time_secs, 0)
         actor.flip_h = false
-      elsif actor.move_left?
+      elsif actor.move_left? && actor.vel.x > -(actor.max_speed / 3.0)
         actor.flip_h = true
         actor.accel += vec2(-speed * time_secs, 0)
       end
@@ -51,6 +51,7 @@ define_behavior :accelerator do
       end
 
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
+
       if (!actor.move_left? && !actor.move_right?) #&& actor.accel.magnitude < (1 * time_secs)
         # stop short
         actor.vel = vec2(0,0) if actor.vel.magnitude < 0.3
