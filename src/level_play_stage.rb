@@ -23,6 +23,13 @@ class LevelPlayStage < Stage
     viewport.boundary = @level.map_extents
 
     viewport.follow @foxy, [0,0], [100,100]
+
+    input_manager.reg :down, KbP do
+      viewport.rotation += radians_to_degrees(Math::PI / 2.0)
+    end
+    input_manager.reg :down, KbO do
+      viewport.rotation -= radians_to_degrees(Math::PI / 2.0)
+    end
   end
 
   def draw(target)

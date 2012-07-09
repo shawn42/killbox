@@ -21,7 +21,7 @@ define_actor :foxy do
     grounded
     gravity dir: vec2(0,20)
 
-    accelerator air_speed: 8, speed: 18, max_speed: 18 
+    accelerator air_speed: 30, speed: 40, max_speed: 18 
     jump anti_gravity_multiplier: 40
     friction amount: 0.04
 

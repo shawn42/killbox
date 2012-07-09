@@ -3,6 +3,7 @@ define_behavior :accelerator do
   setup do
     actor.has_attributes speed: opts[:speed],
                          air_speed: opts[:air_speed],
+                         gravity: vec2(0,0),
                          accel: vec2(0,0),
                          max_speed: opts[:max_speed],
                          vel: vec2(0,0),
@@ -11,11 +12,13 @@ define_behavior :accelerator do
     director.when :first do |time, time_secs|
       speed = actor.on_ground ? actor.speed : actor.air_speed
       if actor.move_right? && actor.vel.x < (actor.max_speed / 3.0)
-        actor.accel += vec2(speed * time_secs, 0)
+        force = actor.gravity.unit.rotate(-Ftor::HALF_PI) * speed * time_secs
+        actor.accel += force 
         actor.flip_h = false
       elsif actor.move_left? && actor.vel.x > -(actor.max_speed / 3.0)
+        force = actor.gravity.unit.rotate(Ftor::HALF_PI) * speed * time_secs
+        actor.accel += force
         actor.flip_h = true
-        actor.accel += vec2(-speed * time_secs, 0)
       end
 
       actor.vel += actor.accel
