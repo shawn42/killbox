@@ -6,7 +6,7 @@ define_behavior :gravity_manipulator do
     input_manager.reg :down, KbG do
       actor.gravity.rotate!(Ftor::HALF_PI)
       actor.vel = vec2(0,0)
-      # viewport.rotation = radians_to_degrees(actor.gravity.a + Ftor::HALF_PI)
+      viewport.rotation = radians_to_degrees(Ftor::HALF_PI - actor.gravity.a)
     end
   end
 end
