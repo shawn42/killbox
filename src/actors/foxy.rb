@@ -31,6 +31,8 @@ define_actor :foxy do
 
     tile_bound
     tile_collision_detector
+
+    gravity_manipulator
   end
 
 end
