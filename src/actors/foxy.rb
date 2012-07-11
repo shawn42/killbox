@@ -35,28 +35,24 @@ define_actor :foxy do
     gravity_manipulator
   end
 
-end
+  view do
+    draw do |target, x_off, y_off, z|
+      img = actor.image
+      return if img.nil?
 
+      x = actor.x
+      y = actor.y
 
-define_actor_view :foxy_view do
-
-  draw do |target, x_off, y_off, z|
-    img = actor.image
-    return if img.nil?
-
-    x = actor.x
-    y = actor.y
-
-    offset_x = x+x_off
-    offset_y = y+y_off
-    x_scale = 1
-    
-    if actor.flip_h
-      x_scale = -1
-      offset_x += actor.width
+      offset_x = x+x_off
+      offset_y = y+y_off
+      x_scale = 1
+      
+      if actor.flip_h
+        x_scale = -1
+      end
+      
+      target.draw_rotated_image img, offset_x, offset_y, z, actor.rot, 0.5, 0.5, x_scale
     end
-    
-    img.draw offset_x, offset_y, z, x_scale, 1
-  end
 
+  end
 end

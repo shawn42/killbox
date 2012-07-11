@@ -3,19 +3,22 @@ define_behavior :bound_by_box do
     actor.has_attributes x: 0,
                          y: 0,
                          width: 0, 
-                         height: 0
+                         height: 0,
+                         rot: 0
+
     actor.has_attributes bb: Rect.new(actor.x, actor.y, 
                                       actor.width, actor.height)
 
+
+    actor.when :rot_changed do
+      # TODO for better collision detection later, update bb here
+    end
+
     actor.when :x_changed do
-      # $debug_drawer.draw :bb do |target|
-        # target.draw_box actor.bb.x, actor.bb.y, actor.bb.right, actor.bb.bottom, Color::RED, 99
-      # end
-        
-      actor.bb.x = actor.x
+      actor.bb.x = actor.x - actor.width/2
     end
     actor.when :y_changed do
-      actor.bb.y = actor.y
+      actor.bb.y = actor.y - actor.height/2
     end
     actor.when :width_changed do
       actor.bb.width = actor.width
@@ -24,4 +27,5 @@ define_behavior :bound_by_box do
       actor.bb.height = actor.height
     end
   end
+
 end
