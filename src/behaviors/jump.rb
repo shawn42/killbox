@@ -15,6 +15,14 @@ define_behavior :jump do
     end
 
     actor.when :remove_me do
+      remove 
+    end
+
+    reacts_with :remove
+  end
+
+  helpers do
+    def remove
       director.unsubscribe_all self
     end
   end
