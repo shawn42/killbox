@@ -14,9 +14,9 @@ define_actor :foxy do
       knocked_down: 24..26,
     }
     input_mapper(
-      KbLeft => :move_left,
-      KbRight => :move_right,
-      KbUp => :attempt_jump
+      [GpLeft, KbLeft] => :move_left,
+      [GpRight, KbRight] => :move_right,
+      [GpUp, KbUp] => :charging_jump
     )
     grounded
     gravity dir: vec2(0,20)
