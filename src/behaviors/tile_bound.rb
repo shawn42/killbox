@@ -11,68 +11,43 @@ define_behavior :tile_bound do
         new_x = nil
         new_y = nil
 
-        hit_top = false
-        hit_bottom = false
-        hit_left = false
-        hit_right = false
+        collision = collisions.first
 
-        collisions.each do |collision|
-          point_index = collision[:point_index]
-          fudge = 0.01
-          case collision[:tile_face]
-          when :top
-            # some edge case here
-            if point_index == 4 || point_index == 5
-              unless map_inspector.solid?(map, collision[:row] - 1, collision[:col])
-                new_y = (collision[:hit][1] - actor.height/2.0 - fudge)
-                hit_bottom = true
-              end
-            end
-          when :bottom
-            unless map_inspector.solid?(map, collision[:row] + 1, collision[:col])
-              if point_index == 0 || point_index == 1
-                new_y = collision[:hit][1] + actor.height/2.0 + fudge
-                hit_top = true
-              end
-            end
-          when :left
-            unless map_inspector.solid?(map, collision[:row], collision[:col] - 1)
-              if point_index == 1 || point_index == 2 || point_index == 3 || point_index == 4
-                new_x = (collision[:hit][0] - actor.width/2.0 - fudge)
-                hit_right = true
-              end
-            end
-          when :right
-            unless map_inspector.solid?(map, collision[:row], collision[:col] + 1)
-              if point_index == 5 || point_index == 6 || point_index == 7 || point_index == 0
-                new_x = (collision[:hit][0] + actor.width/2.0 + fudge)
-                hit_left = true
-              end
-            end
-          end
+        point_index = collision[:point_index]
+        fudge = 0.01
+
+        face_normal = FACE_ROTATIONS[collision[:tile_face]]
+        unless map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+
+          hit = collision[:hit]
+          hit_vector = vec2(hit[0], hit[1])
+
+
+          actor_loc = vec2(actor.x, actor.y)
+
+          pre_rotated_bottom = actor_loc + vec2(0,actor.height/2.0)
+          rotated_bottom = pre_rotated_bottom.rotate actor.rot
+
+          actor_translation = actor_loc - rotated_bottom
+          actor_rotation = face_normal.angle_with(actor_translation)
+
+          actor.x += actor_translation.x
+          actor.y += actor_translation.y
+
+          actor.rot += actor_rotation
         end
 
-        actor.y = new_y if new_y
-        actor.x = new_x if new_x
+        actor.emit :hit_bottom
 
-        actor.emit :hit_top if hit_top
-        actor.emit :hit_bottom if hit_bottom
-        actor.emit :hit_left if hit_left
-        actor.emit :hit_right if hit_right
+        actor.accel.x = 0
+        actor.accel.y = 0
+        actor.vel.x = 0
+        actor.vel.y = 0
 
-        if hit_top || hit_bottom 
-          actor.accel.y = 0
-          actor.vel.y = 0
-        end
-
-        if hit_left || hit_right
-          actor.accel.x = 0
-          actor.vel.x = 0
-        end
+      else
+        actor.x += actor.vel.x 
+        actor.y += actor.vel.y
       end
-
-      actor.x += actor.vel.x unless hit_left || hit_right
-      actor.y += actor.vel.y unless hit_top || hit_bottom
 
       # DEBUG!
       vb = Rect.new(viewport.boundary)
@@ -81,5 +56,15 @@ define_behavior :tile_bound do
       actor.x = 0 if actor.x > vb.right
       actor.x = vb.right-100 if actor.x < vb.x
     end
+  end
+
+  helpers do
+    FACE_ROTATIONS = {
+      top:    vec2(0, -1),
+      bottom: vec2(0, 1),
+      left:   vec2(-1, 0),
+      right:  vec2(1, 0),
+      inside: vec2(0, 0),
+    }
   end
 end

@@ -33,6 +33,7 @@ define_behavior :jump do
         if actor.jump_power > actor.min_jump_power && actor.on_ground
           actor.accel += -actor.gravity * actor.anti_gravity_multiplier * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
           actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
+          actor.remove_behavior :gravity
         end
         actor.jump_power = actor.min_jump_power
       end
