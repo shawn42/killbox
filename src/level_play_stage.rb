@@ -24,6 +24,12 @@ class LevelPlayStage < Stage
 
     viewport.follow @foxy, [0,0], [100,100]
 
+    input_manager.reg :down, KbU do
+      @foxy.y -= 50
+      @foxy.rot = Math::PI / 3.0
+      behs = @foxy.instance_variable_get('@behaviors')
+      behs[behs.keys.first].add_behavior(:gravity)
+    end
     input_manager.reg :down, KbP do
       viewport.rotation += radians_to_degrees(Math::PI / 2.0)
     end
