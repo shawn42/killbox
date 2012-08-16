@@ -4,7 +4,7 @@ define_behavior :bound_by_box do
                          y: 0,
                          width: 0, 
                          height: 0,
-                         rot: Math::PI / 3.0
+                         rot: Math::PI / 2.0
 
     actor.has_attributes bb: Rect.new(actor.x, actor.y, 
                                       actor.width, actor.height)

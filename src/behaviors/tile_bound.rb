@@ -2,9 +2,8 @@ define_behavior :tile_bound do
   requires :map_inspector, :viewport
   setup do
     raise "vel required" unless actor.has_attribute? :vel
-    # $debug_drawer.draw(:foxy_bb) do |target|
-    #   target.draw_box(bb,y1,x2,y2,color, z)
-    # end
+    actor.has_attribute :ground_normal, vec2(0, -1)
+
     actor.when :tile_collisions do |collisions|
       if collisions
         map = actor.map.map_data
@@ -12,49 +11,55 @@ define_behavior :tile_bound do
         new_y = nil
 
         collisions.each do |collision|
-
           face_normal = FACE_ROTATIONS[collision[:tile_face]]
-          unless face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+          actor.ground_normal = face_normal unless collision[:tile_face] == :inside
+          unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+
+            puts "apply collision #{collision[:tile_face]}"
 
             hit = collision[:hit]
             hit_vector = vec2(hit[0], hit[1])
+            # $count ||= 0
+            # $count += 1
+            # bb = actor.bb.dup
+            # $debug_drawer.draw("foxy_bb#{$count}") do |t|
+            #   t.fill bb.x, bb.y, bb.r, bb.b, [255,0,0,150], ZOrder::Debug
+            # end
+
+            # $debug_drawer.draw("hit_vector#{$count}") do |t|
+            #   t.fill hit_vector.x, hit_vector.y, hit_vector.x+2, hit_vector.y+2, [255,255,250], ZOrder::Debug
+            # end
+            # x = actor.x
+            # y = actor.y
+            # $debug_drawer.draw("foxy_position#{$count}") do |t|
+            #   t.fill x, y, x+2, y+2, [0,0,255], ZOrder::Debug
+            # end
 
             actor_loc = vec2(actor.x, actor.y)
 
             thing = vec2(0,actor.height/2.0)
-            rotated_thing = thing.rotate(actor.rot)
+            rotated_thing = thing.rotate(degrees_to_radians(actor.rot))
             rotated_bottom = actor_loc + rotated_thing
 
-            # actor_translation = hit_vector - rotated_bottom
             actor_translation = hit_vector + face_normal * thing.y
             actor_rotation_delta = face_normal.angle_with(actor_loc - rotated_bottom)
 
             actor_translation.x -= rotated_thing.x
 
-            hx = hit_vector.x
-            hy = hit_vector.y
-            $debug_drawer.draw(:hit_vector) do |target|
-              target.fill(hx,hy,hx+2,hy+2,[255,0,0], ZOrder::Debug)
-            end
-            ax = actor.x
-            ay = actor.y
-            $debug_drawer.draw(:foxy_collision) do |target|
-              target.fill(ax,ay, ax+4, ay+4, [0,255,0], ZOrder::Debug)
-            end
-
-            log "="*80
-            log hit_vector
+            # log "="*80
+            # log hit_vector
             # log actor_loc
             # log actor.rot
-            log face_normal
-            log actor_loc - rotated_bottom
+            # log face_normal
+            # log actor_loc - rotated_bottom
             # log actor_translation
-            log actor_rotation_delta
+            # log actor_rotation_delta
+            # log "rotated thing x: #{rotated_thing.x}"
 
-            actor.x = actor_translation.x.round
+            # actor.x = actor_translation.x.round
             actor.y = actor_translation.y.round
 
-            actor.rot -= actor_rotation_delta
+            actor.rot -= radians_to_degrees(actor_rotation_delta)
 
             log vec2(actor.x, actor.y)
             actor.remove_behavior :gravity
@@ -62,10 +67,10 @@ define_behavior :tile_bound do
 
             actor.emit :hit_bottom
 
-            actor.accel.x = 0
-            actor.accel.y = 0
-            actor.vel.x = 0
-            actor.vel.y = 0
+            # actor.accel.x = 0
+            # actor.accel.y = 0
+            # actor.vel.x = 0
+            # actor.vel.y = 0
 
             break
           end
@@ -77,11 +82,11 @@ define_behavior :tile_bound do
       end
 
       # DEBUG!
-      vb = Rect.new(viewport.boundary)
-      actor.y = 10 if actor.y > vb.bottom
-      actor.y = 600 if actor.y < vb.y
-      actor.x = 0 if actor.x > vb.right
-      actor.x = vb.right-100 if actor.x < vb.x
+      # vb = Rect.new(viewport.boundary)
+      # actor.y = 10 if actor.y > vb.bottom
+      # actor.y = 600 if actor.y < vb.y
+      # actor.x = 0 if actor.x > vb.right
+      # actor.x = vb.right-100 if actor.x < vb.x
     end
   end
 

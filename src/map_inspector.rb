@@ -42,7 +42,7 @@ class MapInspector
     return false if tile.nil?
 
     case tile.gfx_index
-    when 3..13, 100..101
+    when 2..13, 100..101
       true
     end
   end

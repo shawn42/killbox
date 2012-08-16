@@ -19,10 +19,10 @@ define_actor :foxy do
       [GpUp, KbUp] => :charging_jump
     )
     grounded
-    gravity dir: vec2(0,20)
+    gravity dir: vec2(0,40)
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
-    jump anti_gravity_multiplier: 40
+    jump power: 300
     friction amount: 0.04
 
     foxy_collision_points
@@ -51,7 +51,8 @@ define_actor :foxy do
         x_scale = -1
       end
       
-      target.draw_rotated_image img, offset_x, offset_y, z, actor.rot, 0.5, 0.5, x_scale
+      rot = normalize_angle(actor.rot)
+      target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, 0.5, x_scale
     end
 
   end

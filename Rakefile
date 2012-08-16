@@ -14,3 +14,8 @@ STATS_DIRECTORIES = [
   %w(Libraries         lib/),
 ].collect { |name, dir| [ name, "#{APP_ROOT}/#{dir}" ] }.select { |name, dir| File.directory?(dir) }
 
+desc "Run the game with debug server"
+task :debugz do |t|
+  sh "ruby src/app.rb --debug"                                         
+end
+

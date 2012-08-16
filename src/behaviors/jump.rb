@@ -3,8 +3,7 @@ define_behavior :jump do
   setup do
     actor.has_attributes speed: opts[:speed],
                          accel: vec2(0,0),
-                         gravity: vec2(0,0),
-                         anti_gravity_multiplier: opts[:anti_gravity_multiplier],
+                         power: opts[:power],
                          max_jump_power: 100,
                          min_jump_power: 30,
                          charging_jump: false
@@ -14,7 +13,6 @@ define_behavior :jump do
     director.when :first do |time, time_secs|
       update_jump time_secs
     end
-
 
     actor.when :remove_me do
       remove 
@@ -31,9 +29,16 @@ define_behavior :jump do
         actor.jump_power = actor.max_jump_power if actor.jump_power > actor.max_jump_power
       else
         if actor.jump_power > actor.min_jump_power && actor.on_ground
-          actor.accel += -actor.gravity * actor.anti_gravity_multiplier * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
+          log "jumping!"
+          mod = actor.ground_normal * actor.power * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
+          actor.accel += mod
+          log "MOD: #{mod}"
+          log "ACCEL: #{actor.accel}"
+          log "GROUND: #{actor.ground_normal}"
           actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
           actor.remove_behavior :gravity
+          actor.on_ground = false
+          actor.emit :jump
         end
         actor.jump_power = actor.min_jump_power
       end

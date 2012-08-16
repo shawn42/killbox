@@ -20,7 +20,8 @@ define_behavior :animated_with_spritemap do
     
     @frames = {}
     actions.each do |action, frames|
-      @frames[action] = [@sprites[frames]].flatten
+      frames_or_image = @sprites[frames]
+      @frames[action] = frames_or_image.is_a?(Array) ? frames_or_image : [frames_or_image]
     end
 
     actor.when :action_changed do |old_action, new_action|

@@ -1,5 +1,4 @@
 define_actor :map do
-  has_attributes tile_size: 50
 
   has_behaviors do
     positioned
