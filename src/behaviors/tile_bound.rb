@@ -11,15 +11,23 @@ define_behavior :tile_bound do
         new_y = nil
 
         collisions.each do |collision|
+
           face_normal = FACE_ROTATIONS[collision[:tile_face]]
-          actor.ground_normal = face_normal unless collision[:tile_face] == :inside
+
+          # TODO figure out which collisions to ignore
+          break if face_normal && map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+
+          unless collision[:tile_face] == :inside || face_normal.nil?
+            actor.ground_normal = face_normal 
+          end
+
           unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
 
             puts "apply collision #{collision[:tile_face]}"
-             actor.accel.x = 0
-             actor.accel.y = 0
-             actor.vel.x = 0
-             actor.vel.y = 0
+            actor.accel.x = 0
+            actor.accel.y = 0
+            actor.vel.x = 0
+            actor.vel.y = 0
 
             hit = collision[:hit]
             hit_vector = vec2(hit[0], hit[1])
@@ -70,8 +78,9 @@ define_behavior :tile_bound do
         end
 
       end
-        actor.x += actor.vel.x 
-        actor.y += actor.vel.y
+
+      actor.x += actor.vel.x 
+      actor.y += actor.vel.y
 
       # DEBUG!
       # vb = Rect.new(viewport.boundary)

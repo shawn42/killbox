@@ -23,6 +23,10 @@ class LevelPlayStage < Stage
     #viewport.boundary = @level.map_extents
 
     viewport.follow @foxy, [0,0], [100,100]
+    # TODO not working correctly
+    @foxy.when :rot_changed do
+      viewport.rotation = @foxy.rot
+    end
 
     input_manager.reg :down, KbU do
       @foxy.x = 200

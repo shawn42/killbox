@@ -15,7 +15,7 @@ GEM
       tween
     gosu (0.7.43)
     i18n (0.6.0)
-    kvo (0.0.3)
+    kvo (0.0.2)
       publisher
     metaclass (0.0.1)
     method_source (0.7.1)
@@ -52,6 +52,7 @@ PLATFORMS
 DEPENDENCIES
   conject
   gamebox (>= 0.4.0.rc5)
+  kvo (= 0.0.2)
   mocha
   pry
   pry-remote
