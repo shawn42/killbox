@@ -35,7 +35,7 @@ describe "Foxy can jump and land", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 120,
-      y: 166
+      y: 165
       # y: 11 * tile_size - 20
 
     # charge & jump
@@ -46,12 +46,14 @@ describe "Foxy can jump and land", acceptance: true do
     release_key KbUp
 
     # float through space
-    update 1000
+    100.times do
+      update 10
+    end
 
     # land
     # TODO some clever way of doing approx matches with see_actor_attrs
-    foxy.rot.should be_within(0.001).of(Math::PI / 2.0)
-    foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0)
+    normalize_angle(foxy.rot).should be_within(0.001).of(180)
+    foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
 
     see_actor_attrs :foxy,
       x: 120
