@@ -11,11 +11,11 @@ define_behavior :accelerator do
     director.when :before do |time, time_secs|
       speed = actor.on_ground ? actor.speed : actor.air_speed
 
-      if actor.move_right? && actor.vel.x < (actor.max_speed / 3.0) && actor.on_ground?
+      if actor.move_right? && actor.vel.x < (actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
         force = actor.ground_normal.rotate(Ftor::HALF_PI) * speed * time_secs
         actor.accel += force 
         actor.flip_h = false
-      elsif actor.move_left? && actor.vel.x > -(actor.max_speed / 3.0) && actor.on_ground?
+      elsif actor.move_left? && actor.vel.x > -(actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
         force = actor.ground_normal.rotate(-Ftor::HALF_PI) * speed * time_secs
         actor.accel += force
         actor.flip_h = true

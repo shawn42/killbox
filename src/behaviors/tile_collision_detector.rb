@@ -19,33 +19,36 @@ define_behavior :tile_collision_detector do
       collisions = nil
       map = actor.map.map_data
       vel = actor.vel
+      if vel.magnitude < 0.01
+        actor.emit :tile_collisions, nil
+      else
 
-      bb = actor.bb
-      ext_bb = bb.move vel.x, vel.y
-      # current_points = [ bb.tl, bb.tr, bb.br, bb.bl ]
-      # extrapolated_points = [ ext_bb.tl, ext_bb.tr, ext_bb.br, ext_bb.bl ]
+        bb = actor.bb
+        ext_bb = bb.move vel.x, vel.y
+        # current_points = [ bb.tl, bb.tr, bb.br, bb.bl ]
+        # extrapolated_points = [ ext_bb.tl, ext_bb.tr, ext_bb.br, ext_bb.bl ]
 
-      collision_points = actor.collision_points.map do |point|
-        from = point.to_a
-        to = (point + vel).to_a
-        [from, to]
-      end
-
-      map_inspector.overlap_tiles(map, bb.union(ext_bb)) do |tile, row, col|
-
-        collision_points.each.with_index do |line, i|
-
-          map_inspector.line_tile_collision(map, line, row, col) do |collision|
-
-            collisions ||= []
-            collision[:point_index] = i
-            collisions << collision
-          end
-
+        collision_points = actor.collision_points.map do |point|
+          from = point.to_a
+          to = (point + vel).to_a
+          [from, to]
         end
-      end
 
-      actor.emit :tile_collisions, collisions
+        map_inspector.overlap_tiles(map, bb.union(ext_bb)) do |tile, row, col|
+
+          collision_points.each.with_index do |line, i|
+
+            map_inspector.line_tile_collision(map, line, row, col) do |collision|
+              collisions ||= []
+              collision[:point_index] = i
+              collisions << collision
+            end
+
+          end
+        end
+
+        actor.emit :tile_collisions, collisions
+      end
     end
   end
 end

@@ -16,6 +16,10 @@ define_behavior :tile_bound do
           unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
 
             puts "apply collision #{collision[:tile_face]}"
+             actor.accel.x = 0
+             actor.accel.y = 0
+             actor.vel.x = 0
+             actor.vel.y = 0
 
             hit = collision[:hit]
             hit_vector = vec2(hit[0], hit[1])
@@ -37,14 +41,14 @@ define_behavior :tile_bound do
 
             actor_loc = vec2(actor.x, actor.y)
 
-            thing = vec2(0,actor.height/2.0)
-            rotated_thing = thing.rotate(degrees_to_radians(actor.rot))
-            rotated_bottom = actor_loc + rotated_thing
+            to_floor = vec2(0,(actor.height/2.0)+1)
+            rotated_to_floor = to_floor.rotate(degrees_to_radians(actor.rot))
+            rotated_bottom = actor_loc + rotated_to_floor
 
-            actor_translation = hit_vector + face_normal * thing.y
+            actor_translation = hit_vector + face_normal * to_floor.y
             actor_rotation_delta = face_normal.angle_with(actor_loc - rotated_bottom)
 
-            actor_translation.x -= rotated_thing.x
+            actor_translation.x -= rotated_to_floor.x
 
             # log "="*80
             # log hit_vector
@@ -54,32 +58,20 @@ define_behavior :tile_bound do
             # log actor_loc - rotated_bottom
             # log actor_translation
             # log actor_rotation_delta
-            # log "rotated thing x: #{rotated_thing.x}"
+            # log "rotated to_floor x: #{rotated_to_floor.x}"
 
             # actor.x = actor_translation.x.round
             actor.y = actor_translation.y.round
-
             actor.rot -= radians_to_degrees(actor_rotation_delta)
-
-            log vec2(actor.x, actor.y)
             actor.remove_behavior :gravity
-
-
             actor.emit :hit_bottom
-
-            # actor.accel.x = 0
-            # actor.accel.y = 0
-            # actor.vel.x = 0
-            # actor.vel.y = 0
-
             break
           end
         end
 
-      else
+      end
         actor.x += actor.vel.x 
         actor.y += actor.vel.y
-      end
 
       # DEBUG!
       # vb = Rect.new(viewport.boundary)

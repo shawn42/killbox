@@ -29,12 +29,14 @@ define_behavior :jump do
         actor.jump_power = actor.max_jump_power if actor.jump_power > actor.max_jump_power
       else
         if actor.jump_power > actor.min_jump_power && actor.on_ground
-          log "jumping!"
-          mod = actor.ground_normal * actor.power * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
-          actor.accel += mod
-          log "MOD: #{mod}"
-          log "ACCEL: #{actor.accel}"
-          log "GROUND: #{actor.ground_normal}"
+          # log "jumping!"
+          # log "GROUND: #{actor.ground_normal}"
+          if actor.ground_normal
+            mod = actor.ground_normal * actor.power * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
+            actor.accel += mod
+          end
+          # log "MOD: #{mod}"
+          # log "ACCEL: #{actor.accel}"
           actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
           actor.remove_behavior :gravity
           actor.on_ground = false

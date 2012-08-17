@@ -53,6 +53,8 @@ define_actor :foxy do
       
       rot = normalize_angle(actor.rot)
       target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, 0.5, x_scale
+      target.draw_box offset_x-img.width/2.0, offset_y-img.height/2.0, offset_x+img.width/2.0, offset_y+img.height/2.0, Color::GREEN, ZOrder::Debug
+      target.draw_line offset_x, offset_y, offset_x+actor.ground_normal.x*40, offset_y+actor.ground_normal.y*40, Color::BLUE, ZOrder::Debug
     end
 
   end

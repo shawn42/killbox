@@ -20,7 +20,7 @@ class LevelPlayStage < Stage
     @foxy = @level.named_objects[:foxy]
 
     viewport.speed = 0.1
-    viewport.boundary = @level.map_extents
+    #viewport.boundary = @level.map_extents
 
     viewport.follow @foxy, [0,0], [100,100]
 
