@@ -10,7 +10,7 @@ class LevelLoader
   def self.load(stage, level_indicator)
     require 'tmx'
     # map = Tmx::Map.new("#{APP_ROOT}/data/maps/level_#{level_indicator.world}_#{level_indicator.level}.tmx")
-    map = Tmx::Map.new("#{APP_ROOT}/data/maps/basic_jump.tmx")
+    map = Tmx::Map.new("#{APP_ROOT}/data/maps/advanced_jump.tmx")
 
     map_data = MapData.new
     map_data.tiles, map_data.tile_grid = generate_map(map)
