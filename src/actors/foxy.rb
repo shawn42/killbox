@@ -16,7 +16,8 @@ define_actor :foxy do
     input_mapper(
       [GpLeft, KbLeft] => :move_left,
       [GpRight, KbRight] => :move_right,
-      [GpUp, KbUp] => :charging_jump
+      [GpButton1, KbUp] => :charging_jump,
+      [GpButton2, KbSpace] => :attempt_attack
     )
     grounded
     gravity dir: vec2(0,40)
