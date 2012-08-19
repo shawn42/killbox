@@ -31,7 +31,7 @@ describe "Foxy can jump and land", acceptance: true do
       update 20
     end
 
-    foxy.rot.should be_within(0.001).of(0)
+    foxy.rotation.should be_within(0.001).of(0)
 
     see_actor_attrs :foxy, 
       x: 120,
@@ -52,7 +52,7 @@ describe "Foxy can jump and land", acceptance: true do
 
     # land
     # TODO some clever way of doing approx matches with see_actor_attrs
-    normalize_angle(foxy.rot).should be_within(0.001).of(180)
+    normalize_angle(foxy.rotation).should be_within(0.001).of(180)
     foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
 
     see_actor_attrs :foxy,

@@ -2,6 +2,7 @@ module ZOrder
   MapTiles,
   Collectible,
   Player,
+  PlayerDecoration,
   Projectile,
   Enemy,
   HudText,

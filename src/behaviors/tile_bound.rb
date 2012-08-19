@@ -12,22 +12,28 @@ define_behavior :tile_bound do
 
         collisions.each do |collision|
 
+          log collision
           face_normal = FACE_ROTATIONS[collision[:tile_face]]
 
           # TODO figure out which collisions to ignore
           break if face_normal && map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+          log "1"
 
           unless collision[:tile_face] == :inside || face_normal.nil?
             actor.ground_normal = face_normal 
           end
 
+          log "2"
           unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
 
+          log "3"
+          log actor
             puts "apply collision #{collision[:tile_face]}"
             actor.accel.x = 0
             actor.accel.y = 0
             actor.vel.x = 0
             actor.vel.y = 0
+            actor.rotation_vel = 0
 
             hit = collision[:hit]
             hit_vector = vec2(hit[0], hit[1])
@@ -54,7 +60,8 @@ define_behavior :tile_bound do
             rotated_bottom = actor_loc + rotated_to_floor
 
             actor_translation = hit_vector + face_normal * to_floor.y
-            actor_rotation_delta = face_normal.angle_with(actor_loc - rotated_bottom)
+            # actor_rotation_delta = face_normal.angle_with(actor_loc - rotated_bottom)
+            actor_rotation_delta = face_normal.angle - (actor_loc - rotated_bottom).angle
 
             actor_translation.x -= rotated_to_floor.x
 
@@ -70,7 +77,8 @@ define_behavior :tile_bound do
 
             # actor.x = actor_translation.x.round
             actor.y = actor_translation.y.round
-            actor.rotation -= radians_to_degrees(actor_rotation_delta)
+            log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
+            actor.rotation += radians_to_degrees(actor_rotation_delta)
             actor.remove_behavior :gravity
             actor.emit :hit_bottom
             break
@@ -81,6 +89,8 @@ define_behavior :tile_bound do
 
       actor.x += actor.vel.x 
       actor.y += actor.vel.y
+      log "APPLYING ROT VEL: #{actor.rotation_vel}" unless actor.rotation_vel == 0
+      actor.rotation += actor.rotation_vel
 
       # DEBUG!
       # vb = Rect.new(viewport.boundary)

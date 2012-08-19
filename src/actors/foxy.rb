@@ -16,14 +16,14 @@ define_actor :foxy do
     input_mapper(
       [GpLeft, KbLeft] => :move_left,
       [GpRight, KbRight] => :move_right,
-      [GpButton1, KbUp] => :charging_jump,
-      [GpButton2, KbSpace] => :attempt_attack
+      [GpButton1, KbUp] => :charging_jump
     )
     grounded
     gravity dir: vec2(0,40)
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
-    jump power: 300
+    shooter recharge_time: 2000, shot_power: 4
+    jump power: 200
     friction amount: 0.04
 
     foxy_collision_points
@@ -51,7 +51,14 @@ define_actor :foxy do
       if actor.flip_h
         x_scale = -1
       end
-      
+
+      if actor.can_shoot?
+        gun = actor.gun_direction.dup
+        gun.m = 20
+        gun = gun.rotate(actor.rotation) + vec2(offset_x, offset_y)
+        target.fill gun.x, gun.y, gun.x+1, gun.y+1, Color::WHITE, ZOrder::PlayerDecoration
+      end
+
       rot = normalize_angle(actor.rotation)
       target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, 0.5, x_scale
       target.draw_box offset_x-img.width/2.0, offset_y-img.height/2.0, offset_x+img.width/2.0, offset_y+img.height/2.0, Color::GREEN, ZOrder::Debug

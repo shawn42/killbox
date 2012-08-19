@@ -20,14 +20,9 @@ class LevelPlayStage < Stage
     @foxy = @level.named_objects[:foxy]
 
     viewport.speed = 0.1
-    viewport.boundary = @level.map_extents
+    # viewport.boundary = @level.map_extents
 
     viewport.follow @foxy, [0,0], [100,100]
-    # TODO not working correctly
-    # @foxy.when :rot_changed do |old_rot, new_rot|
-    #   diff = viewport.rotation - @foxy.rot
-    #   viewport.rotation += diff * 0.1
-    # end
 
     input_manager.reg :down, KbU do
       @foxy.x = 200

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="60" height="50" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
   <image source="../graphics/map/tileset.png" width="256" height="608"/>
   <tile id="2">
@@ -11,17 +11,17 @@
  <tileset firstgid="609" name="Foxy" tilewidth="30" tileheight="39">
   <image source="../graphics/foxy/idle.png" width="30" height="39"/>
  </tileset>
- <layer name="Background" width="40" height="30">
+ <layer name="Background" width="60" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3BMQEAAADCoPVPbQ0PoAAAAADg1wAW4j6/wBIAAA==
+   H4sIAAAAAAAAA+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
   </data>
  </layer>
- <layer name="terrain" width="40" height="30">
+ <layer name="terrain" width="60" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2WOQoAIAwEA/7/z/YWmltjdiCN6DJCPIgAAFIGo25mnuZq/bwy4WfL5GRpKssvgt/8PO6UzPzdemnPreMee4/08wB+MpeXz0eF+yWbTu9bhf+BlG5+ll7KygSgMxNCSVmQwBIAAA==
+   H4sIAAAAAAAAA+3ZQQqAMAxE0YL3v7MXEDHOiJP0f3Ajae1zJbgW0byO4deVd2p48U4KL95J4cXbtd2+r5468PYMrzaXHl5tLj282lx6eLW59PBqc+nh1ebS6+B1/TNYN/ddz6yc5e7Z1VSvs7+96vt3ncU1X12D1xte73x1DV5veL3z1TV4vb3xfvkNl+b9Ory99q+Gt9f+1fD690+7aI9Ogdujt+AuAAA=
   </data>
  </layer>
- <objectgroup name="actors" width="40" height="30">
-  <object name="foxy" type="foxy" gid="609" x="232" y="295"/>
+ <objectgroup name="actors" width="60" height="50">
+  <object name="foxy" type="foxy" gid="609" x="255" y="454"/>
  </objectgroup>
 </map>

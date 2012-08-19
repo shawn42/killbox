@@ -3,6 +3,7 @@ define_behavior :jump do
   setup do
     actor.has_attributes speed: opts[:speed],
                          accel: vec2(0,0),
+                         rotation_vel: 0,
                          power: opts[:power],
                          max_jump_power: 100,
                          min_jump_power: 30,
@@ -29,7 +30,7 @@ define_behavior :jump do
         actor.jump_power = actor.max_jump_power if actor.jump_power > actor.max_jump_power
       else
         if actor.jump_power > actor.min_jump_power && actor.on_ground
-          # log "jumping!"
+          log "jumping!"
           # log "GROUND: #{actor.ground_normal}"
           if actor.ground_normal
             mod = actor.ground_normal * actor.power * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
@@ -41,7 +42,12 @@ define_behavior :jump do
           actor.remove_behavior :gravity
           actor.on_ground = false
           actor.emit :jump
+
+          # degrees
+          # TODO look at direction we're facing and rotate backwards
+          actor.rotation_vel += 45 * time_secs
         end
+
         actor.jump_power = actor.min_jump_power
       end
     end
