@@ -23,7 +23,7 @@ class LevelPlayStage < Stage
     viewport.speed = 0.1
     # viewport.boundary = @level.map_extents
 
-    viewport.follow @foxy, [0,0], [100,100]
+    viewport.follow @foxy#, [0,0], [100,100]
 
     input_manager.reg :down, KbU do
       @foxy.x = 200
