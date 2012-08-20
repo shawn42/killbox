@@ -19,7 +19,6 @@ define_actor :foxy do
       [GpButton1, KbUp] => :charging_jump
     )
     grounded
-    gravity dir: vec2(0,40)
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
     shooter recharge_time: 2000, shot_power: 4
@@ -32,8 +31,6 @@ define_actor :foxy do
 
     tile_bound
     tile_collision_detector
-
-    gravity_manipulator
   end
 
   view do
@@ -55,8 +52,8 @@ define_actor :foxy do
       if actor.can_shoot?
         gun = actor.gun_direction.dup
         gun.m = 20
-        gun = gun.rotate(actor.rotation) + vec2(offset_x, offset_y)
-        target.fill gun.x, gun.y, gun.x+1, gun.y+1, Color::WHITE, ZOrder::PlayerDecoration
+        gun = gun.rotate(degrees_to_radians(actor.rotation)) + vec2(offset_x, offset_y)
+        target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration
       end
 
       rot = normalize_angle(actor.rotation)

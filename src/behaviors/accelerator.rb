@@ -33,11 +33,11 @@ define_behavior :accelerator do
         actor.action = :walking_left unless actor.action == :walking_left
       end
       
-      if actor.vel[1] < 0.05
-        actor.action = :jumping unless actor.action == :jumping
-      elsif actor.vel[1] > 0.1 && !actor.on_ground
-        actor.action = :falling unless actor.action == :falling
-      end
+      # if actor.vel[1] < 0.05
+      #   actor.action = :jumping unless actor.action == :jumping
+      # elsif actor.vel[1] > 0.1 && !actor.on_ground
+      #   actor.action = :falling unless actor.action == :falling
+      # end
     end
 
     director.when :last do |time, time_secs|

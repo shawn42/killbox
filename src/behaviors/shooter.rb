@@ -24,7 +24,7 @@ define_behavior :shooter do
     input_manager.reg :down, KbSpace do
       if actor.can_shoot?
         actor.can_shoot = false
-        actor.accel += actor.gun_direction.rotate(actor.rotation) * -actor.shot_power
+        actor.accel += actor.gun_direction.rotate(degrees_to_radians(actor.rotation)).dup.reverse! * actor.shot_power
         timer_manager.add_timer 'shot_recharge', actor.shot_recharge_time do
           actor.can_shoot = true
           timer_manager.remove_timer 'shot_recharge'

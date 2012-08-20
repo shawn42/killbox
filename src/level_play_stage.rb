@@ -18,6 +18,7 @@ class LevelPlayStage < Stage
     @level = LevelLoader.load self, current_level
 
     @foxy = @level.named_objects[:foxy]
+    @foxy.vel = vec2(0,5)
 
     viewport.speed = 0.1
     # viewport.boundary = @level.map_extents
@@ -30,7 +31,7 @@ class LevelPlayStage < Stage
       @foxy.rot = (45..138).to_a.sample
       @foxy.on_ground = false
       behs = @foxy.instance_variable_get('@behaviors')
-      behs[behs.keys.first].add_behavior(:gravity)
+      @foxy.vel = vec2(0,5)
     end
     input_manager.reg :down, KbP do
       viewport.rotation += 90

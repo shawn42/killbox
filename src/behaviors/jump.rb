@@ -40,7 +40,6 @@ define_behavior :jump do
           # log "ACCEL: #{actor.accel}"
           actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
           actor.remove_behavior :gravity
-          actor.on_ground = false
           actor.emit :jump
 
           # degrees

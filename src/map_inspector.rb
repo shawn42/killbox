@@ -80,16 +80,13 @@ class MapInspector
 
   end
 
-  def _solid?(map, x,y)
-    tile_grid = map.tile_grid
+  def world_point_solid?(map, x, y)
     tile_size = map.tile_size
 
     row = y / tile_size
-    return false if row > tile_grid.size
     col = x / tile_size
-    return false if col > tile_grid[row].size
 
-    tile_grid[row][col]
+    solid? map, row, col
   end
 
 end
