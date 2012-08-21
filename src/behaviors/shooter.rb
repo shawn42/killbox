@@ -1,8 +1,9 @@
 define_behavior :shooter do
-  requires :input_manager, :timer_manager
+  requires :input_manager, :timer_manager, :stage
   setup do
     actor.has_attributes accel: vec2(0,0),
                          shot_power: opts[:shot_power],
+                         kickback: opts[:kickback],
                          shot_recharge_time: opts[:recharge_time],
                          can_shoot: true,
                          gun_direction: DIRECTIONS[:right]
@@ -24,7 +25,10 @@ define_behavior :shooter do
     input_manager.reg :down, KbSpace do
       if actor.can_shoot?
         actor.can_shoot = false
-        actor.accel += actor.gun_direction.rotate(degrees_to_radians(actor.rotation)).dup.reverse! * actor.shot_power
+        rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
+        actor.accel += rotated_gun_dir.dup.reverse! * actor.kickback
+        shot_vel = actor.vel+(rotated_gun_dir*actor.shot_power)
+        stage.create_actor :bullet, x: actor.x, y: actor.y, map: actor.map, vel: shot_vel
         unless actor.on_ground?
           gun_angle = actor.gun_direction.a 
           if gun_angle == 0

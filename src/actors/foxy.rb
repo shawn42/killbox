@@ -21,7 +21,7 @@ define_actor :foxy do
     grounded
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
-    shooter recharge_time: 1000, shot_power: 1
+    shooter recharge_time: 1000, shot_power: 1, kickback: 1
     jump power: 200
     friction amount: 0.04
 
@@ -29,7 +29,7 @@ define_actor :foxy do
 
     bound_by_box
 
-    tile_bound
+    tile_oriented
     tile_collision_detector
   end
 
