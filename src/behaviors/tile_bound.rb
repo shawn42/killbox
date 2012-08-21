@@ -7,16 +7,12 @@ define_behavior :tile_bound do
     actor.when :tile_collisions do |collisions|
       if collisions
         map = actor.map.map_data
-        new_x = nil
-        new_y = nil
 
         collisions.each do |collision|
 
           face_normal = FACE_ROTATIONS[collision[:tile_face]]
-          log collision
 
-          # TODO figure out which collisions to ignore
-          break if face_normal && map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+          next if face_normal && map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
 
           unless collision[:tile_face] == :inside || face_normal.nil?
             actor.ground_normal = face_normal 
@@ -74,7 +70,7 @@ define_behavior :tile_bound do
             # actor.x = actor_translation.x.round
             actor.y = actor_translation.y.round
             log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
-            actor.rotation += radians_to_degrees(actor_rotation_delta)
+            actor.rotation = normalize_angle(actor.rotation + radians_to_degrees(actor_rotation_delta))
             actor.remove_behavior :gravity
             actor.emit :hit_bottom
             break

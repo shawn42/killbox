@@ -28,16 +28,10 @@ class LevelPlayStage < Stage
     input_manager.reg :down, KbU do
       @foxy.x = 200
       @foxy.y = 100
-      @foxy.rot = (45..138).to_a.sample
+      @foxy.rotation = (45..138).to_a.sample
       @foxy.on_ground = false
       behs = @foxy.instance_variable_get('@behaviors')
       @foxy.vel = vec2(0,5)
-    end
-    input_manager.reg :down, KbP do
-      viewport.rotation += 90
-    end
-    input_manager.reg :down, KbO do
-      viewport.rotation -= 90
     end
   end
 
@@ -106,10 +100,12 @@ class Viewport
 
       if @follow_target.respond_to? :rotation
         norm_target_rot = normalize_angle(@follow_target.rotation)
-        rot_diff = normalize_angle(@rotation) - norm_target_rot
-        @rotation = normalize_angle(@rotation - rot_diff * @speed)
-        if rot_diff.abs < 0.001
-          @rotation = norm_target_rot
+        rot_diff = @rotation - norm_target_rot
+        # rot_diff = normalize_angle(norm_target_rot - @rotation) if rot_diff.abs > 180
+        if rot_diff.abs < 0.01
+          @rotation = norm_target_rot 
+        else
+          @rotation = normalize_angle(@rotation - rot_diff * @speed)
         end
       end
 

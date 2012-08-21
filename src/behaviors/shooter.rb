@@ -5,7 +5,7 @@ define_behavior :shooter do
                          shot_power: opts[:shot_power],
                          shot_recharge_time: opts[:recharge_time],
                          can_shoot: true,
-                         gun_direction: DIRECTIONS[:left]
+                         gun_direction: DIRECTIONS[:right]
                         
     # TODO abstract this into gamebox (controls or something)
     input_manager.reg :down, KbLeft do
@@ -25,6 +25,14 @@ define_behavior :shooter do
       if actor.can_shoot?
         actor.can_shoot = false
         actor.accel += actor.gun_direction.rotate(degrees_to_radians(actor.rotation)).dup.reverse! * actor.shot_power
+        unless actor.on_ground?
+          gun_angle = actor.gun_direction.a 
+          if gun_angle == 0
+            actor.rotation_vel -= 0.3 
+          elsif gun_angle == Math::PI
+            actor.rotation_vel += 0.3 
+          end
+        end
         timer_manager.add_timer 'shot_recharge', actor.shot_recharge_time do
           actor.can_shoot = true
           timer_manager.remove_timer 'shot_recharge'

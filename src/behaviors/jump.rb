@@ -5,8 +5,8 @@ define_behavior :jump do
                          accel: vec2(0,0),
                          rotation_vel: 0,
                          power: opts[:power],
-                         max_jump_power: 100,
-                         min_jump_power: 30,
+                         max_jump_power: 140,
+                         min_jump_power: 20,
                          charging_jump: false
                         
     actor.has_attributes jump_power: actor.min_jump_power

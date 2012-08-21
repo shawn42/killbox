@@ -21,7 +21,7 @@ define_actor :foxy do
     grounded
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
-    shooter recharge_time: 2000, shot_power: 4
+    shooter recharge_time: 1000, shot_power: 1
     jump power: 200
     friction amount: 0.04
 
