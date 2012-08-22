@@ -22,24 +22,28 @@ define_behavior :bound_by_box do
     actor.when :height_changed do
       update_bb
     end
+
+    actor.when :rotation_changed do
+      update_bb
+    end
   end
 
   helpers do
     include MinMaxHelpers
-      # vec2(actor.x, actor.y) + point.rotate(actor.do_or_do_not(:rotation) || 0)
 
     def update_bb
-      if actor.has_attribute? :collision_points && false
-        min_y = actor.y
+      if actor.has_attribute? :collision_points
         min_x = actor.x
-        max_y = actor.y
         max_x = actor.x
+        min_y = actor.y
+        max_y = actor.y
         actor.collision_points.each do |pt|
-          min_y = min(min_y, pt.y)
           min_x = min(min_x, pt.x)
-          max_y = max(max_y, pt.y)
+          min_y = min(min_y, pt.y)
           max_x = max(max_x, pt.x)
+          max_y = max(max_y, pt.y)
         end
+
         actor.bb.x = min_x
         actor.bb.y = min_y
         actor.bb.width = max_x - min_x

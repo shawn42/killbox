@@ -11,6 +11,7 @@ define_behavior :foxy_collision_points do
     def points
       x = actor.x
       y = actor.y
+      actor_loc = vec2(x,y)
       w = actor.width
       h = actor.height
       hw = w / 2
@@ -27,27 +28,24 @@ define_behavior :foxy_collision_points do
       #  5     4
 
       [
-        vec2(x-hw,y-hh),
+        vec2(-hw,-hh),
 
-        vec2(x+hw,y-hh),
-        vec2(x+hw,y-qh),
-        vec2(x+hw,y+qh),
-        vec2(x+hw,y+hh),
+        vec2(hw,-hh),
+        vec2(hw,-qh),
+        vec2(hw,qh),
+        vec2(hw,hh),
 
-        vec2(x-hw,y+hh),
-        vec2(x-hw,y+qh),
-        vec2(x-hw,y-qh),
-      ].each do |point|
-        rotate(point)
+        vec2(-hw,hh),
+        vec2(-hw,qh),
+        vec2(-hw,-qh),
+      ].map do |point|
+        rotate(actor_loc, point)
       end
     end
 
-    def rotate(point)
-      point
-      # dx = nucleus.shell_distance * @shell * Math.cos(actor.rot)
-      # dy = @nucleus.shell_distance * @shell * Math.sin(actor.rot)
-      # self.x = dx+@nucleus.x
-      # self.y = dy+@nucleus.y
+    def rotate(actor_loc, point)
+      rotation = actor.do_or_do_not(:rotation) || 0
+      point.rotate(degrees_to_radians(rotation)) + actor_loc
     end
   end
 end
