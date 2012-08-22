@@ -5,7 +5,7 @@ define_actor :bullet do
     audible
     bullet
     layered ZOrder::Player
-    animated_with_spritemap file: 'bullet.png', rows: 1, cols: 3, actions: {idle: 0..1}
+    animated_with_spritemap file: 'bullet.png', rows: 1, cols: 2, actions: {idle: 0..1}
     bound_by_box
     tile_bound
     tile_collision_detector
@@ -19,7 +19,14 @@ define_actor :bullet do
 
       offset_x = x+x_off
       offset_y = y+y_off
-      target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::WHITE, ZOrder::PlayerDecoration
+      rot = normalize_angle(actor.rotation)
+
+      img = actor.image
+      if img.nil?
+        target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::WHITE, ZOrder::PlayerDecoration
+      else
+        target.draw_rotated_image img, offset_x, offset_y, z, rot#, 0.5, 0.5, x_scale
+      end
     end
   end
 end

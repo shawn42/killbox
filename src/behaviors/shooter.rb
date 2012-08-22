@@ -27,7 +27,9 @@ define_behavior :shooter do
         actor.can_shoot = false
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
         actor.accel += rotated_gun_dir.dup.reverse! * actor.kickback
-        shot_vel = actor.vel+(rotated_gun_dir*actor.shot_power)
+        # seems strange, even though in physics terms we should add the
+        # actor.vel
+        shot_vel = (rotated_gun_dir*actor.shot_power) #+ actor.vel
         stage.create_actor :bullet, x: actor.x, y: actor.y, map: actor.map, vel: shot_vel
         unless actor.on_ground?
           gun_angle = actor.gun_direction.a 
@@ -61,6 +63,7 @@ define_behavior :shooter do
 
     def remove
       input_manager.unsubscribe_all self
+      timer_manager.remove_timer 'shot_recharge'
     end
   end
 
