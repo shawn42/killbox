@@ -20,4 +20,7 @@ define_behavior :friction do
       director.unsubscribe_all self
     end
   end
+  helpers do
+    include MinMaxHelpers
+  end
 end
