@@ -18,7 +18,8 @@ define_behavior :tile_oriented do
             actor.ground_normal = face_normal 
           end
 
-          unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+          # unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+          unless actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
 
             puts "apply collision #{collision[:tile_face]}"
             actor.accel.x = 0

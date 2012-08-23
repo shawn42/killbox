@@ -21,7 +21,7 @@ describe "Foxy can jump and land", acceptance: true do
       
       map_actor = create_actor :map, map_data: map_data
 
-      create_actor :foxy, map: map_actor, x: 120, y: 60
+      create_actor :foxy, map: map_actor, x: 120, y: 60, vel: vec2(0,5)
     end
     map = game.actor(:map)
     foxy = game.actor(:foxy)
@@ -47,7 +47,7 @@ describe "Foxy can jump and land", acceptance: true do
 
     # float through space
     100.times do
-      update 10
+      update 20
     end
 
     # land
