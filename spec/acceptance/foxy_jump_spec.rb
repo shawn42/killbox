@@ -38,12 +38,7 @@ describe "Foxy can jump and land", acceptance: true do
       y: 165
       # y: 11 * tile_size - 20
 
-    # charge & jump
-    press_key KbUp
-    10.times do 
-      update 10
-    end
-    release_key KbUp
+    jump 100
 
     # float through space
     100.times do
@@ -58,6 +53,27 @@ describe "Foxy can jump and land", acceptance: true do
     see_actor_attrs :foxy,
       x: 120
 
+    jump 100
+
+    100.times do
+      update 20
+    end
+
+    normalize_angle(foxy.rotation).should be_within(0.001).of(0)
+    foxy.y.should be_within(0.001).of(165)
+
+    see_actor_attrs :foxy, 
+      x: 120
+
+  end
+
+  def jump(amount)
+    # charge & jump
+    press_key KbUp
+    (amount / 10).times do
+      update 10
+    end
+    release_key KbUp
   end
 end
 
