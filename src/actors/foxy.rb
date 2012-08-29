@@ -13,11 +13,6 @@ define_actor :foxy do
       hurt:         9..11,
       knocked_down: 24..26,
     }
-    input_mapper(
-      [GpLeft, KbLeft] => :move_left,
-      [GpRight, KbRight] => :move_right,
-      [GpButton1, KbUp] => :charging_jump
-    )
     grounded
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
@@ -51,7 +46,7 @@ define_actor :foxy do
 
       if actor.can_shoot?
         gun = actor.gun_direction.dup
-        gun.m = 20
+        gun.magnitude = 20
         gun = gun.rotate(degrees_to_radians(actor.rotation)) + vec2(offset_x, offset_y)
         target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration
       end

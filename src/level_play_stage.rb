@@ -17,10 +17,33 @@ class LevelPlayStage < Stage
 
     @level = LevelLoader.load self, current_level
 
-    @foxy = @level.named_objects[:foxy]
+    @foxy = @level.named_objects[:player1]
     @foxy.vel = vec2(0,5)
+    # should behaviors just be constructed with an actor's input?
+    @foxy.input.map_input(
+      '+b' => :shoot,
+      '+n' => :charging_jump,
+      '+m' => :charging_bomb, # TODO
+      '+w' => :look_up,
+      '+a' => [:look_left, :walk_left],
+      '+d' => [:look_right, :walk_right],
+      '+s' => :look_down,
+    )
 
-    viewport.speed = 0.1
+    @other = @level.named_objects[:player2]
+    @other.vel = vec2(0,5)
+    # should behaviors just be constructed with an actor's input?
+    @other.input.map_input(
+      '+i' => :shoot,
+      '+o' => :charging_jump,
+      '+p' => :charging_bomb, # TODO
+      '+t' => :look_up,
+      '+f' => [:look_left, :walk_left],
+      '+h' => [:look_right, :walk_right],
+      '+g' => :look_down,
+    )
+
+    viewport.speed = 0.2
     # viewport.boundary = @level.map_extents
 
     viewport.follow @foxy#, [0,0], [100,100]

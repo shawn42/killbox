@@ -68,7 +68,7 @@ class LevelLoader
       end
     end
 
-    raise "FAILED TO LOAD FOXYS INFO" unless level.named_objects.has_key? :foxy
+    # raise "FAILED TO LOAD FOXYS INFO" unless level.named_objects.has_key? :foxy
 
   end
 

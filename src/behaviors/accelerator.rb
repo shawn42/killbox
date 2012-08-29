@@ -9,14 +9,15 @@ define_behavior :accelerator do
                          flip_h: false
                         
     director.when :before do |time, time_secs|
+      input = actor.input
       speed = actor.on_ground ? actor.speed : actor.air_speed
 
-      if actor.move_right? && actor.vel.x < (actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
-        force = actor.ground_normal.rotate(Ftor::HALF_PI) * speed * time_secs
+      if input.walk_right? && actor.vel.x < (actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
+        force = actor.ground_normal.rotate(Math::HALF_PI) * speed * time_secs
         actor.accel += force 
         actor.flip_h = false
-      elsif actor.move_left? && actor.vel.x > -(actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
-        force = actor.ground_normal.rotate(-Ftor::HALF_PI) * speed * time_secs
+      elsif input.walk_left? && actor.vel.x > -(actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
+        force = actor.ground_normal.rotate(-Math::HALF_PI) * speed * time_secs
         actor.accel += force
         actor.flip_h = true
       end
@@ -46,6 +47,7 @@ define_behavior :accelerator do
     end
 
     director.when :before do |time, time_secs|
+      input = actor.input
       actor.vel += actor.accel
       
       if actor.vel[1] < 0.05
@@ -56,7 +58,7 @@ define_behavior :accelerator do
 
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
 
-      if (!actor.move_left? && !actor.move_right?) #&& actor.accel.magnitude < (1 * time_secs)
+      if (!input.walk_right? && !input.walk_right?) #&& actor.accel.magnitude < (1 * time_secs)
         # stop short
         actor.vel = vec2(0,0) if actor.vel.magnitude < 0.3
       end
