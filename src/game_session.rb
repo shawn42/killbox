@@ -4,13 +4,9 @@ module GameSession
     player.id = 1
     player.name = "Foxy"
     player.character = :foxy
-    player.lives = 3
     player.points = 0
-    # player.jewels = 0
 
     state = State.new
-    state.level_indicator = LevelIndicator.new(:world => 1, :level => 1)
-    state.level_time_remain = 0
 
     state.player = player
 
@@ -24,12 +20,12 @@ module GameSession
 
   class State
     include Kvo
-    kvo_attr_accessor :level_indicator, :player, :level_time_remain
+    kvo_attr_accessor :level, :player
   end
 
   class Player
     include Kvo
-    kvo_attr_accessor :id, :name, :character, :points, :lives#, :jewels
+    kvo_attr_accessor :id, :name, :character, :points
   end
 
 end

@@ -7,7 +7,7 @@ class LevelLoader
     attr_accessor :tiles, :tile_grid, :tileset_image, :tile_size
   end
 
-  def self.load(stage, level_indicator)
+  def self.load(stage)
     require 'tmx'
     # map = Tmx::Map.new("#{APP_ROOT}/data/maps/level_#{level_indicator.world}_#{level_indicator.level}.tmx")
     map = Tmx::Map.new("#{APP_ROOT}/data/maps/advanced_jump.tmx")
