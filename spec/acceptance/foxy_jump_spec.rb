@@ -65,15 +65,24 @@ describe "Foxy can jump and land", acceptance: true do
     see_actor_attrs :foxy, 
       x: 120
 
+    # does not shoot self into floor
+    press KbUp
+    press KbB
+
+    normalize_angle(foxy.rotation).should be_within(0.001).of(0)
+    foxy.y.should be_within(0.001).of(165)
+    see_actor_attrs :foxy, 
+      x: 120
+
   end
 
   def jump(amount)
     # charge & jump
-    press_key KbUp
+    press_key KbN
     (amount / 10).times do
       update 10
     end
-    release_key KbUp
+    release_key KbN
   end
 end
 
