@@ -17,6 +17,19 @@ define_behavior :bullet do
         #
         # stage.create_actor :explosion, x: actor.x, y: actor.y
         actor.remove
+      else
+        # player collisions?
+        (stage.players - [actor.player]).each do |target|
+          if target.bb.collide_point?(actor.x, actor.y)
+            if target.alive?
+              target.react_to :play_sound, :death
+              target.remove
+              actor.remove
+              # TODO GIBS!!
+            end
+          end
+        end
+
       end
     end
 

@@ -2,6 +2,8 @@ class LevelPlayStage < Stage
   include GameSession
   include GameLogic
 
+  attr_accessor :players
+
   def setup
     super
     director.update_slots = [:first, :before, :update, :last]
@@ -42,6 +44,8 @@ class LevelPlayStage < Stage
       '+h' => [:look_right, :walk_right],
       '+g' => :look_down,
     )
+
+    @players = [@foxy, @other]
 
     viewport.speed = 0.2
     # viewport.boundary = @level.map_extents

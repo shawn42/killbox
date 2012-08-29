@@ -31,7 +31,8 @@ define_behavior :shooter do
         # seems strange, even though in physics terms we should add the
         # actor.vel
         shot_vel = (rotated_gun_dir*actor.shot_power) #+ actor.vel
-        stage.create_actor :bullet, x: actor.x, y: actor.y, map: actor.map, vel: shot_vel
+        stage.create_actor :bullet, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: shot_vel
+        actor.react_to :play_sound, :shoot
         unless actor.on_ground?
           gun_angle = actor.gun_direction.angle
           if gun_angle == 0
@@ -40,9 +41,10 @@ define_behavior :shooter do
             actor.rotation_vel += 0.3 
           end
         end
-        timer_manager.add_timer 'shot_recharge', actor.shot_recharge_time do
+        timer_name = "#{actor.object_id}:shot_recharge"
+        timer_manager.add_timer timer_name, actor.shot_recharge_time do
           actor.can_shoot = true
-          timer_manager.remove_timer 'shot_recharge'
+          timer_manager.remove_timer timer_name
         end
       end
     end

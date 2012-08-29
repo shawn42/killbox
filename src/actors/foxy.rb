@@ -52,7 +52,9 @@ define_actor :foxy do
       end
 
       rot = normalize_angle(actor.rotation)
-      target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, 0.5, x_scale
+      y_scale = 1 - 0.2 * ((actor.jump_power - actor.min_jump_power).to_f / (actor.max_jump_power - actor.min_jump_power))
+      y_center_point = y_scale * 0.5
+      target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, y_center_point, x_scale, y_scale
       # target.draw_box offset_x-img.width/2.0, offset_y-img.height/2.0, offset_x+img.width/2.0, offset_y+img.height/2.0, Color::GREEN, ZOrder::Debug
       bb = actor.bb
       target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.x+bb.w, y_off+bb.y+bb.h, Color::GREEN, ZOrder::Debug
