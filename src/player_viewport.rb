@@ -1,56 +1,27 @@
-class PlayerViewport
-  extend Publisher
-  can_fire :scrolled
-  
-  attr_accessor :x_offset, :y_offset, :follow_target, :width,
-    :height, :x_offset_range, :y_offset_range, :boundary, :rotation,
-    :x_scr_offset, :y_scr_offset
+class PlayerViewport < Viewport
+  attr_accessor :x_scr_offset, :y_scr_offset
 
-  attr_reader :speed
-
-  def debug
-    "xoff:#{@x_offset} yoff:#{@y_offset}"
+  def initialize(x_scr_offset, y_scr_offset, width, height)
+    super(width, height)
+    @x_scr_offset = x_scr_offset
+    @y_scr_offset = y_scr_offset
+    @speed = 0.2
   end
 
-  def initialize(width, height)
-    @rotation = 0
-    @speed = 1
-    @x_offset = 0
-    @y_offset = 0
-    @x_scr_offset = 0
-    @y_scr_offset = 0
+  def self.create_n(players, total_size)
+    case players.size
+    when 2  # SPLIT VERTICALLY IN HALF
+      half_width = total_size[0]/2
 
-    @width = width
-    @height = height
-  end
+      vp1 = PlayerViewport.new 0, 0, half_width, total_size[1]
+      vp1.follow players[0]#, [0,0]#, [100,100]
 
-  def scroll(x_delta,y_delta)
-    @x_offset += x_delta
-    @y_offset += y_delta
-
-    fire :scrolled
-  end
-
-  def speed=(new_speed)
-    if new_speed > 1
-      @speed = 1
-    elsif new_speed < 0
-      @speed = 0
+      vp2 = PlayerViewport.new half_width, 0, half_width, total_size[1]
+      vp2.follow players[1], [vp2.width, 0] #, [100,100]
+      [vp1, vp2]
     else
-      @speed = new_speed
+      [] #TODO
     end
-  end
-
-  def x_offset(layer=1)
-    return 0 if layer == Float::INFINITY
-    return @x_offset if layer == 1
-    @x_offset / layer
-  end
-
-  def y_offset(layer=1)
-    return 0 if layer == Float::INFINITY
-    return @y_offset if layer == 1
-    @y_offset / layer
   end
 
   def update(time)
@@ -89,8 +60,19 @@ class PlayerViewport
         scrolled = true
       end
 
+      if @follow_target.respond_to? :rotation
+        norm_target_rot = normalize_angle(@follow_target.rotation)
+        rot_diff = @rotation - norm_target_rot
+        # rot_diff = normalize_angle(norm_target_rot - @rotation) if rot_diff.abs > 180
+        if rot_diff.abs < 0.01
+          @rotation = norm_target_rot 
+        else
+          @rotation = normalize_angle(@rotation - rot_diff * @speed)
+        end
+      end
+
       # constrain_x_offset
-      if @boundary
+      if @boundary && @width < (@boundary[2] - @boundary[0])
         if @x_offset > 0 - @boundary[0] # Left-wall bump
           @x_offset = @boundary[0]
         elsif @x_offset < @width - @boundary[2] # right-wall bump
@@ -99,7 +81,7 @@ class PlayerViewport
       end
 
       # constrain_y_offset
-      if @boundary
+      if @boundary && @height < (@boundary[3] - @boundary[1])
         if @y_offset > 0 - @boundary[1]
           @y_offset = @boundary[1]
         elsif @y_offset < @height - @boundary[3]
@@ -111,7 +93,6 @@ class PlayerViewport
     end
   end
 
-
   def follow(target, off=[0,0], buff=[0,0])
     @follow_target = target
     @follow_offset_x = off[0]
@@ -121,6 +102,10 @@ class PlayerViewport
 
     @x_offset = @width/2 - @follow_target.x + @follow_offset_x
     @y_offset = @height/2 - @follow_target.y + @follow_offset_y
+
+    if @target.respond_to? :rotation
+      @rotation = @target.rotation
+    end
 
     fire :scrolled
   end
