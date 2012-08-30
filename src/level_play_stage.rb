@@ -68,8 +68,8 @@ class LevelPlayStage < Stage
   end
 
   def draw_viewport(target, viewport)
-    center_x = viewport.width / 2
-    center_y = viewport.height / 2
+    center_x = viewport.width / 2 + viewport.x_scr_offset
+    center_y = viewport.height / 2 + viewport.y_scr_offset
 
     target.draw_box(
       viewport.x_scr_offset,
