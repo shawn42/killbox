@@ -24,12 +24,10 @@ describe "Foxy can jump and land", acceptance: true do
       create_actor :foxy, map: map_actor, x: 120, y: 60, vel: vec2(0,5)
     end
     map = game.actor(:map)
-    foxy = game.actor(:foxy)
+    foxy = game.actors(:foxy).first
 
     # settle
-    100.times do
-      update 20
-    end
+    update 2000, step: 20
 
     foxy.rotation.should be_within(0.001).of(0)
 
@@ -41,9 +39,7 @@ describe "Foxy can jump and land", acceptance: true do
     jump 100
 
     # float through space
-    100.times do
-      update 20
-    end
+    udpate 1000, step: 20
 
     # land
     # TODO some clever way of doing approx matches with see_actor_attrs
@@ -55,9 +51,7 @@ describe "Foxy can jump and land", acceptance: true do
 
     jump 100
 
-    100.times do
-      update 20
-    end
+    udpate 1000, step: 20
 
     normalize_angle(foxy.rotation).should be_within(0.001).of(0)
     foxy.y.should be_within(0.001).of(165)
@@ -79,9 +73,7 @@ describe "Foxy can jump and land", acceptance: true do
   def jump(amount)
     # charge & jump
     press_key KbN
-    (amount / 10).times do
-      update 10
-    end
+    update amount, step: 10
     release_key KbN
   end
 end

@@ -14,44 +14,40 @@ class LevelPlayStage < Stage
 
     @level = LevelLoader.load self
 
-    @foxy = @level.named_objects[:player1]
-    @foxy.vel = vec2(0,5)
-    # should behaviors just be constructed with an actor's input?
-    @foxy.input.map_input(
-      '+b' => :shoot,
-      '+n' => :charging_jump,
-      '+m' => :charging_bomb, # TODO
-      '+w' => :look_up,
-      '+a' => [:look_left, :walk_left],
-      '+d' => [:look_right, :walk_right],
-      '+s' => :look_down,
-    )
+    @players = []
+    setup_player :player1
+    setup_player :player2
 
-    @other = @level.named_objects[:player2]
-    @other.vel = vec2(0,5)
-    # should behaviors just be constructed with an actor's input?
-    @other.input.map_input(
-      '+i' => :shoot,
-      '+o' => :charging_jump,
-      '+p' => :charging_bomb, # TODO
-      '+t' => :look_up,
-      '+f' => [:look_left, :walk_left],
-      '+h' => [:look_right, :walk_right],
-      '+g' => :look_down,
-    )
-
-    @players = [@foxy, @other]
     @viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
-    # this_object_context[:viewport] = @viewport
-    
-    input_manager.reg :down, KbU do
-      @foxy.x = 200
-      @foxy.y = 100
-      @foxy.rotation = (45..138).to_a.sample
-      @foxy.on_ground = false
-      behs = @foxy.instance_variable_get('@behaviors')
-      @foxy.vel = vec2(0,5)
-    end
+  end
+
+  def setup_player(name)
+    player = @level.named_objects[name]
+    player.vel = vec2(0,5)
+    player.input.map_input(controls[name])
+    @players << player
+  end
+
+  def controls
+    { player1: {
+        '+b' => :shoot,
+        '+n' => :charging_jump,
+        '+m' => :charging_bomb, # TODO
+        '+w' => :look_up,
+        '+a' => [:look_left, :walk_left],
+        '+d' => [:look_right, :walk_right],
+        '+s' => :look_down,
+      },
+      player2: {
+        '+i' => :shoot,
+        '+o' => :charging_jump,
+        '+p' => :charging_bomb, # TODO
+        '+t' => :look_up,
+        '+f' => [:look_left, :walk_left],
+        '+h' => [:look_right, :walk_right],
+        '+g' => :look_down,
+      }
+    }
   end
 
   def update(time)
@@ -64,6 +60,12 @@ class LevelPlayStage < Stage
   def draw(target)
     @viewports.each do |vp|
       draw_viewport target, vp
+    end
+
+    @color ||= Color.new 255, 41, 145, 179
+    target.fill_screen @color, -1
+    $debug_drawer.draw_blocks.each do |name, dblock|
+      dblock.call target
     end
   end
 
@@ -98,12 +100,6 @@ class LevelPlayStage < Stage
         end
       end # rotate
     end # clip_to
-
-    @color ||= Color.new 255, 41, 145, 179
-    #target.fill_screen @color, -1
-    $debug_drawer.draw_blocks.each do |name, dblock|
-      dblock.call target
-    end
   end
 end
 
