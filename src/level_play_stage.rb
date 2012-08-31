@@ -5,19 +5,24 @@ class LevelPlayStage < Stage
 
   def setup
     super
-
     director.update_slots = [:first, :before, :update, :last]
     $debug_drawer = DebugDraw.new
 
+    setup_level
+    setup_players :player1, :player2
+  end
+
+  def setup_level
     # TODO XXX hack until all other stages are in place
     init_session
-
     @level = LevelLoader.load self
+  end
 
+  def setup_players(*player_names)
     @players = []
-    setup_player :player1
-    setup_player :player2
-
+    player_names.each do |name|
+      setup_player name
+    end
     @viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
   end
 

@@ -24,7 +24,6 @@ define_behavior :bullet do
             if target.alive?
               target.react_to :play_sound, :death
               target.remove
-              actor.remove
               # TODO GIBS!!
             end
           end

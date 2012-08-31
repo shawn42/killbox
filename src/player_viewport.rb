@@ -10,6 +10,11 @@ class PlayerViewport < Viewport
 
   def self.create_n(players, total_size)
     case players.size
+    when 1  
+      vp1 = PlayerViewport.new 0, 0, total_size[0], total_size[1]
+      vp1.follow players[0]#, [0,0]#, [100,100]
+
+      [vp1]
     when 2  # SPLIT VERTICALLY IN HALF
       half_width = total_size[0]/2
 
