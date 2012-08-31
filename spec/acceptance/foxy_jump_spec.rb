@@ -31,6 +31,8 @@ class JumpAcceptanceStage < LevelPlayStage
 
     setup_players(:player1)
   end
+
+  def round_over; end
 end
 
 describe "Foxy jumping", acceptance: true do

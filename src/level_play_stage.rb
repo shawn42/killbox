@@ -60,6 +60,21 @@ class LevelPlayStage < Stage
     @viewports.each do |vp|
       vp.update time
     end
+
+    unless @restarting
+      alive_players = @players.select{|player| player.alive?}
+      if alive_players.size < 2
+        round_over
+      end
+    end
+  end
+
+  def round_over
+    @restarting = true
+    timer_manager.add_timer 'restart', 2000 do
+      timer_manager.remove_timer 'restart'
+      fire :restart_stage 
+    end
   end
 
   def draw(target)
