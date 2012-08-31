@@ -99,10 +99,10 @@ describe "Foxy jumping", acceptance: true do
     update 1000, step: 20
     release_key KbA
 
-    foxy.y.should be_within(2).of(61)
+    foxy.y.should be_within(2).of(65)
     normalize_angle(foxy.rotation).should be_within(0.1).of(90)
     see_actor_attrs :foxy, 
-      x: 36,
+      x: 27,
       on_ground: true
 
   end

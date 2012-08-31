@@ -52,25 +52,27 @@ define_behavior :tile_oriented do
             rotated_to_floor = to_floor.rotate(degrees_to_radians(actor.rotation))
             rotated_bottom = actor_loc + rotated_to_floor
 
-            actor_translation = hit_vector + face_normal * to_floor.y
+            # XXX BUG
+            actor_translation = hit_vector + (face_normal * to_floor.y)
             # actor_rotation_delta = face_normal.angle_with(actor_loc - rotated_bottom)
             actor_rotation_delta = face_normal.angle - (actor_loc - rotated_bottom).angle
 
-            actor_translation.x -= rotated_to_floor.x
+            # actor_translation.x -= rotated_to_floor.x
 
-            log "="*80
-            log collision
-            log hit_vector
-            log actor_loc
-            # log actor.rotation
-            # log face_normal
-            # log actor_loc - rotated_bottom
-            # log actor_translation
-            # log actor_rotation_delta
+            # log "="*80
+            # log "collision: #{collision}"
+            # log "hit: #{hit_vector}"
+            # log "actor loc: #{actor_loc}"
+            # log "actor rotation: #{actor.rotation}"
+            # log "face normal: #{face_normal}"
+            # log "translation #{(face_normal * to_floor.y)}"
+            # log "center foot pos: #{actor_loc - rotated_bottom}"
+            # log "translation: #{actor_translation}"
+            # log "rot delta: #{actor_rotation_delta}"
             # log "rotated to_floor x: #{rotated_to_floor.x}"
 
-            # actor.x = actor_translation.x.round
-            actor.y = actor_translation.y.round
+            actor.x = actor_translation.x#.round
+            actor.y = actor_translation.y#.round
             log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
             actor.rotation = normalize_angle(actor.rotation + radians_to_degrees(actor_rotation_delta))
             actor.remove_behavior :gravity
