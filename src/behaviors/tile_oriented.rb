@@ -58,9 +58,10 @@ define_behavior :tile_oriented do
 
             actor_translation.x -= rotated_to_floor.x
 
-            # log "="*80
-            # log hit_vector
-            # log actor_loc
+            log "="*80
+            log collision
+            log hit_vector
+            log actor_loc
             # log actor.rotation
             # log face_normal
             # log actor_loc - rotated_bottom

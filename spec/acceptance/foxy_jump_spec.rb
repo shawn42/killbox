@@ -89,6 +89,23 @@ describe "Foxy jumping", acceptance: true do
 
   end
 
+  it 'walks and rotates to wall' do
+    # settle
+    update 2000, step: 20
+
+    press_key KbA
+    update 1000, step: 20
+    release_key KbA
+
+    foxy.y.should be_within(2).of(61)
+    normalize_angle(foxy.rotation).should be_within(0.1).of(90)
+    see_actor_attrs :foxy, 
+      x: 36,
+      on_ground: true
+
+  end
+
+
   def jump(amount)
     # charge & jump
     press_key KbN
