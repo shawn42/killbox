@@ -40,11 +40,7 @@ class MapInspector
     return false if trow.nil?
     tile = trow[col]
     return false if tile.nil?
-
-    case tile.gfx_index
-    when 2..13, 100..101
-      true
-    end
+    true
   end
 
   def line_tile_collision(map, line, row, col)

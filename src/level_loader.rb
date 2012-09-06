@@ -10,11 +10,11 @@ class LevelLoader
   def self.load(stage)
     require 'tmx'
     # map = Tmx::Map.new("#{APP_ROOT}/data/maps/level_#{level_indicator.world}_#{level_indicator.level}.tmx")
-    map = Tmx::Map.new("#{APP_ROOT}/data/maps/advanced_jump.tmx")
+    map = Tmx::Map.new("#{APP_ROOT}/data/maps/geo2.tmx")
 
     map_data = MapData.new
     map_data.tiles, map_data.tile_grid = generate_map(map)
-    map_data.tileset_image = "map/tileset.png"
+    map_data.tileset_image = "map/geo2.png"
     # all tiles will be square!
     map_data.tile_size = 16
     

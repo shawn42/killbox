@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="16" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="foxy_geo" tilewidth="16" tileheight="16">
+  <image source="../../../../../../../Users/karlin/Documents/art/foxy_geo.png" width="256" height="336"/>
+ </tileset>
+ <objectgroup name="actors" width="32" height="16">
+  <object name="player1" type="foxy" x="45" y="157" width="24" height="42"/>
+  <object name="player2" type="foxy" x="429" y="165" width="23" height="38"/>
+ </objectgroup>
+ <layer name="terrain" width="32" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACxNkYGAQHGDsyUB/4IVk/0CBoWa/KhArA7HpANgPslsRip2h7qCn/SBgBLXfmAi1mkCsRWX7SQFMUDxq/8DYbwnEVgNoPzFg1H4IjhwAu6MYcNeH9MQAif/l7AAIAAA=
+  </data>
+ </layer>
+</map>

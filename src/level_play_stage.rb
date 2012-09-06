@@ -82,7 +82,7 @@ class LevelPlayStage < Stage
       draw_viewport target, vp
     end
 
-    @color ||= Color.new 255, 41, 145, 179
+    @color ||= Color::BLACK #Color.new 255, 41, 145, 179
     target.fill_screen @color, -1
     $debug_drawer.draw_blocks.each do |name, dblock|
       dblock.call target
