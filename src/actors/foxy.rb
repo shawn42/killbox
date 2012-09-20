@@ -62,6 +62,12 @@ define_actor :foxy do
       if actor.ground_normal
         target.draw_line offset_x, offset_y, offset_x+actor.ground_normal.x*40, offset_y+actor.ground_normal.y*40, Color::BLUE, ZOrder::Debug
       end
+
+      if $thing
+        x = $thing.x+x_off
+        y = $thing.y+y_off
+        target.draw_box x,y,x+2,y+2, Color::RED, ZOrder::Debug
+      end
     end
 
   end

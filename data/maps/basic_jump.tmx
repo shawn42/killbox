@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="20" height="12" tilewidth="16" tileheight="16">
- <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
-  <image source="../graphics/map/tileset.png" width="256" height="608"/>
-  <tile id="2">
-   <properties>
-    <property name="solid" value="true"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="609" name="Foxy" tilewidth="30" tileheight="39">
+<map version="1.0" orientation="orthogonal" width="20" height="16" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Foxy" tilewidth="30" tileheight="39">
   <image source="../graphics/foxy/idle.png" width="30" height="39"/>
  </tileset>
- <layer name="Background" width="20" height="12">
+ <tileset firstgid="2" name="geo2" tilewidth="16" tileheight="16">
+  <image source="../graphics/map/geo2.png" width="256" height="192"/>
+ </tileset>
+ <layer name="terrain" width="20" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAWjYBQMVQAAewDiOMADAAA=
+   H4sIAAAAAAAAAxNiYGAQojKmFhg1b9S8oWoetfMRpXkNm3mUgKFgHjFhBQBbKz6tAAUAAA==
   </data>
  </layer>
- <layer name="terrain" width="20" height="12">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NmYGBgpjKmFhg1b9S84WgeNTEAsoc04sADAAA=
-  </data>
- </layer>
- <objectgroup name="actors" width="20" height="12">
-  <object name="foxy" type="foxy" gid="609" x="90" y="158"/>
+ <objectgroup name="actors" width="20" height="16">
+  <object name="player1" type="foxy" gid="1" x="75" y="119"/>
  </objectgroup>
 </map>

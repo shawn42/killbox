@@ -8,84 +8,40 @@ define_behavior :tile_oriented do
       if collisions
         map = actor.map.map_data
 
-        collisions.each do |collision|
+        first_collision = nil
 
-          face_normal = FACE_ROTATIONS[collision[:tile_face]]
-
-          next if face_normal && map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
-
-          unless collision[:tile_face] == :inside || face_normal.nil?
-            actor.ground_normal = face_normal 
-          end
-
-          # unless actor.on_ground || actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
-          unless actor.jump_power > actor.min_jump_power || face_normal.nil? || map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
-
-            puts "apply collision #{collision[:tile_face]}"
-            actor.accel.x = 0
-            actor.accel.y = 0
-            actor.vel.x = 0
-            actor.vel.y = 0
-            actor.rotation_vel = 0
-
-            hit = collision[:hit]
-            hit_vector = vec2(hit[0], hit[1])
-            # $count ||= 0
-            # $count += 1
-            # bb = actor.bb.dup
-            # $debug_drawer.draw("foxy_bb#{$count}") do |t|
-            #   t.fill bb.x, bb.y, bb.r, bb.b, [255,0,0,150], ZOrder::Debug
-            # end
-
-            # $debug_drawer.draw("hit_vector#{$count}") do |t|
-            #   t.fill hit_vector.x, hit_vector.y, hit_vector.x+2, hit_vector.y+2, [255,255,250], ZOrder::Debug
-            # end
-            # x = actor.x
-            # y = actor.y
-            # $debug_drawer.draw("foxy_position#{$count}") do |t|
-            #   t.fill x, y, x+2, y+2, [0,0,255], ZOrder::Debug
-            # end
-
-            actor_loc = vec2(actor.x, actor.y)
-
-            to_floor = vec2(0,(actor.height/2.0)+1)
-            rotated_to_floor = to_floor.rotate(degrees_to_radians(actor.rotation))
-            rotated_bottom = actor_loc + rotated_to_floor
-
-            # XXX BUG
-            actor_translation = hit_vector + (face_normal * to_floor.y)
-            # actor_rotation_delta = face_normal.angle_with(actor_loc - rotated_bottom)
-            actor_rotation_delta = face_normal.angle - (actor_loc - rotated_bottom).angle
-
-            # actor_translation.x -= rotated_to_floor.x
-
-            # log "="*80
-            # log "collision: #{collision}"
-            # log "hit: #{hit_vector}"
-            # log "actor loc: #{actor_loc}"
-            # log "actor rotation: #{actor.rotation}"
-            # log "face normal: #{face_normal}"
-            # log "translation #{(face_normal * to_floor.y)}"
-            # log "center foot pos: #{actor_loc - rotated_bottom}"
-            # log "translation: #{actor_translation}"
-            # log "rot delta: #{actor_rotation_delta}"
-            # log "rotated to_floor x: #{rotated_to_floor.x}"
-
-            actor.x = actor_translation.x#.round
-            actor.y = actor_translation.y#.round
-            log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
-            actor.rotation = normalize_angle(actor.rotation + radians_to_degrees(actor_rotation_delta))
-            actor.remove_behavior :gravity
-            actor.emit :hit_bottom
-            break
-          end
+        interesting_collisions = collisions.select do |collision|
+          face_normal = FACE_NORMALS[collision[:tile_face]]
+          # no tile next to
+          face_normal && !map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
         end
 
-      end
+        # get collision that would occur first
+        closest_collision = interesting_collisions.min_by do |collision|
+          hit = collision[:hit]
+          hit_vector = vec2(hit[0], hit[1])
+          actor_loc = vec2(actor.x, actor.y)
+          (hit_vector = actor_loc).magnitude
+        end
 
-      actor.x += actor.vel.x 
-      actor.y += actor.vel.y
-      actor.rotation = actor.rotation + actor.rotation_vel
+
+        if closest_collision
+          face_normal = FACE_NORMALS[closest_collision[:tile_face]]
+          raise "Y NO COL FACE?" if closest_collision[:tile_face].nil?
+          raise "Y NO FACE?" if face_normal.nil?
+          actor.ground_normal = face_normal 
+
+          set_actor_rotation closest_collision[:tile_face]
+          set_actor_location closest_collision
+          actor.emit :hit_bottom
+        else
+          apply_actor_velocities
+          # log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
+          # actor.rotation = normalize_angle(actor.rotation + radians_to_degrees(actor_rotation_delta))
+        end
+      else
+        apply_actor_velocities
+      end
 
       # log "APPLYING ROT VEL: #{actor.rotation_vel} making #{actor.rotation}" unless actor.rotation_vel == 0
       # DEBUG!
@@ -98,12 +54,67 @@ define_behavior :tile_oriented do
   end
 
   helpers do
-    FACE_ROTATIONS = {
+    FACE_NORMALS = {
       top:    vec2(0, -1),
       bottom: vec2(0, 1),
       left:   vec2(-1, 0),
       right:  vec2(1, 0),
-      inside: vec2(0, 0),
-    }
+    } unless defined? FACE_NORMALS
+    ROTATIONS = {
+      top:    0,
+      bottom: 180,
+      left:   90,
+      right:  270
+    } unless defined? ROTATIONS
+
+    def apply_actor_velocities
+      actor.x += actor.vel.x 
+      actor.y += actor.vel.y
+      actor.rotation = actor.rotation + actor.rotation_vel
+    end
+
+    def set_actor_rotation(tile_face)
+      actor.rotation_vel = 0
+      actor.rotation = ROTATIONS[tile_face]
+    end
+
+    def set_actor_location(collision)
+      tile_row = collision[:row] 
+      tile_col = collision[:col] 
+
+      # TODO move to map inspector?
+      map = actor.map.map_data
+      cps = actor.collision_points
+      tile_size = map.tile_size
+      actor_loc = vec2(actor.x, actor.y)
+
+      log "="*80
+      log collision
+      log actor_loc
+
+      case collision[:tile_face]
+      when :top
+        lower_left_target = vec2(tile_col * tile_size, tile_row * tile_size - 1)
+      when :bottom
+        lower_left_target = vec2((tile_col + 1) * tile_size, (tile_row + 1) * tile_size)
+      when :left
+        lower_left_target = vec2(tile_col * tile_size, (tile_row + 1) * tile_size)
+      when :right
+        lower_left_target = vec2((tile_col + 1) * tile_size, tile_row * tile_size)
+      else
+        raise "cannot determin desired actor location from tile_face: #{collision[:tile_face]}"
+      end
+      $thing = lower_left_target
+
+
+      new_loc = lower_left_target + (actor_loc - cps[5])
+      actor.x = new_loc.x
+      actor.y = new_loc.y
+      # actor.y = lower_left_target.y - 20
+
+      log vec2(actor.x, actor.y)
+    end
+
+
   end
 end

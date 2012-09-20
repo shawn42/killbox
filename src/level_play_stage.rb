@@ -28,9 +28,11 @@ class LevelPlayStage < Stage
 
   def setup_player(name)
     player = @level.named_objects[name]
-    player.vel = vec2(0,5)
-    player.input.map_input(controls[name])
-    @players << player
+    if player
+      player.vel = vec2(0,5)
+      player.input.map_input(controls[name])
+      @players << player
+    end
   end
 
   def controls
@@ -51,6 +53,14 @@ class LevelPlayStage < Stage
         '+f' => [:look_left, :walk_left],
         '+h' => [:look_right, :walk_right],
         '+g' => :look_down,
+# 
+#         '+gp_button1' => :shoot,
+#         '+gp_button2' => :charging_jump,
+#         '+gp_button3' => :charging_bomb, # TODO
+#         '+gp_up' => :look_up,
+#         '+gp_left' => [:look_left, :walk_left],
+#         '+gp_right' => [:look_right, :walk_right],
+#         '+gp_down' => :look_down,
       }
     }
   end
@@ -63,7 +73,7 @@ class LevelPlayStage < Stage
 
     unless @restarting
       alive_players = @players.select{|player| player.alive?}
-      if alive_players.size < 2
+      if alive_players.size < @players.size
         round_over
       end
     end

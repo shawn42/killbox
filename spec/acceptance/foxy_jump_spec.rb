@@ -1,4 +1,8 @@
 require 'spec_helper'
+class MockImage
+  def width; 28; end
+  def height; 40; end
+end
 
 class FakeLevel
   attr_accessor :named_objects
@@ -51,13 +55,15 @@ describe "Foxy jumping", acceptance: true do
   let(:foxy) { game.actor(:foxy) }
 
   it 'jumps from floor to ceiling and back' do
+    see_actor_attrs :foxy, 
+      x: 120
     # settle
-    update 2000, step: 20
+    update 4000, step: 20
 
     foxy.rotation.should be_within(0.001).of(0)
     see_actor_attrs :foxy, 
-      x: 120,
-      y: 165
+      x: 110,
+      y: 155
 
     jump 1000
     update 1000, step: 20
