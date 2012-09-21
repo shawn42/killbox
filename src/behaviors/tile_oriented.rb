@@ -6,6 +6,7 @@ define_behavior :tile_oriented do
 
     actor.when :tile_collisions do |collisions|
       if collisions
+        puts "I CAN HAZ COLLISIONS"
         map = actor.map.map_data
 
         first_collision = nil
@@ -32,6 +33,7 @@ define_behavior :tile_oriented do
           actor.ground_normal = face_normal 
 
           set_actor_rotation closest_collision[:tile_face]
+          clear_actor_velocity
           set_actor_location closest_collision
           actor.emit :hit_bottom
         else
@@ -63,8 +65,8 @@ define_behavior :tile_oriented do
     ROTATIONS = {
       top:    0,
       bottom: 180,
-      left:   90,
-      right:  270
+      left:   270,
+      right:  90
     } unless defined? ROTATIONS
 
     def apply_actor_velocities
@@ -92,27 +94,38 @@ define_behavior :tile_oriented do
       log collision
       log actor_loc
 
+      collision_point_delta = actor_loc - cps[5]
       case collision[:tile_face]
       when :top
         lower_left_target = vec2(tile_col * tile_size, tile_row * tile_size - 1)
+        new_loc = lower_left_target + collision_point_delta
+        new_loc.y = new_loc.y.floor
+        actor.y = new_loc.y
       when :bottom
-        lower_left_target = vec2((tile_col + 1) * tile_size, (tile_row + 1) * tile_size)
+        lower_left_target = vec2((tile_col + 1) * tile_size, (tile_row + 1) * tile_size + 1)
+        new_loc = lower_left_target + collision_point_delta
+        new_loc.y = new_loc.y.ceil
+        actor.y = new_loc.y
       when :left
-        lower_left_target = vec2(tile_col * tile_size, (tile_row + 1) * tile_size)
+        lower_left_target = vec2(tile_col * tile_size - 1 , tile_row * tile_size)
+        new_loc = lower_left_target + collision_point_delta
+        new_loc.x = new_loc.x.floor
+        actor.x = new_loc.x
       when :right
-        lower_left_target = vec2((tile_col + 1) * tile_size, tile_row * tile_size)
+        lower_left_target = vec2((tile_col + 1) * tile_size + 1, tile_row * tile_size)
+        new_loc = lower_left_target + collision_point_delta
+        new_loc.x = new_loc.x.ceil
+        actor.x = new_loc.x
       else
         raise "cannot determin desired actor location from tile_face: #{collision[:tile_face]}"
       end
       $thing = lower_left_target
 
-
-      new_loc = lower_left_target + (actor_loc - cps[5])
-      actor.x = new_loc.x
-      actor.y = new_loc.y
-      # actor.y = lower_left_target.y - 20
-
       log vec2(actor.x, actor.y)
+    end
+
+    def clear_actor_velocity
+      actor.vel = vec2(0,0)
     end
 
 

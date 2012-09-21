@@ -24,7 +24,7 @@ define_behavior :jump do
   helpers do
 
     def update_jump(time_secs)
-      if actor.input.charging_jump?
+      if actor.input.charging_jump? && actor.on_ground?
         actor.jump_power += actor.max_jump_power * time_secs * 3
         actor.jump_power = actor.max_jump_power if actor.jump_power > actor.max_jump_power
       else

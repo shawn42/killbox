@@ -69,10 +69,10 @@ describe "Foxy jumping", acceptance: true do
     update 1000, step: 20
 
     # TODO some clever way of doing approx matches with see_actor_attrs
-    foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
     normalize_angle(foxy.rotation).should be_within(0.001).of(180)
-    see_actor_attrs :foxy,
-      x: 120
+
+    foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
+    foxy.x.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
 
     jump 1000
     update 2000, step: 20
@@ -80,7 +80,7 @@ describe "Foxy jumping", acceptance: true do
     normalize_angle(foxy.rotation).should be_within(0.001).of(0)
     foxy.y.should be_within(0.001).of(165)
     see_actor_attrs :foxy, 
-      x: 120
+      x: 110
   end
 
   it 'does not shoot self into floor' do

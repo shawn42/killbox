@@ -9,14 +9,9 @@ define_behavior :grounded do
 
       actor_loc = vec2(actor.x, actor.y)
       touching_points = actor.collision_points.select { |fp| on_ground?(fp) }
-      actor.on_ground = touching_points.size > 1
+      actor.on_ground = touching_points.size > 0
       actor.action = :idle unless actor.action == :idle
     end
-
-    # actor.when :hit_bottom do
-    #   actor.action = :idle unless actor.action == :idle
-    #   actor.on_ground = true
-    # end
 
   end
   
