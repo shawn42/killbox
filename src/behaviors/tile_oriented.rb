@@ -6,7 +6,6 @@ define_behavior :tile_oriented do
 
     actor.when :tile_collisions do |collisions|
       if collisions
-        puts "I CAN HAZ COLLISIONS"
         map = actor.map.map_data
 
         first_collision = nil
@@ -90,9 +89,9 @@ define_behavior :tile_oriented do
       tile_size = map.tile_size
       actor_loc = vec2(actor.x, actor.y)
 
-      log "="*80
-      log collision
-      log actor_loc
+      # log "="*80
+      # log collision
+      # log actor_loc
 
       collision_point_delta = actor_loc - cps[5]
       case collision[:tile_face]
@@ -119,9 +118,8 @@ define_behavior :tile_oriented do
       else
         raise "cannot determin desired actor location from tile_face: #{collision[:tile_face]}"
       end
-      $thing = lower_left_target
 
-      log vec2(actor.x, actor.y)
+      # log vec2(actor.x, actor.y)
     end
 
     def clear_actor_velocity

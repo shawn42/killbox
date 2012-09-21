@@ -68,6 +68,15 @@ class PlayerViewport < Viewport
       if @follow_target.respond_to? :rotation
         norm_target_rot = normalize_angle(@follow_target.rotation)
         rot_diff = @rotation - norm_target_rot
+
+        if rot_diff.abs > 180
+          if rot_diff < 0
+            rot_diff = 360 - rot_diff.abs
+          else
+            rot_diff = -(360 - rot_diff)
+          end
+        end
+
         # rot_diff = normalize_angle(norm_target_rot - @rotation) if rot_diff.abs > 180
         if rot_diff.abs < 0.01
           @rotation = norm_target_rot 
