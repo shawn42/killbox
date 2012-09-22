@@ -37,7 +37,7 @@ class LevelPlayStage < Stage
   def setup_players(player_count=1)
     @players = []
     player_count.times do |i|
-      setup_player "player#{i}".to_sym
+      setup_player "player#{i+1}".to_sym
     end
     @viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
   end
