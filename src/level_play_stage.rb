@@ -69,14 +69,14 @@ class LevelPlayStage < Stage
         '+f' => [:look_left, :walk_left],
         '+h' => [:look_right, :walk_right],
         '+g' => :look_down,
-# 
-#         '+gp_button1' => :shoot,
-#         '+gp_button2' => :charging_jump,
-#         '+gp_button3' => :charging_bomb, # TODO
-#         '+gp_up' => :look_up,
-#         '+gp_left' => [:look_left, :walk_left],
-#         '+gp_right' => [:look_right, :walk_right],
-#         '+gp_down' => :look_down,
+
+        '+gp_button_0' => :shoot,
+        '+gp_button_1' => :charging_jump,
+        '+gp_button_2' => :charging_bomb, # TODO
+        '+gp_up' => :look_up,
+        '+gp_left' => [:look_left, :walk_left],
+        '+gp_right' => [:look_right, :walk_right],
+        '+gp_down' => :look_down,
       }
     }
   end
