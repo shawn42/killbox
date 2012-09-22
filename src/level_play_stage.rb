@@ -3,25 +3,41 @@ class LevelPlayStage < Stage
 
   attr_accessor :players, :viewports
 
+  LEVELS = {
+    :advanced_jump => 2,
+    :cave => 2,
+  }
   def setup
     super
     director.update_slots = [:first, :before, :update, :last]
     $debug_drawer = DebugDraw.new
+    backstage[:level_name] ||= LEVELS.keys[0]
+    backstage[:player_count] ||= LEVELS.values[0]
 
-    setup_level
-    setup_players :player1, :player2
+    LEVELS.size.times do |i|
+      input_manager.reg :down, Object.const_get("Kb#{i}") do
+        backstage[:level_name] = LEVELS.keys[i]
+        backstage[:player_count] = LEVELS.values[i]
+
+        fire :restart_stage
+
+      end
+    end
+
+    setup_level backstage[:level_name]
+    setup_players backstage[:player_count]
   end
 
-  def setup_level
+  def setup_level(name)
     # TODO XXX hack until all other stages are in place
     init_session
-    @level = LevelLoader.load self
+    @level = LevelLoader.load self, name
   end
 
-  def setup_players(*player_names)
+  def setup_players(player_count=1)
     @players = []
-    player_names.each do |name|
-      setup_player name
+    player_count.times do |i|
+      setup_player "player#{i}".to_sym
     end
     @viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
   end

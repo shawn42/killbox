@@ -17,7 +17,7 @@ define_actor :foxy do
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
     shooter recharge_time: 1000, shot_power: 11, kickback: 1
-    jump power: 200
+    jump power: 200, rotational_power: 30
     friction amount: 0.04
 
     foxy_collision_points

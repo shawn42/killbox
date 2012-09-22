@@ -7,18 +7,16 @@ class LevelLoader
     attr_accessor :tile_grid, :tileset_image, :tile_size, :bg_tile_grid, :fg_tile_grid
   end
 
-  def self.load(stage)
+  def self.load(stage, level_name="advanced_jump")
     require 'tmx'
     # map = Tmx::Map.new("#{APP_ROOT}/data/maps/level_#{level_indicator.world}_#{level_indicator.level}.tmx")
-    map = Tmx::Map.new("#{APP_ROOT}/data/maps/advanced_jump.tmx")
+    map = Tmx::Map.new("#{APP_ROOT}data/maps/#{level_name}.tmx")
     # map = Tmx::Map.new("#{APP_ROOT}/data/maps/geo.tmx")
 
     map_data = MapData.new
 
     map_data.tile_grid, map_data.bg_tile_grid, map_data.fg_tile_grid = 
       generate_map(map)
-
-    puts map_data.tile_grid
 
     map_data.tileset_image = "map/geo2.png"
     # all tiles will be square!
