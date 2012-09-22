@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
+  <image source="../graphics/map/geo2.png" width="256" height="192"/>
+  <tile id="2">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="193" name="Foxy" tilewidth="30" tileheight="39">
+  <image source="../graphics/foxy/idle.png" width="30" height="39"/>
+ </tileset>
+ <layer name="bg" width="60" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="60" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2XTQrCMBCF015Foa6roIdy5dpTeGJTUITgaH5mkrR8H7zdy5t5UFPrHAAAAAAAAAAAfGOI0LXZdvoMSp61QN88z1qgb56nJjF37D/NQvZckGl1ry/ZD6PscI6lv3Vu6Rz66hDm3rzGSF28dl77jDna/tzcMfH80esU4ZPuNIle+y5MGosE9Nh3cp9nW5se+1r0fENfm1z6ytBXZgvvo3PBHG1/eFbSPfDG/r86vLwpO6TunEsP36D01fVrndUi9Xs//J2lzmpNzR3oWx/6bmOWBH1tZ7VWyfsFfvMEAX1X5uAuAAA=
+  </data>
+ </layer>
+ <objectgroup name="actors" width="60" height="50">
+  <object name="player1" type="foxy" gid="193" x="669" y="643"/>
+  <object name="player2" type="foxy" gid="193" x="31" y="756"/>
+  <object name="player3" type="foxy" gid="193" x="392" y="369"/>
+  <object name="player4" type="foxy" gid="193" x="196" y="444"/>
+ </objectgroup>
+ <layer name="fg" width="60" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3YvQrCMBSG4XZy0Ek3vQtvwdmrcPJnESeri165KSQQShQjyTmW8z7wESglzUfaim0aAAAAAAAApGy0F6BskggAlGL9HVvD5c3xZSKfzsdvVtoLGJhVnt9a39rz52J/y7LWd1p5/n+j1XfvcohGKVp9ry5nn05pDZL6fQ19Jfe3lIfL2uf5xfn9/nbRODZHl9bnFB1fCK9D6j9QO0iwFbq+tJvLPRoDjb6a385y7+ddgWuOqW8J9JVj7fm11lfjftZkrW+J35dcc+UR9bwAjmefLOAuAAA=
+  </data>
+ </layer>
+</map>
