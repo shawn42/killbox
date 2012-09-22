@@ -1,10 +1,11 @@
 define_behavior :jump do
   requires :director
   setup do
-    actor.has_attributes speed: opts[:speed],
-                         accel: vec2(0,0),
-                         rotation_vel: 0,
-                         power: opts[:power],
+    actor.has_attributes speed:          opts[:speed],
+                         accel:          vec2(0,0),
+                         rotation_vel:   0,
+                         power:          opts[:power],
+                         jump_rotation:  opts[:rotational_power],
                          max_jump_power: 140,
                          min_jump_power: 20
                         
@@ -39,9 +40,9 @@ define_behavior :jump do
           # degrees
           # TODO look at direction we're facing and rotate backwards
           if actor.flip_h
-            actor.rotation_vel += 20 * time_secs
+            actor.rotation_vel += actor.jump_rotation * time_secs
           else
-            actor.rotation_vel -= 20 * time_secs
+            actor.rotation_vel -= actor.jump_rotation * time_secs
           end
         end
 
