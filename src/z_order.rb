@@ -3,6 +3,7 @@ module ZOrder
   Collectible,
   Player,
   PlayerDecoration,
+  MapForeground,
   Projectile,
   Enemy,
   HudText,

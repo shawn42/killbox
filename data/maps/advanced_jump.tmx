@@ -11,9 +11,9 @@
  <tileset firstgid="193" name="Foxy" tilewidth="30" tileheight="39">
   <image source="../graphics/foxy/idle.png" width="30" height="39"/>
  </tileset>
- <layer name="Background" width="60" height="50">
+ <layer name="bg" width="60" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
+   H4sIAAAAAAAAA+3ZOwqAMBBFUd2Shb3oZvw0ln4a7XTVjhAhWDkYosZ74DFNIAkpBiZRBACAe6WksmroOklr0j98Fh/2dz3u+5f37a0KADZ63nWrZFGsnySJyazcy5U7PS8zuaqWxCaNci9X7vS8QpIr1senhG6QjFYFAACAX+nTBwDwO8yMwvb1fxLt3O3r/yRvmLv5xNwNAAAAIdgA6yL13eAuAAA=
   </data>
  </layer>
  <layer name="terrain" width="60" height="50">
@@ -22,7 +22,12 @@
   </data>
  </layer>
  <objectgroup name="actors" width="60" height="50">
-  <object name="player1" type="foxy" gid="193" x="242" y="453"/>
-  <object name="player2" type="foxy" gid="193" x="129" y="444"/>
+  <object name="player1" type="foxy" gid="193" x="843" y="170"/>
+  <object name="player2" type="foxy" gid="193" x="159" y="443"/>
  </objectgroup>
+ <layer name="fg" width="60" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3ZQQqAIBAFUC+TN6g71qltUctghGTC3gN3In8hOPhLAWawZQcYYM0OAAA/tGQHAAAAgMtxrn3g/if1hTOI6ek2dAbc3AUAomrpm+10JABEfeXvwNvFzBqkX/9s4C4AAA==
+  </data>
+ </layer>
 </map>

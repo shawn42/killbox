@@ -4,7 +4,7 @@ class LevelLoader
   end
 
   class MapData
-    attr_accessor :tiles, :tile_grid, :tileset_image, :tile_size
+    attr_accessor :tile_grid, :tileset_image, :tile_size, :bg_tile_grid, :fg_tile_grid
   end
 
   def self.load(stage)
@@ -14,7 +14,12 @@ class LevelLoader
     # map = Tmx::Map.new("#{APP_ROOT}/data/maps/geo.tmx")
 
     map_data = MapData.new
-    map_data.tiles, map_data.tile_grid = generate_map(map)
+
+    map_data.tile_grid, map_data.bg_tile_grid, map_data.fg_tile_grid = 
+      generate_map(map)
+
+    puts map_data.tile_grid
+
     map_data.tileset_image = "map/geo2.png"
     # all tiles will be square!
     map_data.tile_size = 16
@@ -30,24 +35,23 @@ class LevelLoader
 
   # TODO
   def self.generate_map(map)
-    layer = map.layers["terrain"]
+    %w(terrain bg fg).map { |name| build_tile_grid(map.layers, name) }
+  end
 
-    #
-    # Main map
-    #
-    tiles = []
-    tile_grid = []
-    layer.rows.times do 
-      tile_grid << [nil]*layer.columns
+  def self.build_tile_grid(layers, layer_name)
+    [].tap do |tile_grid|
+
+      layer = layers[layer_name]
+      layer.rows.times do 
+        tile_grid << Array.new(layer.columns)#[nil]*layer.columns
+      end
+
+      layer.each_tile_id do |x,y, tile_id|
+        tile = new_tile_for_index(tile_id, x,y)
+        tile_grid[y][x] = tile
+      end
     end
 
-    layer.each_tile_id do |x,y, tile_id|
-      tile = new_tile_for_index(tile_id, x,y)
-      tiles << tile
-      tile_grid[y][x] = tile
-    end
-
-    return tiles, tile_grid
   end
 
   def self.load_objects(stage, map, level)

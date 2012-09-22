@@ -15,14 +15,14 @@ define_actor :map do
     end
     
     draw do |target, x_off, y_off, z|
-      unless actor.map_image
-        map_data = actor.map_data
-        tile_size = map_data.tile_size
-        # TODO how to get these?
-        width = map_data.tile_grid.size * tile_size
-        height = map_data.tile_grid.first.size * tile_size
-        tileset = actor.tileset
+      map_data = actor.map_data
+      tile_size = map_data.tile_size
+      # TODO how to get these?
+      width = map_data.tile_grid.size * tile_size
+      height = map_data.tile_grid.first.size * tile_size
+      tileset = actor.tileset
 
+      unless actor.map_image
         actor.map_image = wrapped_screen.record width, height do
           map_data.tile_grid.each.with_index do |row, y|
             row.each.with_index do |tile, x|
@@ -31,10 +31,25 @@ define_actor :map do
               end
             end
           end
+          map_data.bg_tile_grid.each.with_index do |row, y|
+            row.each.with_index do |tile, x|
+              unless tile.nil?
+                target.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z
+              end
+            end
+          end
+          map_data.fg_tile_grid.each.with_index do |row, y|
+            row.each.with_index do |tile, x|
+              unless tile.nil?
+                target.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, ZOrder::MapForeground
+              end
+            end
+          end
         end
       end
 
       target.draw_image actor.map_image, x_off, y_off, z
+
     end
   end
 end
