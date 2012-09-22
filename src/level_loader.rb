@@ -40,18 +40,18 @@ class LevelLoader
 
   def self.build_tile_grid(layers, layer_name)
     [].tap do |tile_grid|
-
       layer = layers[layer_name]
-      layer.rows.times do 
-        tile_grid << Array.new(layer.columns)#[nil]*layer.columns
-      end
+      if layer
+        layer.rows.times do 
+          tile_grid << Array.new(layer.columns)
+        end
 
-      layer.each_tile_id do |x,y, tile_id|
-        tile = new_tile_for_index(tile_id, x,y)
-        tile_grid[y][x] = tile
+        layer.each_tile_id do |x,y, tile_id|
+          tile = new_tile_for_index(tile_id, x,y)
+          tile_grid[y][x] = tile
+        end
       end
     end
-
   end
 
   def self.load_objects(stage, map, level)
