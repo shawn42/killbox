@@ -8,8 +8,6 @@ define_behavior :tile_oriented do
       if collisions
         map = actor.map.map_data
 
-        first_collision = nil
-
         interesting_collisions = collisions.select do |collision|
           face_normal = FACE_NORMALS[collision[:tile_face]]
           # no tile next to
@@ -21,7 +19,7 @@ define_behavior :tile_oriented do
           hit = collision[:hit]
           hit_vector = vec2(hit[0], hit[1])
           actor_loc = vec2(actor.x, actor.y)
-          (hit_vector = actor_loc).magnitude
+          (hit_vector - actor_loc).magnitude
         end
 
 
