@@ -4,14 +4,23 @@ define_actor :foxy do
     positioned
     audible
     layered ZOrder::Player
+    # animated_with_spritemap file: 'foxy.png', rows: 9, cols: 3, actions: {
+    #   idle:         2,
+    #   walking_right:21..23,
+    #   walking_left: 21..23,
+    #   jumping:      6..7,
+    #   falling:      8,
+    #   hurt:         9..11,
+    #   knocked_down: 24..26,
+    # }
     animated_with_spritemap file: 'foxy.png', rows: 9, cols: 3, actions: {
-      idle:         2,
-      walking_right:21..23,
-      walking_left: 21..23,
-      jumping:      6..7,
-      falling:      8,
-      hurt:         9..11,
-      knocked_down: 24..26,
+      idle:         1,
+      walking_right:1,
+      walking_left: 1,
+      jumping:      1,
+      falling:      1,
+      hurt:         1,
+      knocked_down: 1,
     }
     grounded
 
@@ -57,12 +66,27 @@ define_actor :foxy do
       y_center_point = y_scale * 0.5
       target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, y_center_point, x_scale, y_scale
       # target.draw_box offset_x-img.width/2.0, offset_y-img.height/2.0, offset_x+img.width/2.0, offset_y+img.height/2.0, Color::GREEN, ZOrder::Debug
-      # bb = actor.bb
-      # target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.x+bb.w, y_off+bb.y+bb.h, Color::GREEN, ZOrder::Debug
+      
+      bb = actor.bb
+      target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::GREEN, ZOrder::Debug
 
-      # if actor.ground_normal
-      #   target.draw_line offset_x, offset_y, offset_x+actor.ground_normal.x*40, offset_y+actor.ground_normal.y*40, Color::BLUE, ZOrder::Debug
-      # end
+      if $big_bag
+        bb = $big_bag
+        target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::YELLOW, ZOrder::Debug
+      end
+
+
+      actor.collision_points.each do |cp|
+        target.draw_box x_off+cp.x, y_off+cp.y, x_off+cp.x+1, y_off+cp.y+1, Color::WHITE, ZOrder::Debug
+      end
+      lines = actor.do_or_do_not(:lines) || []
+      lines.each do |l|
+        one = l[0]
+        two = l[1]
+        target.draw_line x_off+one[0], y_off+one[1], 
+          x_off+two[0], y_off+two[1],
+          Color::RED, ZOrder::Debug
+      end
     end
 
   end

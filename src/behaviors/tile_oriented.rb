@@ -5,6 +5,8 @@ define_behavior :tile_oriented do
     actor.has_attribute :ground_normal, vec2(0, -1)
 
     actor.when :tile_collisions do |collisions|
+      $logs ||= []
+      $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{collisions}"
       if collisions
         map = actor.map.map_data
 
@@ -12,6 +14,14 @@ define_behavior :tile_oriented do
           face_normal = FACE_NORMALS[collision[:tile_face]]
           # no tile next to
           face_normal && !map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
+        end
+        if interesting_collisions.empty?
+          $logs ||= []
+
+          $logs[-60..-1].each do |l|
+            log l
+          end
+          # binding.pry
         end
 
         # get collision that would occur first
@@ -42,13 +52,6 @@ define_behavior :tile_oriented do
         apply_actor_velocities
       end
 
-      # log "APPLYING ROT VEL: #{actor.rotation_vel} making #{actor.rotation}" unless actor.rotation_vel == 0
-      # DEBUG!
-      # vb = Rect.new(viewport.boundary)
-      # actor.y = 10 if actor.y > vb.bottom
-      # actor.y = 600 if actor.y < vb.y
-      # actor.x = 0 if actor.x > vb.right
-      # actor.x = vb.right-100 if actor.x < vb.x
     end
   end
 
@@ -67,9 +70,19 @@ define_behavior :tile_oriented do
     } unless defined? ROTATIONS
 
     def apply_actor_velocities
+      actor.rotation = actor.rotation + actor.rotation_vel
+      new_x = (actor.x + actor.vel.x)
+      new_y = (actor.y + actor.vel.y)
+
+      # tile_x = (new_x / 16).floor
+      # tile_y = (actor.y / 16).floor + 1
+      # map = actor.map.map_data
+
+      $logs ||= []
+      $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{actor.x},#{actor.y} #{actor.vel}:#{actor.rotation_vel} (#{new_x},#{new_y})"
+
       actor.x += actor.vel.x 
       actor.y += actor.vel.y
-      actor.rotation = actor.rotation + actor.rotation_vel
     end
 
     def set_actor_rotation(tile_face)
@@ -86,10 +99,6 @@ define_behavior :tile_oriented do
       cps = actor.collision_points
       tile_size = map.tile_size
       actor_loc = vec2(actor.x, actor.y)
-
-      # log "="*80
-      # log collision
-      # log actor_loc
 
       collision_point_delta = actor_loc - cps[5]
       case collision[:tile_face]

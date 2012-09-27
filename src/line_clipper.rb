@@ -27,7 +27,11 @@ class LineClipper
   end
 
   def self.clip(px0, py0, px1, py1, box)
-    cohen_sutherland_line_clip(px0, py0, px1, py1, box)
+    $logs ||= []
+    $logs << "c: #{px0}, #{py0}, #{px1}, #{py1}, #{box}"
+    res = cohen_sutherland_line_clip(px0, py0, px1, py1, box)
+    $logs << "r: #{res}"
+    res
   end
 
   # Cohen–Sutherland clipping algorithm clips a line from
@@ -44,7 +48,6 @@ class LineClipper
     accept = false
 
     loop do
-
       if (outcode0 | outcode1) == 0
         accept = true
         break

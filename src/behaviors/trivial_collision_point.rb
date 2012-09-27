@@ -1,6 +1,7 @@
 define_behavior :trivial_collision_point do
   setup do
-    actor.has_attributes collision_points: points
+    actor.has_attributes collision_points: points,
+      collision_point_deltas: [vec2(0,0)]
 
     actor.when :position_changed do
       actor.collision_points = points
@@ -10,10 +11,6 @@ define_behavior :trivial_collision_point do
   helpers do
     def points
       [vec2(actor.x,actor.y)]
-    end
-
-    def rotate(point)
-      #fuh
     end
   end
 end

@@ -9,6 +9,7 @@ define_behavior :tile_bouncer do
         map = actor.map.map_data
         actor_loc = vec2(actor.x, actor.y)
 
+        log collisions
         interesting_collisions = collisions.select do |collision|
           face_normal = FACE_NORMALS[collision[:tile_face]]
           # no tile next to

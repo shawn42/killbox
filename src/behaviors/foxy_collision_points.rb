@@ -33,8 +33,8 @@ define_behavior :foxy_collision_points do
     def point_deltas
       w = actor.width
       h = actor.height
-      hw = w / 2
-      hh = h / 2
+      hw = w / 2.0
+      hh = h / 2.0
       qh = h * 0.25
 
       [

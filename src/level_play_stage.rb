@@ -4,7 +4,7 @@ class LevelPlayStage < Stage
   attr_accessor :players, :viewports
 
   LEVELS = {
-    :advanced_jump => 2,
+    :advanced_jump => 1,
     :cave => 2,
   }
   def setup
@@ -45,7 +45,7 @@ class LevelPlayStage < Stage
   def setup_player(name)
     player = @level.named_objects[name]
     if player
-      player.vel = vec2(0,5)
+      player.vel = vec2(0,2)
       player.input.map_input(controls[name])
       @players << player
     end
