@@ -4,7 +4,7 @@ define_actor :bomb do
     positioned
     audible
     layered ZOrder::Projectile
-    # animated_with_spritemap file: 'bullet.png', rows: 1, cols: 2, actions: {idle: 0..1}
+    animated_with_spritemap file: 'bomb.png', rows: 1, cols: 2, actions: {idle: 0..1}
     bound_by_box
     tile_bouncer
     tile_collision_detector
@@ -58,8 +58,9 @@ define_actor :bomb do
       offset_y = y+y_off
       rot = normalize_angle(actor.rotation)
 
-      target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::YELLOW, z
-      # target.draw_rotated_image img, offset_x, offset_y, z, rot#, 0.5, 0.5, x_scale
+      img = actor.image
+      #target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::YELLOW, z
+      target.draw_rotated_image img, offset_x, offset_y, z, rot#, 0.5, 0.5, x_scale
     end
   end
 end
