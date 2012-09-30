@@ -5,17 +5,20 @@ define_behavior :tile_oriented do
     actor.has_attribute :ground_normal, vec2(0, -1)
 
     actor.when :tile_collisions do |collisions|
-      $logs ||= []
-      $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{collisions}"
+      if ENV['DEBUG']
+        $logs ||= []
+        $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{collisions}"
+      end
       if collisions
         map = actor.map.map_data
+        actor_loc = vec2(actor.x, actor.y)
 
         interesting_collisions = collisions.select do |collision|
           face_normal = FACE_NORMALS[collision[:tile_face]]
           # no tile next to
           face_normal && !map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
         end
-        if interesting_collisions.empty?
+        if ENV['DEBUG'] && interesting_collisions.empty?
           $logs ||= []
 
           $logs[-60..-1].each do |l|
@@ -34,15 +37,42 @@ define_behavior :tile_oriented do
 
 
         if closest_collision
-          face_normal = FACE_NORMALS[closest_collision[:tile_face]]
-          raise "Y NO COL FACE?" if closest_collision[:tile_face].nil?
-          raise "Y NO FACE?" if face_normal.nil?
-          actor.ground_normal = face_normal 
+          if actor.shields_up
+            
+            # FIXME blatantly copied from tile_bouncer!
+            hit = closest_collision[:hit]
+            hit_vector = vec2(hit[0], hit[1])
+            penetration = vec2(hit[2], hit[3])
 
-          set_actor_rotation closest_collision[:tile_face]
-          clear_actor_velocity
-          set_actor_location closest_collision
-          actor.emit :hit_bottom
+            left_over = (penetration - hit_vector).magnitude
+
+            face_normal = FACE_NORMALS[closest_collision[:tile_face]]
+            reversed_vel = actor.vel.reverse
+            
+            projected = actor.vel.projected_onto(face_normal)
+
+            new_vel = (projected - actor.vel).reverse + projected.reverse
+            actor.vel = new_vel
+
+            cps = actor.collision_points
+
+            left_over_movement = new_vel.dup
+            left_over_movement.magnitude = left_over
+            new_loc = hit_vector + left_over_movement + (actor_loc - cps[closest_collision[:point_index]])
+
+            actor.x = new_loc.x
+            actor.y = new_loc.y
+          else
+            face_normal = FACE_NORMALS[closest_collision[:tile_face]]
+            raise "Y NO COL FACE?" if closest_collision[:tile_face].nil?
+            raise "Y NO FACE?" if face_normal.nil?
+            actor.ground_normal = face_normal 
+
+            set_actor_rotation closest_collision[:tile_face]
+            clear_actor_velocity
+            set_actor_location closest_collision
+            actor.emit :hit_bottom
+          end
         else
           apply_actor_velocities
           # log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
@@ -78,8 +108,10 @@ define_behavior :tile_oriented do
       # tile_y = (actor.y / 16).floor + 1
       # map = actor.map.map_data
 
-      $logs ||= []
-      $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{actor.x},#{actor.y} #{actor.vel}:#{actor.rotation_vel} (#{new_x},#{new_y})"
+      if ENV['DEBUG']
+        $logs ||= []
+        $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{actor.x},#{actor.y} #{actor.vel}:#{actor.rotation_vel} (#{new_x},#{new_y})"
+      end
 
       actor.x += actor.vel.x 
       actor.y += actor.vel.y

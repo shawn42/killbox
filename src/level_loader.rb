@@ -71,8 +71,6 @@ class LevelLoader
       end
     end
 
-    # raise "FAILED TO LOAD FOXYS INFO" unless level.named_objects.has_key? :foxy
-
   end
 
   def self.new_tile_for_index(index,x,y)

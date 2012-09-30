@@ -26,11 +26,12 @@ define_actor :foxy do
 
     accelerator air_speed: 30, speed: 40, max_speed: 18 
 
-    shooter recharge_time: 1000, shot_power: 11, kickback: 1
+    shooter recharge_time: 1000, shot_power: 13, kickback: 1.5
     bomber kickback: 5
+    shielded
 
-    jump power: 200, rotational_power: 30
-    friction amount: 0.04
+    jump power: 150, rotational_power: 35
+    friction amount: 0.05
 
     foxy_collision_points
 
@@ -60,7 +61,12 @@ define_actor :foxy do
         gun = actor.gun_direction.dup
         gun.magnitude = 20
         gun = gun.rotate(degrees_to_radians(actor.rotation)) + vec2(offset_x, offset_y)
-        target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration
+        target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration if ENV['DEBUG']
+      end
+
+      if actor.shields_up
+        #target.draw_circle offset_x, offset_y, actor.height/2+4, Color::WHITE, ZOrder::PlayerDecoration
+        target.draw_image actor.shield_image, offset_x-actor.shield_image.width/2, 4+offset_y-actor.shield_image.height/2, ZOrder::PlayerDecoration
       end
 
       rot = normalize_angle(actor.rotation)
@@ -69,25 +75,28 @@ define_actor :foxy do
       target.draw_rotated_image img, offset_x, offset_y, z, rot, 0.5, y_center_point, x_scale, y_scale
       # target.draw_box offset_x-img.width/2.0, offset_y-img.height/2.0, offset_x+img.width/2.0, offset_y+img.height/2.0, Color::GREEN, ZOrder::Debug
       
-      bb = actor.bb
-      target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::GREEN, ZOrder::Debug
+      if ENV['DEBUG']
+        bb = actor.bb
+        target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::GREEN, ZOrder::Debug
 
-      if $big_bag
-        bb = $big_bag
-        target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::YELLOW, ZOrder::Debug
-      end
+        if $big_bag
+          bb = $big_bag
+          target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::YELLOW, ZOrder::Debug
+        end
 
 
-      actor.collision_points.each do |cp|
-        target.draw_box x_off+cp.x, y_off+cp.y, x_off+cp.x+1, y_off+cp.y+1, Color::WHITE, ZOrder::Debug
-      end
-      lines = actor.do_or_do_not(:lines) || []
-      lines.each do |l|
-        one = l[0]
-        two = l[1]
-        target.draw_line x_off+one[0], y_off+one[1], 
-          x_off+two[0], y_off+two[1],
-          Color::RED, ZOrder::Debug
+        actor.collision_points.each do |cp|
+          target.draw_box x_off+cp.x, y_off+cp.y, x_off+cp.x+1, y_off+cp.y+1, Color::WHITE, ZOrder::Debug
+        end
+
+        lines = actor.do_or_do_not(:lines) || []
+        lines.each do |l|
+          one = l[0]
+          two = l[1]
+          target.draw_line x_off+one[0], y_off+one[1], 
+            x_off+two[0], y_off+two[1],
+            Color::RED, ZOrder::Debug
+        end
       end
     end
 

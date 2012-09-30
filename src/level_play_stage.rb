@@ -55,7 +55,8 @@ class LevelPlayStage < Stage
     { player1: {
         '+b' => :shoot,
         '+n' => :charging_jump,
-        '+m' => :charging_bomb, # TODO
+        '+m' => :charging_bomb,
+        '+v' => :shields_up,
         '+w' => :look_up,
         '+a' => [:look_left, :walk_left],
         '+d' => [:look_right, :walk_right],
@@ -64,7 +65,8 @@ class LevelPlayStage < Stage
       player2: {
         '+i' => :shoot,
         '+o' => :charging_jump,
-        '+p' => :charging_bomb, # TODO
+        '+p' => :charging_bomb, 
+        '+u' => :shields_up, 
         '+t' => :look_up,
         '+f' => [:look_left, :walk_left],
         '+h' => [:look_right, :walk_right],
@@ -72,7 +74,8 @@ class LevelPlayStage < Stage
 
         '+gp_button_0' => :shoot,
         '+gp_button_1' => :charging_jump,
-        '+gp_button_2' => :charging_bomb, # TODO
+        '+gp_button_2' => :charging_bomb,
+        '+gp_button_3' => :shields_up,
         '+gp_up' => :look_up,
         '+gp_left' => [:look_left, :walk_left],
         '+gp_right' => [:look_right, :walk_right],
