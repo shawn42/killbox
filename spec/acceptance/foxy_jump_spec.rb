@@ -1,8 +1,4 @@
 require 'spec_helper'
-class MockImage
-  def width; 28; end
-  def height; 40; end
-end
 
 class FakeLevel
   attr_accessor :named_objects

@@ -37,42 +37,15 @@ define_behavior :tile_oriented do
 
 
         if closest_collision
-          if actor.shields_up
-            
-            # FIXME blatantly copied from tile_bouncer!
-            hit = closest_collision[:hit]
-            hit_vector = vec2(hit[0], hit[1])
-            penetration = vec2(hit[2], hit[3])
+          face_normal = FACE_NORMALS[closest_collision[:tile_face]]
+          raise "Y NO COL FACE?" if closest_collision[:tile_face].nil?
+          raise "Y NO FACE?" if face_normal.nil?
+          actor.ground_normal = face_normal 
 
-            left_over = (penetration - hit_vector).magnitude
-
-            face_normal = FACE_NORMALS[closest_collision[:tile_face]]
-            reversed_vel = actor.vel.reverse
-            
-            projected = actor.vel.projected_onto(face_normal)
-
-            new_vel = (projected - actor.vel).reverse + projected.reverse
-            actor.vel = new_vel
-
-            cps = actor.collision_points
-
-            left_over_movement = new_vel.dup
-            left_over_movement.magnitude = left_over
-            new_loc = hit_vector + left_over_movement + (actor_loc - cps[closest_collision[:point_index]])
-
-            actor.x = new_loc.x
-            actor.y = new_loc.y
-          else
-            face_normal = FACE_NORMALS[closest_collision[:tile_face]]
-            raise "Y NO COL FACE?" if closest_collision[:tile_face].nil?
-            raise "Y NO FACE?" if face_normal.nil?
-            actor.ground_normal = face_normal 
-
-            set_actor_rotation closest_collision[:tile_face]
-            clear_actor_velocity
-            set_actor_location closest_collision
-            actor.emit :hit_bottom
-          end
+          set_actor_rotation closest_collision[:tile_face]
+          clear_actor_velocity
+          set_actor_location closest_collision
+          actor.emit :hit_bottom
         else
           apply_actor_velocities
           # log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
@@ -83,6 +56,9 @@ define_behavior :tile_oriented do
       end
 
     end
+
+    reacts_with :remove
+
   end
 
   helpers do
@@ -165,6 +141,9 @@ define_behavior :tile_oriented do
       actor.vel = vec2(0,0)
     end
 
+    def remove
+      actor.unsubscribe_all self
+    end
 
   end
 end

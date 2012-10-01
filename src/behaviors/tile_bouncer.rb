@@ -22,6 +22,7 @@ define_behavior :tile_bouncer do
           actor_loc = vec2(actor.x, actor.y)
           (hit_vector - actor_loc).magnitude
         end
+
         if closest_collision
 
           hit = closest_collision[:hit]
@@ -51,11 +52,12 @@ define_behavior :tile_bouncer do
         end
 
       else
-
         actor.x += actor.vel.x 
         actor.y += actor.vel.y
       end
     end
+
+    reacts_with :remove
   end
 
   helpers do
@@ -66,5 +68,9 @@ define_behavior :tile_bouncer do
       left:   vec2(-1, 0),
       right:  vec2(1, 0),
     } unless defined? FACE_NORMALS
+
+    def remove
+      actor.unsubscribe_all self
+    end
   end
 end
