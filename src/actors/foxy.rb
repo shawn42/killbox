@@ -28,6 +28,7 @@ define_actor :foxy do
 
     shooter recharge_time: 1000, shot_power: 13, kickback: 1.5
     bomber kickback: 5
+    bombable
     shielded
 
     jump power: 150, rotational_power: 35

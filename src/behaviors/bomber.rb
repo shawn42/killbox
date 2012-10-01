@@ -1,5 +1,5 @@
 define_behavior :bomber do
-  requires :stage, :director
+  requires :stage, :director, :bomb_coordinator
   setup do
     # lets start with infinite bombs, fixed vel
     actor.has_attributes bomb_charge: 0,
@@ -10,7 +10,6 @@ define_behavior :bomber do
     director.when :first do |time, time_secs|
       update_bombing time_secs
     end
-
   end
 
   helpers do
@@ -41,7 +40,9 @@ define_behavior :bomber do
 
       bomb_vel = rotated_gun_dir * power
 
-      stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel
+      bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel
+      bomb_coordinator.register_bomb bomb
+
       actor.react_to :play_sound, :shoot
 
       actor.bomb_charge = 0

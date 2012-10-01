@@ -43,6 +43,7 @@ define_actor :bomb do
 
         timer_manager.add_timer "#{object_id}_bomb_death", 4_000, false do
           actor.react_to :play_sound, :bomb
+          actor.emit :boom
           actor.remove
         end
       end
@@ -61,6 +62,9 @@ define_actor :bomb do
       img = actor.image
       #target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::YELLOW, z
       target.draw_rotated_image img, offset_x, offset_y, z, rot#, 0.5, 0.5, x_scale
+
+      target.draw_circle offset_x, offset_y, 100, Color::WHITE, ZOrder::PlayerDecoration
+      
     end
   end
 end

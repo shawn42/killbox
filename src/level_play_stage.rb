@@ -4,7 +4,7 @@ class LevelPlayStage < Stage
   attr_accessor :players, :viewports
 
   LEVELS = {
-    :advanced_jump => 1,
+    :advanced_jump => 2,
     :cave => 2,
   }
   def setup
