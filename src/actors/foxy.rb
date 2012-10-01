@@ -64,9 +64,9 @@ define_actor :foxy do
         target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration if ENV['DEBUG']
       end
 
-      if actor.shields_up
-        #target.draw_circle offset_x, offset_y, actor.height/2+4, Color::WHITE, ZOrder::PlayerDecoration
-        target.draw_image actor.shield_image, offset_x-actor.shield_image.width/2, 4+offset_y-actor.shield_image.height/2, ZOrder::PlayerDecoration
+      if actor.shields_up?
+        shield_image = resource_manager.load_image 'shield.png'
+        target.draw_image shield_image, offset_x-shield_image.width/2, 4+offset_y-shield_image.height/2, ZOrder::PlayerDecoration
       end
 
       rot = normalize_angle(actor.rotation)
