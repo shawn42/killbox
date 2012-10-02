@@ -6,8 +6,8 @@ define_behavior :jump do
                          rotation_vel:   0,
                          power:          opts[:power],
                          jump_rotation:  opts[:rotational_power],
-                         max_jump_power: 140,
-                         min_jump_power: 20
+                         max_jump_power: 110,
+                         min_jump_power: 10
                         
     actor.has_attributes jump_power: actor.min_jump_power
 
@@ -23,15 +23,15 @@ define_behavior :jump do
   end
 
   helpers do
+    include MinMaxHelpers
 
     def update_jump(time_secs)
       if actor.input.charging_jump? && actor.on_ground?
-        actor.jump_power += actor.max_jump_power * time_secs * 3
-        actor.jump_power = actor.max_jump_power if actor.jump_power > actor.max_jump_power
+        actor.jump_power = min(actor.jump_power + actor.max_jump_power * time_secs * 3, actor.max_jump_power)
       else
         if actor.jump_power > actor.min_jump_power && actor.on_ground
           if actor.ground_normal
-            mod = actor.ground_normal * actor.power * time_secs * (actor.jump_power.to_f / actor.max_jump_power)
+            mod = actor.ground_normal * actor.jump_power * 0.05
             actor.accel += mod
           end
           actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)

@@ -60,9 +60,9 @@ define_actor :foxy do
 
       if actor.can_shoot?
         gun = actor.gun_direction.dup
-        gun.magnitude = 20
+        gun.magnitude = 18
         gun = gun.rotate(degrees_to_radians(actor.rotation)) + vec2(offset_x, offset_y)
-        target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration if ENV['DEBUG']
+        target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration
       end
 
       if actor.shields_up?
