@@ -1,4 +1,4 @@
-define_behavior :bombable do
+define_behavior :die_by_bomb do
   requires :bomb_coordinator
   setup do
     bomb_coordinator.register_bombable actor

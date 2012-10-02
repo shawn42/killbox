@@ -10,7 +10,8 @@ define_behavior :shielded do
   end
 
   helpers do
-    UNSHIELDED_BEHAVIORS = [:jump, :shooter, :bomber, :tile_oriented] unless defined? UNSHIELDED_BEHAVIORS
+    UNSHIELDED_BEHAVIORS = [:jump, :shooter, :bomber, :tile_oriented, :die_by_bomb] unless defined? UNSHIELDED_BEHAVIORS
+    SHIELDED_BEHAVIORS = [:tile_bouncer, :blasted_by_bomb]
     def shield_up_sound
       actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
     end
@@ -26,14 +27,18 @@ define_behavior :shielded do
         UNSHIELDED_BEHAVIORS.each do |beh|
           remove_behavior beh
         end
-        add_behavior :tile_bouncer
+        SHIELDED_BEHAVIORS.each do |beh|
+          add_behavior beh
+        end
       end
     end
 
     def shields_down
       actor.shields_up = false
 
-      remove_behavior :tile_bouncer
+      SHIELDED_BEHAVIORS.each do |beh|
+        remove_behavior beh
+      end
       UNSHIELDED_BEHAVIORS.each do |beh|
         add_behavior beh
       end
