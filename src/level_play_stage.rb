@@ -10,6 +10,7 @@ class LevelPlayStage < Stage
   }
   def setup
     super
+    this_object_context[:bomb_coordinator]
     director.update_slots = [:first, :before, :update, :last]
     $debug_drawer = DebugDraw.new
     backstage[:level_name] ||= LEVELS.keys[0]
