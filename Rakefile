@@ -3,6 +3,11 @@ $: << libdir
 confdir = File.dirname(__FILE__)+"/config"
 $: << confdir
 
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 
+end
+
 require 'environment'
 $: << GAMEBOX_PATH
 load "tasks/gamebox_tasks.rake"
@@ -18,4 +23,5 @@ desc "Run the game with debug server"
 task :debugz do |t|
   sh "ruby src/app.rb --debug"                                         
 end
+
 

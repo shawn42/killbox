@@ -6,6 +6,7 @@ class LevelPlayStage < Stage
   LEVELS = {
     :advanced_jump => 2,
     :cave => 2,
+    :basic_jump => 1,
   }
   def setup
     super
@@ -45,7 +46,7 @@ class LevelPlayStage < Stage
   def setup_player(name)
     player = @level.named_objects[name]
     if player
-      player.vel = vec2(0,2)
+      player.vel = vec2(0,3)
       player.input.map_input(controls[name])
       @players << player
     end

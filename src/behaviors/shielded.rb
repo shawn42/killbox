@@ -10,7 +10,7 @@ define_behavior :shielded do
   end
 
   helpers do
-    UNSHIELDED_BEHAVIORS = [:jump, :shooter, :bomber, :tile_oriented]
+    UNSHIELDED_BEHAVIORS = [:jump, :shooter, :bomber, :tile_oriented] unless defined? UNSHIELDED_BEHAVIORS
     def shield_up_sound
       actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
     end

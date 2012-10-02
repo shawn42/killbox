@@ -30,7 +30,14 @@ describe :tile_collision_detector do
     before do
       actor.has_attributes vel: vec2(0,0), 
                            bb: Rect.new(0,0,10,10), 
-                           map: map
+                           map: map,
+                           x: 5,
+                           y: 5,
+                           rotation: 0,
+                           width: 10,
+                           height: 10,
+                           collision_point_deltas: [vec2(0,0)]
+
     end
 
     it 'emits w/ empty data when there are no collisions' do

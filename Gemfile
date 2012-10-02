@@ -13,3 +13,4 @@ gem "rspec-core"
 gem "rspec-mocks"
 gem "rspec-expectations"
 gem "rake"
+gem "simplecov", require: false

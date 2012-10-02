@@ -1,5 +1,10 @@
 require 'spec_helper'
 
+class MockImage
+  def width; 28; end
+  def height; 40; end
+end
+
 class FakeLevel
   attr_accessor :named_objects
   def initialize
@@ -19,7 +24,8 @@ class JumpAcceptanceStage < LevelPlayStage
     map = Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/basic_jump.tmx")
 
     map_data = LevelLoader::MapData.new
-    map_data.tiles, map_data.tile_grid = LevelLoader.generate_map(map)
+    map_data.tile_grid = LevelLoader.generate_map(map)[0]
+
     map_data.tileset_image = "map/tileset.png"
     # all tiles will be square!
     map_data.tile_size = 16
@@ -29,7 +35,7 @@ class JumpAcceptanceStage < LevelPlayStage
     @level = FakeLevel.new
     @level.named_objects[:player1] = create_actor :foxy, map: map_actor, x: 120, y: 60
 
-    setup_players(:player1)
+    setup_players
   end
 
 end
@@ -37,7 +43,7 @@ end
 describe "Foxy jumping", acceptance: true do
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
-    mock_tiles 'foxy.png', 84/3, 360/9
+    # mock_tiles 'foxy.png', 84/3, 360/9
     mock_image 'foxy.png'
     mock_image 'bullet.png'
     Gamebox.configuration.stages = [:jump_acceptance]
@@ -57,25 +63,25 @@ describe "Foxy jumping", acceptance: true do
 
     foxy.rotation.should be_within(0.001).of(0)
     see_actor_attrs :foxy, 
-      x: 110,
+      x: 120,
       y: 155
 
-    jump 1000
+    jump 2000
     update 1000, step: 20
 
     # TODO some clever way of doing approx matches with see_actor_attrs
     normalize_angle(foxy.rotation).should be_within(0.001).of(180)
 
     foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
-    foxy.x.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
+    foxy.x.should be_within(0.001).of(120)
 
-    jump 1000
+    jump 2000
     update 2000, step: 20
 
     normalize_angle(foxy.rotation).should be_within(0.001).of(0)
-    foxy.y.should be_within(0.001).of(165)
+    foxy.y.should be_within(0.001).of(155)
     see_actor_attrs :foxy, 
-      x: 110
+      x: 120
   end
 
   it 'does not shoot self into floor' do
@@ -86,7 +92,7 @@ describe "Foxy jumping", acceptance: true do
     press_key KbB
 
     normalize_angle(foxy.rotation).should be_within(0.001).of(0)
-    foxy.y.should be_within(0.001).of(165)
+    foxy.y.should be_within(0.001).of(155)
     see_actor_attrs :foxy, 
       x: 120
 
@@ -100,11 +106,11 @@ describe "Foxy jumping", acceptance: true do
     update 1000, step: 20
     release_key KbA
 
-    foxy.y.should be_within(2).of(65)
     normalize_angle(foxy.rotation).should be_within(0.1).of(90)
     see_actor_attrs :foxy, 
-      x: 27,
+      x: 37,
       on_ground: true
+    foxy.y.should < 155
 
   end
 
