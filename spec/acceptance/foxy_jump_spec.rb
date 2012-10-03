@@ -57,31 +57,31 @@ describe "Foxy jumping", acceptance: true do
 
   it 'jumps from floor to ceiling and back' do
     see_actor_attrs :foxy, 
-      x: 120
+      x: 120.ish
+
     # settle
     update 4000, step: 20
 
-    foxy.rotation.should be_within(0.001).of(0)
     see_actor_attrs :foxy, 
-      x: 120,
-      y: 155
+      x: 120.ish,
+      y: 155.ish,
+      rotation: 0.ish
 
     jump 2000
     update 1000, step: 20
 
-    # TODO some clever way of doing approx matches with see_actor_attrs
-    normalize_angle(foxy.rotation).should be_within(0.001).of(180)
-
-    foxy.y.should be_within(0.001).of(tile_size + foxy.height / 2.0 + 1)
-    foxy.x.should be_within(0.001).of(120)
+    see_actor_attrs :foxy, 
+      x: 120.ish,
+      y: (tile_size + foxy.height / 2.0 + 1).ish,
+      rotation: 180.ish
 
     jump 2000
     update 2000, step: 20
 
-    normalize_angle(foxy.rotation).should be_within(0.001).of(0)
-    foxy.y.should be_within(0.001).of(155)
     see_actor_attrs :foxy, 
-      x: 120
+      x: 120.ish,
+      y: 155.ish,
+      rotation: 0.ish
   end
 
   it 'does not shoot self into floor' do
@@ -91,25 +91,30 @@ describe "Foxy jumping", acceptance: true do
     press_key KbUp
     press_key KbB
 
-    normalize_angle(foxy.rotation).should be_within(0.001).of(0)
-    foxy.y.should be_within(0.001).of(155)
     see_actor_attrs :foxy, 
-      x: 120
+      x: 120.ish,
+      y: 155.ish,
+      rotation: 0.ish
 
   end
 
   it 'walks and rotates to wall' do
     # settle
-    update 2000, step: 20
+    update 4000, step: 20
+
+    see_actor_attrs :foxy, 
+      x: 120.ish,
+      y: 155.ish
 
     press_key KbA
     update 1000, step: 20
     release_key KbA
 
-    normalize_angle(foxy.rotation).should be_within(0.1).of(90)
     see_actor_attrs :foxy, 
-      x: 37,
-      on_ground: true
+      on_ground: true,
+      rotation: 90.ish,
+      x: 37.ish
+
     foxy.y.should < 155
 
   end

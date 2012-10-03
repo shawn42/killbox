@@ -53,7 +53,7 @@ describe :tile_collision_detector do
       actor.vel = vec2(5,0)
       subject
       
-      expects_event actor, :tile_collisions, [[[{:row=>0, :col=>1, :tile_face=>:left, :hit=>[16, 5.0, 17.0, 5.0], :point_index=>0}]]] do
+      expects_event actor, :tile_collisions, [[[{:row=>0, :col=>1, :tile_face=>:left, :hit=>[16.ish, 5.0.ish, 17.0.ish, 5.0.ish], :point_index=>0}]]] do
         director.fire :update, 61
       end
     end
