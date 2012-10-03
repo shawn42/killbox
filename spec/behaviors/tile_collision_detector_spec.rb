@@ -20,9 +20,9 @@ describe :tile_collision_detector do
 
   let(:map_data) { stub('map data', tile_size: 16, tile_grid: grid) }
   let(:grid) { [
-    [1,1,0],
-    [0,1,0],
-    [0,0,0],
+    [nil, 1 ,nil],
+    [nil,nil,nil],
+    [nil,nil,nil],
   ]}
   let(:map) { stub('map', map_data: map_data) }
 
@@ -49,9 +49,11 @@ describe :tile_collision_detector do
     end
 
     it 'emits w/ data when there is a collision' do
+      actor.x = 12
+      actor.vel = vec2(5,0)
       subject
       
-      expects_event actor, :tile_collisions, [[nil]] do
+      expects_event actor, :tile_collisions, [[[{:row=>0, :col=>1, :tile_face=>:left, :hit=>[16, 5.0, 17.0, 5.0], :point_index=>0}]]] do
         director.fire :update, 61
       end
     end

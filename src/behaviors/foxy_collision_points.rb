@@ -1,7 +1,7 @@
 define_behavior :foxy_collision_points do
   setup do
-    actor.has_attributes collision_points: points,
-      collision_point_deltas: point_deltas
+    actor.has_attributes collision_point_deltas: point_deltas,
+    collision_points: points
 
     actor.when :position_changed do
       actor.collision_points = points
