@@ -22,11 +22,11 @@ describe :tile_collision_detector do
   let(:grid) { [
     [nil, 1 ,nil],
     [nil,nil,nil],
-    [nil,nil,nil],
+    [nil,nil, 1 ],
   ]}
   let(:map) { stub('map', map_data: map_data) }
 
-  describe "a valid actor" do
+  describe "a single point object" do
     before do
       actor.has_attributes vel: vec2(0,0), 
                            bb: Rect.new(0,0,10,10), 
@@ -44,17 +44,29 @@ describe :tile_collision_detector do
       subject
       
       expects_event actor, :tile_collisions, [[nil]] do
-        director.fire :update, 61
+        director.fire :update, 1
       end
     end
 
-    it 'emits w/ data when there is a collision' do
+    it 'emits w/ data when there is a basic left collision' do
       actor.x = 12
       actor.vel = vec2(5,0)
       subject
       
       expects_event actor, :tile_collisions, [[[{:row=>0, :col=>1, :tile_face=>:left, :hit=>[16.ish, 5.0.ish, 17.0.ish, 5.0.ish], :point_index=>0}]]] do
-        director.fire :update, 61
+        director.fire :update, 1
+      end
+    end
+
+    it 'emits w/ data when with collision on the corner' do
+      actor.x = 30
+      actor.y = 30
+      actor.bb = Rect.new(25,25,35,35)
+      actor.vel = vec2(4.1,4.1)
+      subject
+      
+      expects_event actor, :tile_collisions, [[[{:row=>2, :col=>2, :tile_face=>:top, :hit=>[32.ish, 32.ish, 34.1.ish, 34.1.ish], :point_index=>0}]]] do
+        director.fire :update, 1
       end
     end
   end
