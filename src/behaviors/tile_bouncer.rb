@@ -52,6 +52,8 @@ define_behavior :tile_bouncer do
         end
 
       else
+        rotation_vel = actor.do_or_do_not(:rotation_vel) || 0
+        actor.rotation += rotation_vel
         actor.x += actor.vel.x 
         actor.y += actor.vel.y
       end

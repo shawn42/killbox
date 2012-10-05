@@ -119,6 +119,55 @@ describe "Foxy jumping", acceptance: true do
 
   end
 
+  it 'grabs the wall when we rotate next to it' do
+    foxy.x = 31
+
+    see_actor_attrs :foxy, 
+      x: 31.ish
+
+    # settle
+    update 4000, step: 20
+
+    see_actor_attrs :foxy, 
+      x: 31.ish,
+      y: 155.ish,
+      rotation: 0.ish
+
+    jump 100
+    update 1000, step: 20
+
+    see_actor_attrs :foxy, 
+      rotation: 90.ish,
+      rotation_vel: 0.ish
+
+  end
+
+  context "shields up" do
+    it 'grabs the wall when we rotate next to it' do
+      foxy.x = 31
+
+      see_actor_attrs :foxy, 
+        x: 31.ish
+
+      # settle
+      update 4000, step: 20
+
+      see_actor_attrs :foxy, 
+        x: 31.ish,
+        y: 155.ish,
+        rotation: 0.ish
+
+      shields_up
+
+      jump 100
+      update 1000, step: 20
+
+      see_actor_attrs :foxy, 
+        rotation: 90.ish,
+        rotation_vel: 0.ish
+
+    end
+  end
 
   def jump(amount)
     # charge & jump
@@ -126,5 +175,10 @@ describe "Foxy jumping", acceptance: true do
     update amount, step: 20
     release_key KbN
   end
+
+  def shields_up
+    press_key KbV
+  end
+
 end
 

@@ -25,7 +25,6 @@ define_behavior :foxy_collision_points do
       # 6 |    | 3
       #   -----
       #  5     4
-      p point_deltas
       point_deltas.map do |point|
         rotate(actor_loc, point)
       end

@@ -36,7 +36,7 @@ define_behavior :tile_collision_detector do
       ]
       rotation_rads = degrees_to_radians(actor.rotation + actor_rot_vel)
       rotated_points = points.map do |point|
-        (rotation_rads == 0.0 ? point : point.rotate(rotation_rads)) + trans_center
+        point.rotate(rotation_rads) + trans_center
       end
 
       rotated_points.each do |point|
@@ -47,12 +47,11 @@ define_behavior :tile_collision_detector do
       end
 
       lines_to_check = actor.collision_point_deltas.map do |point|
-        rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
-        puts "(#{rotation} [#{point.inspect}])"
-        puts
-        rotated_point = point.rotate(rotation)
-        from = (actor_loc + rotated_point).to_a
-        to = (actor_loc + rotated_point + vel).to_a
+        current_rotation = degrees_to_radians(actor.rotation)
+        next_rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
+
+        from = (actor_loc + point.rotate(current_rotation)).to_a
+        to = (actor_loc + point.rotate(next_rotation) + vel).to_a
         [from, to]
       end
       actor.has_attribute :lines

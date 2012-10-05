@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe :tile_collision_detector do
   # TODO AAAAAHHHHH gamebox should hide this from me! VVVVVVVVVV
-  let(:opts) { {} }
+  let(:opts) { {} } 
   subject { subcontext[:behavior_factory].add_behavior actor, :tile_collision_detector, opts }
   let(:director) { evented_stub(stub_everything('director')) }
   let(:subcontext) do 
@@ -69,30 +69,39 @@ describe :tile_collision_detector do
         director.fire :update, 1
       end
     end
+  end
 
-    describe "a foxy-like object at glancing angle" do
-      let(:grid) { [nil,nil, 1]*8 }
-      before do
-        actor.has_attributes vel: vec2(0,-4), 
-                             bb: Rect.new(0,0,16*3,16*8), 
-                             map: map,
-                             x: 17,
-                             y: 65,
-                             rotation: 0.0,
-                             rotation_vel: 0.3,
-                             width: 28,
-                             height: 40,
-                             collision_point_deltas: [vec2(-14.0, -20.0), vec2(14.0, -20.0), vec2(14.0, -10.0), vec2(14.0, 10.0), vec2(14.0, 20.0), vec2(-14.0, 20.0), vec2(-14.0, 10.0), vec2(-14.0, -10.0)]
-      end
-
-      it 'does not get stuck on a wall' do
-        subject
-        
-        expects_event actor, :tile_collisions, [[[{:row=>2, :col=>2, :tile_face=>:top, :hit=>[32.ish, 32.ish, 34.1.ish, 34.1.ish], :point_index=>0}]]] do
-        director.fire :update, 1
-        end
-      end
+  describe "a foxy-like object at glancing angle" do
+    let(:grid) { [[nil,nil, 1]] * 8 }
+    before do
+      actor.has_attributes vel: vec2(0,-4), 
+                           bb: Rect.new(0,0,16*3,16*8), 
+                           map: map,
+                           x: 17,
+                           y: 65,
+                           rotation: 0.0,
+                           rotation_vel: -3,
+                           width: 28,
+                           height: 40,
+                           collision_point_deltas: [
+                             vec2(-14.0, -20.0), 
+                             vec2(14.0, -20.0), 
+                             vec2(14.0, -10.0), 
+                             vec2(14.0, 10.0), 
+                             vec2(14.0, 20.0), 
+                             vec2(-14.0, 20.0), 
+                             vec2(-14.0, 10.0), 
+                             vec2(-14.0, -10.0)]
     end
 
+    it 'does not get stuck on a wall' do
+      subject
+      
+      expects_event actor, :tile_collisions, [[[{:row=>5, :col=>2, :tile_face=>:left, :hit=>
+        [32.ish, 80.367.ish, 32.027.ish, 80.239.ish], :point_index=>4}]]] do
+      director.fire :update, 1
+      end
+    end
   end
+
 end

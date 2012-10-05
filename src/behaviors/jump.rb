@@ -51,6 +51,7 @@ define_behavior :jump do
     end
 
     def remove
+      actor.jump_power = actor.min_jump_power
       director.unsubscribe_all self
     end
   end
