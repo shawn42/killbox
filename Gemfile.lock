@@ -2,7 +2,15 @@ GEM
   remote: http://rubygems.org/
   specs:
     coderay (1.0.6)
+    columnize (0.3.6)
     conject (0.0.7)
+    debugger (1.1.4)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.1.1)
+      debugger-ruby_core_source (~> 1.1.3)
+    debugger-linecache (1.1.2)
+      debugger-ruby_core_source (>= 1.1.1)
+    debugger-ruby_core_source (1.1.3)
     diff-lcs (1.1.3)
     gamebox (0.4.0.rc7)
       conject (>= 0.0.5)
@@ -27,6 +35,9 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.7.1)
       slop (>= 2.4.4, < 3)
+    pry-debugger (0.2.0)
+      debugger (~> 1.1.3)
+      pry (~> 0.9.9)
     pry-remote (0.1.4)
       pry (~> 0.9.9)
       slop (~> 2.1)
@@ -60,6 +71,7 @@ DEPENDENCIES
   kvo (= 0.0.2)
   mocha
   pry
+  pry-debugger
   pry-remote
   rake
   require_all

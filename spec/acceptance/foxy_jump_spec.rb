@@ -157,15 +157,18 @@ describe "Foxy jumping", acceptance: true do
         y: 155.ish,
         rotation: 0.ish
 
-      jump 100
-      update 20, step: 20
-      shields_up
-      update 100, step: 20
+      jump 10
 
-      foxy.rotation.should == 90
-      # see_actor_attrs :foxy, 
-        # rotation: 90.ish,
-        # rotation_vel: 0.ish
+      update 20
+
+      shields_up
+
+      update 1000, step: 20
+
+      # foxy.rotation.should == 90
+      see_actor_attrs :foxy, 
+        rotation: 90.ish,
+        rotation_vel: 0.ish
 
     end
   end

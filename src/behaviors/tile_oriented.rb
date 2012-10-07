@@ -48,8 +48,6 @@ define_behavior :tile_oriented do
           actor.emit :hit_bottom
         else
           apply_actor_velocities
-          # log "actor rotating from #{actor.rotation} += #{radians_to_degrees(actor_rotation_delta)}"
-          # actor.rotation = normalize_angle(actor.rotation + radians_to_degrees(actor_rotation_delta))
         end
       else
         apply_actor_velocities

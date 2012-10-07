@@ -3,6 +3,7 @@ gem 'require_all'
 gem 'tmx'
 gem 'pry'
 gem 'pry-remote'
+gem 'pry-debugger'
 gem "gamebox", '>= 0.4.0.rc7'
 gem "conject"
 gem 'kvo', '0.0.2'

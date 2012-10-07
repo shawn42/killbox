@@ -58,6 +58,7 @@ define_behavior :tile_collision_detector do
       actor.lines = lines_to_check.dup
 
 
+      # TODO the inflate here is a hack, it doesn't cost us much for now
       bb_to_check = bb.union(trans_bb).inflate(actor.width*2,actor.height*2)
       map_inspector.overlap_tiles(map, bb_to_check) do |tile, row, col|
         lines_to_check.each.with_index do |line, i|
