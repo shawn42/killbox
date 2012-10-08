@@ -1,3 +1,9 @@
+class Numeric
+  def two
+    "%.2f" % self
+  end
+end
+
 class LevelPlayStage < Stage
   include GameSession
 
@@ -10,9 +16,12 @@ class LevelPlayStage < Stage
   }
   def setup
     super
+    $debug_drawer = DebugDraw.new
     this_object_context[:bomb_coordinator]
     director.update_slots = [:first, :before, :update, :last]
-    $debug_drawer = DebugDraw.new
+
+    @console = create_actor(:console, hide: true)
+
     backstage[:level_name] ||= LEVELS.keys[0]
     backstage[:player_count] ||= LEVELS.values[0]
 
@@ -28,6 +37,11 @@ class LevelPlayStage < Stage
 
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
+
+    player = @players.first
+    @console.react_to :watch, "vel" do [player.vel.x.two, player.vel.y.two] end
+    @console.react_to :watch, "x" do player.x.two end
+    @console.react_to :watch, "y" do player.y.two end
   end
 
   def setup_level(name)

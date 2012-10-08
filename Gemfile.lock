@@ -12,7 +12,7 @@ GEM
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.1.3)
     diff-lcs (1.1.3)
-    gamebox (0.4.0.rc7)
+    gamebox (0.4.0.rc8)
       conject (>= 0.0.5)
       gosu
       i18n
@@ -67,7 +67,7 @@ PLATFORMS
 
 DEPENDENCIES
   conject
-  gamebox (>= 0.4.0.rc7)
+  gamebox (>= 0.4.0.rc8)
   kvo (= 0.0.2)
   mocha
   pry

@@ -7,6 +7,7 @@ define_behavior :shooter do
                          can_shoot: true,
                          gun_direction: shoot_directions[:right]
                         
+    actor.can_shoot = true
     setup_gun_looking
 
     actor.input.when(:shoot) { shoot_if_able }
@@ -72,6 +73,7 @@ define_behavior :shooter do
     def remove
       timer_name = "#{actor.object_id}:shot_recharge"
       timer_manager.remove_timer 'shot_recharge'
+      actor.can_shoot = false
     end
   end
 

@@ -7,5 +7,6 @@ module ZOrder
   Projectile,
   Enemy,
   HudText,
-  Debug = *(0..100)
+  Debug,
+  Console = *(0..100)
 end
