@@ -63,7 +63,7 @@ define_behavior :tile_bouncer do
           actor.y = new_loc.y
           log "UPDATED ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel}"
         else
-          raise "collided, but no good collisions in [#{collisions}]"
+          # raise "collided, but no good collisions in [#{collisions}]"
         end
 
       else

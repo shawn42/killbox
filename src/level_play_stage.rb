@@ -20,7 +20,7 @@ class LevelPlayStage < Stage
     this_object_context[:bomb_coordinator]
     director.update_slots = [:first, :before, :update, :last]
 
-    @console = create_actor(:console, hide: true)
+    @console = create_actor(:console, visible: false)
 
     backstage[:level_name] ||= LEVELS.keys[0]
     backstage[:player_count] ||= LEVELS.values[0]
@@ -39,9 +39,10 @@ class LevelPlayStage < Stage
     setup_players backstage[:player_count]
 
     player = @players.first
-    @console.react_to :watch, "vel" do [player.vel.x.two, player.vel.y.two] end
+    @console.react_to :watch, "vel" do player.vel.to_a.map &:two end
     @console.react_to :watch, "x" do player.x.two end
     @console.react_to :watch, "y" do player.y.two end
+    @console.react_to :watch, "ground" do player.ground_normal.to_a.map &:two end
   end
 
   def setup_level(name)

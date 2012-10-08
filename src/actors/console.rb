@@ -1,34 +1,33 @@
 define_actor :console do
   has_behaviors do
+    positioned
     layered ZOrder::Console
   end
 
   behavior do
-    requires :stage, :input_manager, :font_style_factory, :director
+    requires :stage, :input_manager, :font_style_factory
     setup do |opts|
-      actor.has_attributes shown: false,
-                           watch_labels: []
 
-      input_manager.reg :down, KbF1 do
-        toggle_console
-      end
+      actor.has_attributes font_size: 30,
+                           font_name: "Asimov.ttf",
+                           color:     [250,250,250,255], 
+                           watch_labels: [],
+                           visible: false
 
-      actor.when :remove_me do
-        actor.watch_labels.each &:remove
-      end
+      font_style = font_style_factory.build actor.font_name, actor.font_size, actor.color
+      actor.has_attributes font_style: font_style
 
-      director.when :update do
-        update_watch_labels
-      end
+      input_manager.reg :down, KbF1 do toggle_console end
 
-      actor.when :show_me do
-        actor.watch_labels.each do |wl|
-          wl[2].react_to :show
-        end
-      end
-      actor.when :hide_me do
-        actor.watch_labels.each do |wl|
-          wl[2].react_to :hide
+      $debug_drawer.draw "console" do |target|
+        if actor.visible?
+          @color ||= Color.new(150, 10, 10, 10)
+          target.fill 0, 0, target.width, 200, @color, ZOrder::Console
+          target.draw_box 0, 0, target.width, 200, Color::WHITE, ZOrder::Console
+
+          actor.watch_labels.each.with_index do |wl, i|
+            target.print "#{wl[0]}: #{wl[1].call}", actor.x, actor.y + i * font_style.size, ZOrder::Console, actor.font_style
+          end
         end
       end
 
@@ -39,34 +38,12 @@ define_actor :console do
 
       def watch(name, &block)
         raise "too many watches" if actor.watch_labels.size > 4
-        label = stage.create_actor(:label, actor.attributes.merge(y: actor.watch_labels.size * 40))
-        actor.watch_labels << [name, block, label]
-      end
-
-      def update_watch_labels
-        actor.watch_labels.each do |label_info|
-          name, block, label = *label_info
-          label.text = "#{name}: #{block.call}"
-        end
+        actor.watch_labels << [name, block]
       end
 
       def toggle_console
-        if actor.visible?
-          actor.emit :hide_me
-        else
-          actor.emit :show_me
-        end
-
         actor.visible = !actor.visible
       end
-    end
-
-  end
-
-  view do
-    draw do |target, x_off, y_off, z|
-      @color ||= Color.new(150, 10, 10, 10)
-      target.fill 0, 0, target.width, 200, @color, ZOrder::Console if actor.visible?
     end
 
   end
