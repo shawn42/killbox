@@ -39,10 +39,11 @@ class LevelPlayStage < Stage
     setup_players backstage[:player_count]
 
     player = @players.first
-    @console.react_to :watch, "vel" do player.vel.to_a.map &:two end
-    @console.react_to :watch, "x" do player.x.two end
-    @console.react_to :watch, "y" do player.y.two end
-    @console.react_to :watch, "ground" do player.ground_normal.to_a.map &:two end
+    @console.react_to :watch, :vel do player.vel.to_a.map &:two end
+    @console.react_to :watch, :x do player.x.two end
+    @console.react_to :watch, :y do player.y.two end
+    @console.react_to :watch, :jump do player.jump_power.two end
+    @console.react_to :watch, :ground do player.ground_normal.to_a.map &:two end
   end
 
   def setup_level(name)
