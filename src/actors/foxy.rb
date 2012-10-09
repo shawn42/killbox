@@ -24,7 +24,7 @@ define_actor :foxy do
     }
     grounded
 
-    accelerator air_speed: 30, speed: 40, max_speed: 18 
+    accelerator air_speed: 16, speed: 30, max_speed: 18 
 
     shooter recharge_time: 1000, shot_power: 13, kickback: 1.5
     bomber kickback: 5
@@ -59,6 +59,7 @@ define_actor :foxy do
       end
 
       if actor.can_shoot?
+        # TODO move these calcs to the shooter behavior
         gun = actor.gun_direction.dup
         gun.magnitude = 18
         gun = gun.rotate(degrees_to_radians(actor.rotation)) + vec2(offset_x, offset_y)

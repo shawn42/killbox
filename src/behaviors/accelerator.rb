@@ -64,12 +64,13 @@ define_behavior :accelerator do
       end
     end
 
-    actor.when :remove_me do
-      director.unsubscribe_all self
-    end
+    reacts_with :remove
   end
 
   helpers do
     include MinMaxHelpers
+    def remove
+      director.unsubscribe_all self
+    end
   end
 end

@@ -9,13 +9,12 @@ define_behavior :tile_collision_detector do
       find_collisions time
     end
 
-    actor.when :remove_me do
-      director.unsubscribe_all self
-    end
+    reacts_with :remove
   end
 
   helpers do
     include MinMaxHelpers
+
     def find_collisions(time)
       collisions = nil
       map = actor.map.map_data
@@ -72,6 +71,10 @@ define_behavior :tile_collision_detector do
       end
 
       actor.emit :tile_collisions, collisions
+    end
+
+    def remove
+      director.unsubscribe_all self
     end
   end
 end

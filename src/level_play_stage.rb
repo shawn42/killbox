@@ -57,7 +57,16 @@ class LevelPlayStage < Stage
     player_count.times do |i|
       setup_player "player#{i+1}".to_sym
     end
+    (4-player_count).times do |i|
+      player_count + i
+      remove_player "player#{player_count+i+1}".to_sym
+    end
     @viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
+  end
+
+  def remove_player(name)
+    player = @level.named_objects[name]
+    player.remove if player
   end
 
   def setup_player(name)

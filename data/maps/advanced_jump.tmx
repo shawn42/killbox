@@ -23,6 +23,7 @@
  </layer>
  <objectgroup name="actors" width="60" height="50">
   <object name="player1" type="foxy" gid="193" x="844" y="140"/>
+  <object name="player2" type="foxy" gid="193" x="110" y="431"/>
  </objectgroup>
  <layer name="fg" width="60" height="50">
   <data encoding="base64" compression="gzip">
