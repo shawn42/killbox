@@ -9,7 +9,7 @@ define_actor :console do
     setup do |opts|
 
       actor.has_attributes font_size: 25,
-                           font_name: "typewriter-mono.ttf",
+                           font_name: "console.ttf",
                            color:     [250,250,250,255], 
                            watch_labels: {},
                            visible: false
