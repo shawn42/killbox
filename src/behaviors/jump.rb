@@ -15,10 +15,6 @@ define_behavior :jump do
       update_jump time_secs
     end
 
-    actor.when :remove_me do
-      remove 
-    end
-
     reacts_with :remove
   end
 
