@@ -9,7 +9,7 @@ define_behavior :die_by_bomb do
   helpers do
     def esplode(bomb, distance)
       log "UG.. I died"
-      actor.remove
+      actor.remove if distance < (bomb.radius * 0.666)
     end
 
     def remove

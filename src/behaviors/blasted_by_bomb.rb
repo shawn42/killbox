@@ -8,9 +8,12 @@ define_behavior :blasted_by_bomb do
 
   helpers do
     def esplode(bomb, distance)
-      puts "PUSH!"
-
-      # actor.vel += 
+      # TODO only apply if below feet
+      forceV = vec2(bomb.x, bomb.y) - vec2(actor.x, actor.y)
+      force = (1-(distance / bomb.force)) * bomb.radius
+      forceV.scale! force
+      actor.on_ground = false
+      actor.vel += forceV
     end
 
     def remove

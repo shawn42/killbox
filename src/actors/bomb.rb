@@ -1,4 +1,5 @@
 define_actor :bomb do
+  
 
   has_behaviors do
     positioned
@@ -16,7 +17,11 @@ define_actor :bomb do
 
     setup do
       reacts_with :remove
-
+    
+      actor.has_attributes(
+        force: 2, # force of the effect at 0 distance (impulse will be force/distance)
+        radius: 100 # radius of effect - the distance at which the effect's influence will drop to zero
+      )
       setup_timers
     end
 

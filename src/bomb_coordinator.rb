@@ -1,5 +1,4 @@
 class BombCoordinator
-  BLAST_RADIUS = 100
 
   def initialize
     @active_bombs = []
@@ -14,7 +13,7 @@ class BombCoordinator
       @explosion_listeners.each do |target|
         distance = Math.sqrt((x-target.x)**2 + (y-target.y)**2)
 
-        if distance < BLAST_RADIUS
+        if distance < bomb.radius
           target.react_to :esplode, bomb, distance
         end
       end

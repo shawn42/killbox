@@ -41,6 +41,8 @@ define_behavior :bomber do
       bomb_vel = rotated_gun_dir * power
 
       bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel
+      bomb.force = 10
+      bomb.radius = 100
       bomb_coordinator.register_bomb bomb
 
       actor.react_to :play_sound, :shoot
