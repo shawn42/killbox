@@ -11,7 +11,7 @@ define_behavior :shielded do
 
   helpers do
     UNSHIELDED_BEHAVIORS = [:accelerator, :jump, :shooter, :bomber, :tile_oriented, :die_by_bomb] unless defined? UNSHIELDED_BEHAVIORS
-    SHIELDED_BEHAVIORS = [:tile_bouncer, :blasted_by_bomb] unless defined? SHIELDED_BEHAVIORS
+    SHIELDED_BEHAVIORS = [:tile_bouncer] unless defined? SHIELDED_BEHAVIORS
     def shield_up_sound
       actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
     end

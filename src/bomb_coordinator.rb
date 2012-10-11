@@ -2,7 +2,7 @@ class BombCoordinator
 
   def initialize
     @active_bombs = []
-    @explosion_listeners = []
+    @explosion_listeners = Hash.new { 0 }
   end
 
   def register_bomb(bomb)
@@ -10,8 +10,8 @@ class BombCoordinator
     bomb.when :boom do
       unregister_bomb bomb
       x, y = bomb.x, bomb.y
-      @explosion_listeners.each do |target|
-        distance = Math.sqrt((x-target.x)**2 + (y-target.y)**2)
+      @explosion_listeners.each do |target, count|
+        distance = (vec2(target.x, target.y) - vec2(bomb.x, bomb.y)).magnitude
 
         if distance < bomb.radius
           target.react_to :esplode, bomb, distance
@@ -21,11 +21,12 @@ class BombCoordinator
   end
 
   def register_bombable(bombable)
-    @explosion_listeners << bombable
+    @explosion_listeners[bombable] += 1
   end
 
   def unregister_bombable(bombable)
-    @explosion_listeners.delete bombable
+    @explosion_listeners[bombable] -= 1
+    @explosion_listeners.delete bombable if @explosion_listeners[bombable] == 0
   end
 
   def unregister_bomb(bomb)
