@@ -9,13 +9,8 @@ class BulletCoordinator
     @active_bullets << bullet
     bullet.when :bullet_moved do
       unregister_bullet bullet
-      x, y = bullet.x, bullet.y
       @shot_listeners.keys.each do |target|
-        # TODO how to do this better
-        distance = (vec2(target.x, target.y) - vec2(bullet.x, bullet.y)).magnitude
-        if distance < 20
-        # if target.bb.collide_point?(bullet.x, bullet.y)
-          log "GOT EM"
+        if target.bb.collide_point?(bullet.x, bullet.y)
           target.react_to :shot, bullet
         end
       end

@@ -18,7 +18,7 @@ define_behavior :die_by_bullet do
         stage.create_actor :gib, x: actor.x, y: actor.y, vel: vel + (bullet.vel * 0.2), map: actor.map, size: rand(4)
       end
 
-      stage.create_actor :splat, x: actor.x, y: actor.y, view: :graphical_actor_view
+      # stage.create_actor :splat, x: actor.x, y: actor.y, view: :graphical_actor_view
 
     end
 

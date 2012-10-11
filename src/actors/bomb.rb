@@ -1,6 +1,5 @@
 define_actor :bomb do
   
-
   has_behaviors do
     positioned
     audible
@@ -9,7 +8,8 @@ define_actor :bomb do
     bound_by_box
     tile_bouncer
     tile_collision_detector
-    trivial_collision_point
+    bomb_collision_points
+    explode_by_bullet
   end
 
   behavior do

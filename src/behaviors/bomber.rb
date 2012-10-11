@@ -30,15 +30,13 @@ define_behavior :bomber do
     end
 
     def bomb_if_able
+      actor_loc = vec2(actor.x, actor.y)
 
       percent = (actor.bomb_charge / actor.max_bomb_charge.to_f)
       power = 10 * percent
 
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
-      # TODO not working!
-      actor.accel += rotated_gun_dir.dup.reverse! * actor.bomb_kickback * percent
-
-      bomb_vel = rotated_gun_dir * power
+      bomb_vel = (actor.gun_tip - actor_loc).unit * power
 
       bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel
       bomb_coordinator.register_bomb bomb

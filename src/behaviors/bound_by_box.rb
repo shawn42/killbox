@@ -26,6 +26,7 @@ define_behavior :bound_by_box do
     actor.when :rotation_changed do
       update_bb
     end
+    update_bb
   end
 
   helpers do

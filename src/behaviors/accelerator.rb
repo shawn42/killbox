@@ -70,6 +70,7 @@ define_behavior :accelerator do
   helpers do
     include MinMaxHelpers
     def remove
+      actor.vel = vec2(0,0) if actor.on_ground
       director.unsubscribe_all self
     end
   end
