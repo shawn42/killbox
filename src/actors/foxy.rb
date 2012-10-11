@@ -30,6 +30,7 @@ define_actor :foxy do
     bomber kickback: 5
     die_by_bomb
     blasted_by_bomb
+    die_by_bullet
     shielded
 
     jump power: 150, rotational_power: 35
@@ -60,10 +61,7 @@ define_actor :foxy do
       end
 
       if actor.can_shoot?
-        # TODO move these calcs to the shooter behavior
-        gun = actor.gun_direction.dup
-        gun.magnitude = 18
-        gun = gun.rotate(degrees_to_radians(actor.rotation)) + vec2(offset_x, offset_y)
+        gun = actor.gun_tip + vec2(x_off, y_off)
         target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration
       end
 

@@ -1,14 +1,22 @@
 define_behavior :shooter do
-  requires :timer_manager, :stage
+  requires :timer_manager, :stage, :bullet_coordinator
   setup do
     actor.has_attributes shot_power: opts[:shot_power],
                          kickback: opts[:kickback],
                          shot_recharge_time: opts[:recharge_time],
                          can_shoot: true,
-                         gun_direction: shoot_directions[:right]
+                         gun_direction: shoot_directions[:right],
+                         gun_tip: nil
                         
     actor.can_shoot = true
     setup_gun_looking
+    update_gun_tip
+    actor.when :gun_direction_changed do
+      update_gun_tip
+    end
+    actor.when :rotation_changed do
+      update_gun_tip
+    end
 
     actor.input.when(:shoot) { shoot_if_able }
 
@@ -41,15 +49,27 @@ define_behavior :shooter do
       end
     end
 
+    def update_gun_tip
+      rotation = actor.do_or_do_not(:rotation) || 0
+      rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(rotation))
+      rotated_gun_dir.magnitude = 21
+      actor.gun_tip = rotated_gun_dir + vec2(actor.x, actor.y)
+    end
+
     def shoot_if_able
       if actor.can_shoot?
+        actor_loc = vec2(actor.x, actor.y)
+
         actor.can_shoot = false
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
+        shot_vel = rotated_gun_dir * actor.shot_power
+        shot_vel = (actor.gun_tip - actor_loc).unit * actor.shot_power
+
+        bullet_pos = actor.gun_tip
+        bullet = stage.create_actor :bullet, player: actor, x: bullet_pos.x, y: bullet_pos.y, map: actor.map, vel: shot_vel
+        bullet_coordinator.register_bullet bullet
+
         actor.accel += rotated_gun_dir.dup.reverse! * actor.kickback
-        # seems strange, even though in physics terms we should add the
-        # actor.vel
-        shot_vel = (rotated_gun_dir*actor.shot_power) #+ actor.vel
-        stage.create_actor :bullet, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: shot_vel
         actor.react_to :play_sound, :shoot
 
         # TODO per Dustin: move this to where we apply the velocity

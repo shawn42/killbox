@@ -18,7 +18,6 @@ define_behavior :blasted_by_bomb do
     end
 
     def remove
-      log "removing blasted for #{actor.name}"
       bomb_coordinator.unregister_bombable actor
     end
 
