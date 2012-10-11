@@ -1,6 +1,7 @@
 module ZOrder
   MapTiles,
   Collectible,
+  Gib,
   Player,
   PlayerDecoration,
   MapForeground,
