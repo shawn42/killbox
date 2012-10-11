@@ -1,12 +1,10 @@
 define_behavior :jump do
   requires :director
   setup do
-    actor.has_attributes speed:          opts[:speed],
-                         accel:          vec2(0,0),
+    actor.has_attributes accel:          vec2(0,0),
                          rotation_vel:   0,
-                         power:          opts[:power],
                          jump_rotation:  opts[:rotational_power],
-                         max_jump_power: 110,
+                         max_jump_power: 60,
                          min_jump_power: 10
                         
     actor.has_attributes jump_power: actor.min_jump_power
@@ -23,7 +21,7 @@ define_behavior :jump do
 
     def update_jump(time_secs)
       if actor.input.charging_jump? && actor.on_ground?
-        actor.jump_power = min(actor.jump_power + actor.max_jump_power * time_secs * 3, actor.max_jump_power)
+        actor.jump_power = min(actor.jump_power + actor.max_jump_power * time_secs * 1.5, actor.max_jump_power)
       else
         if actor.jump_power > actor.min_jump_power && actor.on_ground
           if actor.ground_normal

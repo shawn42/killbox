@@ -52,7 +52,7 @@ define_behavior :shooter do
     def update_gun_tip
       rotation = actor.do_or_do_not(:rotation) || 0
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(rotation))
-      rotated_gun_dir.magnitude = 21
+      rotated_gun_dir.magnitude = 25
       actor.gun_tip = rotated_gun_dir + vec2(actor.x, actor.y)
     end
 
