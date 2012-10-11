@@ -68,7 +68,9 @@ define_actor :bomb do
       #target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::YELLOW, z
       target.draw_rotated_image img, offset_x, offset_y, z, rot#, 0.5, 0.5, x_scale
 
-      target.draw_circle offset_x, offset_y, 100, Color::WHITE, ZOrder::PlayerDecoration
+      if ENV['DEBUG']
+        target.draw_circle offset_x, offset_y, 100, Color::WHITE, ZOrder::PlayerDecoration
+      end
       
     end
   end

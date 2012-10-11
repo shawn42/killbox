@@ -36,7 +36,7 @@ define_behavior :bomber do
       power = 10 * percent
 
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
-      bomb_vel = (actor.gun_tip - actor_loc).unit * power
+      bomb_vel = actor.vel + ((actor.gun_tip - actor_loc).unit * power)
 
       bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel
       bomb_coordinator.register_bomb bomb

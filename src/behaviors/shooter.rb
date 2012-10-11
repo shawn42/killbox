@@ -52,7 +52,7 @@ define_behavior :shooter do
     def update_gun_tip
       rotation = actor.do_or_do_not(:rotation) || 0
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(rotation))
-      rotated_gun_dir.magnitude = 20
+      rotated_gun_dir.magnitude = 22
       actor.gun_tip = rotated_gun_dir + vec2(actor.x, actor.y)
     end
 
@@ -64,7 +64,7 @@ define_behavior :shooter do
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
         shot_vel = (actor.gun_tip - actor_loc).unit * actor.shot_power
 
-        bullet_pos = actor_loc + ((actor.gun_tip - actor_loc) * 1.8)
+        bullet_pos = actor_loc + ((actor.gun_tip - actor_loc) * 1.9)
         bullet = stage.create_actor :bullet, player: actor, x: bullet_pos.x, y: bullet_pos.y, map: actor.map, vel: shot_vel
         bullet_coordinator.register_bullet bullet
 
