@@ -163,9 +163,8 @@ describe "Foxy jumping", acceptance: true do
 
       shields_up
 
-      update 1000, step: 20
+      update 3000, step: 20
 
-      # foxy.rotation.should == 90
       see_actor_attrs :foxy, 
         rotation: 90.ish,
         rotation_vel: 0.ish
