@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="60" height="50" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="80" height="70" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
   <image source="../graphics/map/geo2.png" width="256" height="192"/>
   <tile id="2">
@@ -11,23 +11,23 @@
  <tileset firstgid="193" name="Foxy" tilewidth="30" tileheight="39">
   <image source="../graphics/foxy/idle.png" width="30" height="39"/>
  </tileset>
- <layer name="bg" width="60" height="50">
+ <layer name="bg" width="80" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3YvQqAIBSG4bqlhvaom+lnacxaaqur7gQG0lKSmNj7wMdZBBWHgydJAABwr5Y0Ro3dIOl11Mdn8eF41/O+f3lfZVQAMNHzntskq8X6WZLpLJZ7ufKm5xU6T7WSVKez3MuVNz2vkpQW69NLYjdKJqMCAADAr/zrA+AW/+u4MVMGwhLC3M2nEOZuPjF3AwAAQAx2e31dIuAuAAA=
+   H4sIAAAAAAAAA+3ZvQrCMBQG0PaVHNxFX8afxdHaRTd9alOIUJwMF9q0nAMfWQIJJcOlX9MAAAAAACzbMeU0WilzS7nmdDPfZYmGd/f9ft5fueH9daMVgHqZuWIiM9c75VWw/5GyyXkWnlWryMy1y/nXOaXNuRSeVavIzHVI2Rfsb39CmXtKP1oBAABqsZ37Aiye/4sxOt0YnW6MThfqssYeaEpr7IGmpAeK0QMBAAAAAADM6wO6VadogFcAAA==
   </data>
  </layer>
- <layer name="terrain" width="60" height="50">
+ <layer name="terrain" width="80" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2ZQQ6EIAxFPcPc/7CuJpmFOmBp+2nfS9h9Sl8wYvA4AOrxKT6ufKuCby/fu2e8CpXdrsC3Nvj+P593pvJ51O37atQD3z3B15ZTB19bTh18bTl18LXl1MHXllvNqvvV33qj62bwZl185+t19PX8f2Htb3ROxr5l+0bfS2X6Wmu/Ad812dk53XyjwPc563neRaDWjzeqvl594asBvtp1Z4l6r6v4fvHuB99cInzVBvTgBClAJBLgLgAA
+   H4sIAAAAAAAAA+3aQQ6CMBRAQcMRvP9hDUsTF9IHQnEm+cs2+EKkBh8PisXkYYx+jX6Nfo1+jX6Nfo1+jX6Nfo1+zUi/581ni9F+d6Vfo19zdL+R74iZ/OL+uzP9Gv0a/ZpfPX9Hz5tX5/zyPb8/mj0+h36Nfo1+jX6Nfo1+jX6Nfo1+jX6Nfs1M/fZ+H/mP/fZco19bo19bc2a/M/4vcZd+ezq7X30P8c/96t4r/cb3Xuk3vvdKv0a/ZrZ+R56PRszU74r0++zb69LvM/0a/Rr9thl9buv3buv16PdOv2bGflebLc7uNzv9Gv0a/Rr9Gv0a/Rr9Gv0a/Rr9msXkeQFaTQhBgFcAAA==
   </data>
  </layer>
- <objectgroup name="actors" width="60" height="50">
-  <object name="player1" type="foxy" gid="193" x="844" y="140"/>
-  <object name="player2" type="foxy" gid="193" x="110" y="431"/>
+ <objectgroup name="actors" width="80" height="70">
+  <object name="player1" type="foxy" gid="193" x="1004" y="300"/>
+  <object name="player2" type="foxy" gid="193" x="270" y="591"/>
  </objectgroup>
- <layer name="fg" width="60" height="50">
+ <layer name="fg" width="80" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3Zyw2DMBRFQTcTd0AaCB0kTZGqkwLMAiRzAc9I3rE4G3/0KAW4g2c6oIMpHcChPumAgFc6ADqyp6/rkQ4AAAB2+/7X0vF78rbMgc1X96vpAKDJuTaGdzrgQHM6oKGWbfegeTJrRvxPBMBYzjI78B7jzn5hB1q94C4AAA==
+   H4sIAAAAAAAAA+3awRFAMBBA0TRDBzRABzRF1XRgDGsj895Mbg7/lIhVCgAAAAC1GbMDAgzZARBozQ5owJQdALzGnvhcK3tilx0AAAAAPLafawt8Hq7cmZuaR7arzw4AKM4Z6rBkB/zYnB3wgb7ce28yz+Wv/JcCABCnlm+x7isAAABAlAN0IZ4rgFcAAA==
   </data>
  </layer>
 </map>
