@@ -36,6 +36,8 @@ class MapInspector
 
   # TODO this will come from the map import eventually
   def solid?(map, row, col)
+    return false if row < 0 || col < 0
+
     trow = map.tile_grid[row]
     return false if trow.nil?
     tile = trow[col]

@@ -18,7 +18,7 @@
  </layer>
  <layer name="terrain" width="60" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3ZQQqAMAxE0Z7B+x/WC4gYZ8RJ+j+4kbT2uRJci2hex/Dryjs1vHgnhRfvpPDi7dpu31dPHXh7hlebSw+vNpceXm0uPbzaXHp4tbn08Gpz6XXwuv4ZrJv7rmdWznL37Gqq19nfXvX9u87imq+uwesNr3e+ugavN7ze+eoavN7eeL/8hkvzfh3eXvtXw9tr/2p4/funXbRHJ6J5upfgLgAA
+   H4sIAAAAAAAAA+2ZQQ6AIAwEeYP/f6wnb8YIu+BSZxIuZls6nJrYGkA9juLnzrcq+OJbCXzxrQS++O7K3/artx747gm+Wi4dfLVcOvhquXTw1XLp4Kvl0sFXy6Wzg6/rn0F7+O66s2eWp7t7UX2dfO2rvr9rFle+twZfL/h686M1s8DXmx+tmQW+3vzKmhl9V+xwI3N93VcF3+y+vazao1N8L9L2q9ng6++fduAfnDlQE1TgLgAA
   </data>
  </layer>
  <objectgroup name="actors" width="60" height="50">
@@ -27,7 +27,7 @@
  </objectgroup>
  <layer name="fg" width="60" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3ZQQqAIBAFUC+TN6g71qltUctghGTC3gN3In8hOPhLAWawZQcYYM0OAAA/tGQHAAAAgMtxrn3g/if1hTOI6ek2dAbc3AUAomrpm+10JABEfeXvwNvFzBqkX/9s4C4AAA==
+   H4sIAAAAAAAAA+3ZQQqAIBAFUC9TN6gTdIO6VJ26FrYMDLKJfA/cifyF4OBPCfiDMTpABUN0AABoUBcdAAAAALLtWGvF/Vf6B86gzJ1uQ2fAyV1owxwd4EVTdACoYIkOkPXp3mynIwGg1Ff+Drxd/NkOZ/Xyz+AuAAA=
   </data>
  </layer>
 </map>
