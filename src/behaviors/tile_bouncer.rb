@@ -1,5 +1,5 @@
 define_behavior :tile_bouncer do
-  requires :map_inspector
+  requires :map_inspector, :stage
   setup do
     raise "vel required" unless actor.has_attribute? :vel
 
@@ -40,6 +40,7 @@ define_behavior :tile_bouncer do
           face_normal = FACE_NORMALS[closest_collision[:tile_face]]
 
           point_that_collided = cps[closest_collision[:point_index]]
+
           motion = penetration - point_that_collided 
           # motion = actor.vel
 
@@ -48,20 +49,18 @@ define_behavior :tile_bouncer do
           projected = motion.projected_onto(face_normal)
 
           new_vel = (projected - motion).reverse + projected.reverse
-
-          # XXX bandaide ... no longer stuck.. but 
-          actor.rotation_vel *= -1
-
           actor.vel = new_vel
 
           left_over_movement = new_vel.dup
           left_over_movement.magnitude = left_over
           new_loc = hit_vector + left_over_movement + (actor_loc - point_that_collided)
 
-          actor.rotation += actor.rotation_vel
+          log "BEFORE ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
+          actor.rotation_vel = 0
           actor.x = new_loc.x
           actor.y = new_loc.y
-          log "UPDATED ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel}"
+          log "UPDATED ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
+          # binding.pry if closest_collision[:tile_face] == :right
         else
           # raise "collided, but no good collisions in [#{collisions}]"
         end
@@ -71,6 +70,7 @@ define_behavior :tile_bouncer do
         actor.x += actor.vel.x 
         actor.y += actor.vel.y
       end
+
     end
 
     reacts_with :remove
