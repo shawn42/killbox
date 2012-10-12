@@ -1,5 +1,6 @@
 class BombCoordinator
 
+  attr_accessor :active_bombs, :explosion_listeners
   def initialize
     @active_bombs = []
     @explosion_listeners = Hash.new { 0 }

@@ -46,6 +46,7 @@ describe "Foxy jumping", acceptance: true do
     # mock_tiles 'foxy.png', 84/3, 360/9
     mock_image 'foxy.png'
     mock_image 'bullet.png'
+    mock_image 'bomb.png'
     Gamebox.configuration.stages = [:jump_acceptance]
 
     game
@@ -172,11 +173,49 @@ describe "Foxy jumping", acceptance: true do
     end
   end
 
+  context "bombs" do
+    it 'does not blast you through the floor' do
+      update 4000, step: 20
+
+      see_actor_attrs :foxy, 
+        x: 120.ish,
+        y: 155.ish,
+        rotation: 0.ish
+
+      look_up
+      10.times do
+        bomb 50
+        update 1
+      end
+      update 2500, step: 20
+      shields_up
+
+      update 1200, step: 20
+
+      see_actor_attrs :foxy, 
+        x: 120.ish,
+        y: 155.ish,
+        rotation: 0.ish
+
+    end
+  end
+
   def jump(amount)
     # charge & jump
     press_key KbN
     update amount, step: 20
     release_key KbN
+  end
+
+  def bomb(amount)
+    # charge & throw
+    press_key KbM
+    update amount, step: 20
+    release_key KbM
+  end
+
+  def look_up
+    press_key KbW
   end
 
   def shields_up

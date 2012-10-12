@@ -46,7 +46,7 @@ define_actor :bomb do
           end
         end
 
-        timer_manager.add_timer "#{object_id}_bomb_death", 4_000, false do
+        timer_manager.add_timer "#{object_id}_bomb_death", 3_000, false do
           actor.react_to :play_sound, :bomb
           actor.emit :boom
           actor.remove

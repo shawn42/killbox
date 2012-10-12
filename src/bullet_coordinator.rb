@@ -1,5 +1,6 @@
 class BulletCoordinator
 
+  attr_accessor :active_bullets, :shot_listeners
   def initialize
     @active_bullets = []
     @shot_listeners = Hash.new { 0 }

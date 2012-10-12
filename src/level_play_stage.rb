@@ -18,8 +18,8 @@ class LevelPlayStage < Stage
     super
     $debug_drawer = DebugDraw.new
     # TODO cleaner way to summon these into existance at the stage context
-    this_object_context[:bomb_coordinator]
-    this_object_context[:bullet_coordinator]
+    bomb_c = this_object_context[:bomb_coordinator]
+    bullet_c = this_object_context[:bullet_coordinator]
 
     director.update_slots = [:first, :before, :update, :last]
 
@@ -45,8 +45,6 @@ class LevelPlayStage < Stage
     @console.react_to :watch, :vel do player.vel.to_a.map &:two end
     @console.react_to :watch, :x do player.x.two end
     @console.react_to :watch, :y do player.y.two end
-    @console.react_to :watch, :gun do player.gun_tip.to_a.map &:two end
-
   end
 
   def setup_level(name)

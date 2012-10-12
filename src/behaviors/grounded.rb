@@ -9,6 +9,7 @@ define_behavior :grounded do
 
       actor_loc = vec2(actor.x, actor.y)
       touching_points = actor.collision_points.select { |fp| on_ground?(fp) }
+      # TODO actor.react_to :left_ground # should rotate now
       actor.on_ground = touching_points.size > 0
       actor.action = :idle unless actor.action == :idle
     end
