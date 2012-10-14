@@ -24,9 +24,9 @@ define_actor :foxy do
     }
     grounded
 
-    accelerator air_speed: 16, speed: 30, max_speed: 18 
+    accelerator air_speed: 12, speed: 14, max_speed: 12 
 
-    shooter recharge_time: 1000, shot_power: 25, kickback: 2.5
+    shooter recharge_time: 4_000, shot_power: 15, kickback: 0.7
     bomber kickback: 5
     die_by_bomb
     blasted_by_bomb
