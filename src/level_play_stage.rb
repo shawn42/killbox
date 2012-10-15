@@ -13,6 +13,7 @@ class LevelPlayStage < Stage
     :advanced_jump => 2,
     :cave => 2,
     :basic_jump => 1,
+    :hot_pocket => 2,
   }
   def setup
     super
