@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="62" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16">
+  <image source="../graphics/map/geo2.png" width="256" height="192"/>
+  <tile id="2">
+   <properties>
+    <property name="solid" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="193" name="Foxy" tilewidth="30" tileheight="39">
+  <image source="../graphics/foxy/idle.png" width="30" height="39"/>
+ </tileset>
+ <tileset firstgid="194" name="0space" tilewidth="733" tileheight="581">
+  <image source="../../../../Desktop/pocket_cave.gif" width="733" height="581"/>
+ </tileset>
+ <objectgroup name="the cave" width="62" height="50" visible="0" opacity="0.15">
+  <object gid="194" x="24" y="793"/>
+ </objectgroup>
+ <layer name="the cave" width="62" height="50" visible="0" opacity="0.25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3OMQEAAAgDoPWPZTIj7NMHEpAAAAAAAAAAAAAAAADNfAeOLX+YpExwMAAA
+  </data>
+ </layer>
+ <layer name="bg" width="62" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3BMQEAAADCoPVP7W0HoAAAAAAAAAAAAAAAAN4ApX1PanAwAAA=
+  </data>
+ </layer>
+ <layer name="terrain" width="62" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2W0Q6AIAgArU/o/z+2l55cLoaQCHcbLw6Vs8ZoDQAAAAAAAGBvTkVkAG95bgbwludmIYu3pldJvnufdz0RpR9W8171vlZ5s3VU9R6tj/7TPmbv0+Zpwft9/RgE3rW8V9XlfT7eeFf21vYzq7q8z9/dWzv/S+cWL/Bes9+av+YWvGOAt02e135rpH0W77l7ovA1//Yxe08U8Mbb0zta4I23pfcNVOVUMnAwAAA=
+  </data>
+ </layer>
+ <objectgroup name="actors" width="62" height="50">
+  <object name="player1" type="foxy" gid="193" x="687" y="622"/>
+  <object name="player2" type="foxy" gid="193" x="39" y="678"/>
+  <object name="player3" type="foxy" gid="193" x="438" y="345"/>
+  <object name="player4" type="foxy" gid="193" x="179" y="464"/>
+ </objectgroup>
+ <layer name="fg" width="62" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Y0QmDMBSFYV9cwWXcoK7gdB0hE7aBPEhQUuztbU7u/8Gh0IfAjwq20wQAAAAAAKAtlUUTtXsve1aLoG6O0q1uLmt9N5K5sRGN3HbFu3ltzINFc6uj7vl3c+Zxrb2bPhHxuc48u3t6l6X79+iOhW5tZ789Lda7UbtT9Wl1Xu+su1VYdi9lvTv+R0r3fYrdj/e2L89T7LaQ34VVui1F7Va6zy2pXG9AxQvvQ5+UcDAAAA==
+  </data>
+ </layer>
+</map>
