@@ -13,14 +13,14 @@ define_actor :foxy do
     #   hurt:         9..11,
     #   knocked_down: 24..26,
     # }
-    animated_with_spritemap file: 'foxy.png', rows: 9, cols: 3, actions: {
-      idle:         1,
-      walking_right:1,
-      walking_left: 1,
-      jumping:      1,
-      falling:      1,
-      hurt:         1,
-      knocked_down: 1,
+    animated_with_spritemap file: 'boxy.png', rows: 1, cols: 1, actions: {
+      idle:         0,
+      walking_right:0,
+      walking_left: 0,
+      jumping:      0,
+      falling:      0,
+      hurt:         0,
+      knocked_down: 0,
     }
     grounded
 

@@ -12,7 +12,7 @@ define_behavior :animated_with_spritemap do
     actor.has_attributes :image, :width, :height
 
     file, rows, cols, actions = opts[:file], opts[:rows], opts[:cols], opts[:actions]
-    @spritemap = resource_manager.load_image file
+    # @spritemap = resource_manager.load_image file
     
     # negatives means rows/cols instead of w/h 
     #   http://www.libgosu.org/rdoc/Gosu/Image.html#load_tiles-class_method
