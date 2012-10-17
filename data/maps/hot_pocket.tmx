@@ -11,9 +11,6 @@
  <tileset firstgid="193" name="Foxy" tilewidth="30" tileheight="39">
   <image source="../graphics/foxy/idle.png" width="30" height="39"/>
  </tileset>
- <tileset firstgid="194" name="0space" tilewidth="733" tileheight="581">
-  <image source="../../../../Desktop/pocket_cave.gif" width="733" height="581"/>
- </tileset>
  <objectgroup name="the cave" width="62" height="50" visible="0" opacity="0.15">
   <object gid="194" x="24" y="793"/>
  </objectgroup>
