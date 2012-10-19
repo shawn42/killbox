@@ -1,7 +1,7 @@
-define_behavior :ttl do
+define_behavior :short_lived do
   requires :timer_manager
   setup do
-    actor.has_attributes ttl: opts || 500
+    actor.has_attributes ttl: opts[:ttl] || 500
 
     timer_manager.add_timer timer_name, actor.ttl, false do
       actor.remove
