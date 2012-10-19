@@ -11,8 +11,6 @@ class BulletCoordinator
     bullet.when :bullet_moved do
       unregister_bullet bullet
       @shot_listeners.keys.each do |target|
-        # TODO this should be collide line? use LineClipper?
-
         current = vec2(bullet.x, bullet.y)
         future = current + bullet.vel
         if LineClipper.clip(current.x, current.y, future.x, future.y, target.bb)

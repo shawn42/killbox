@@ -26,12 +26,15 @@ define_actor :foxy do
 
     accelerator air_speed: 12, speed: 14, max_speed: 12 
 
+    sword
     shooter recharge_time: 4_000, shot_power: 15, kickback: 0.7
+    shielded
     bomber kickback: 5
+
+    die_by_sword
+    die_by_bullet
     die_by_bomb
     blasted_by_bomb
-    die_by_bullet
-    shielded
 
     jump rotational_power: 20
     friction amount: 0.15

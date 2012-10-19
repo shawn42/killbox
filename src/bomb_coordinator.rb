@@ -10,7 +10,6 @@ class BombCoordinator
     @active_bombs << bomb
     bomb.when :boom do
       unregister_bomb bomb
-      x, y = bomb.x, bomb.y
       @explosion_listeners.each do |target, count|
         distance = (vec2(target.x, target.y) - vec2(bomb.x, bomb.y)).magnitude
 

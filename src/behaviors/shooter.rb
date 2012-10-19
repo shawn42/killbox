@@ -58,6 +58,7 @@ define_behavior :shooter do
 
     def shoot_if_able
       if actor.can_shoot?
+        log "SHOOTING"
         actor_loc = vec2(actor.x, actor.y)
 
         actor.can_shoot = false
