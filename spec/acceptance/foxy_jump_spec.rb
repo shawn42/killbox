@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 class MockImage
-  def width; 28; end
-  def height; 40; end
+  def width; 26; end
+  def height; 30; end
 end
 
 class FakeLevel
@@ -44,7 +44,9 @@ describe "Foxy jumping", acceptance: true do
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
     # mock_tiles 'foxy.png', 84/3, 360/9
-    mock_image 'foxy.png'
+    # mock_image 'foxy.png'
+    # TEMP til we get new sprites
+    mock_image 'boxy.png'
     mock_image 'bullet.png'
     mock_image 'bomb.png'
     Gamebox.configuration.stages = [:jump_acceptance]
@@ -52,6 +54,7 @@ describe "Foxy jumping", acceptance: true do
     game
   end
 
+  let(:floor_y) { 160 }
   let(:tile_size) { 16 }
   let(:map) { game.actor(:map) }
   let(:foxy) { game.actor(:foxy) }
@@ -65,7 +68,7 @@ describe "Foxy jumping", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 120.ish,
-      y: 155.ish,
+      y: floor_y.ish,
       rotation: 0.ish
 
     jump 2000
@@ -81,7 +84,7 @@ describe "Foxy jumping", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 120.ish,
-      y: 155.ish,
+      y: floor_y.ish,
       rotation: 0.ish
   end
 
@@ -94,7 +97,7 @@ describe "Foxy jumping", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 120.ish,
-      y: 155.ish,
+      y: floor_y.ish,
       rotation: 0.ish
 
   end
@@ -105,19 +108,23 @@ describe "Foxy jumping", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 120.ish,
-      y: 155.ish
+      y: floor_y.ish
 
-    press_key KbA
-    update 1000, step: 20
-    release_key KbA
+    walk_left 1200
 
     see_actor_attrs :foxy, 
       on_ground: true,
       rotation: 90.ish,
-      x: 37.ish
+      x: 32.ish
 
-    foxy.y.should < 155
+    foxy.y.should < floor_y
 
+  end
+
+  def walk_left(time_held)
+    press_key KbA
+    update time_held, step: 20
+    release_key KbA
   end
 
   it 'grabs the wall when we rotate next to it' do
@@ -131,7 +138,7 @@ describe "Foxy jumping", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 31.ish,
-      y: 155.ish,
+      y: floor_y.ish,
       rotation: 0.ish
 
     jump 100
@@ -155,7 +162,7 @@ describe "Foxy jumping", acceptance: true do
 
       see_actor_attrs :foxy, 
         x: 31.ish,
-        y: 155.ish,
+        y: floor_y.ish,
         rotation: 0.ish
 
       jump 10
@@ -179,7 +186,7 @@ describe "Foxy jumping", acceptance: true do
 
       see_actor_attrs :foxy, 
         x: 120.ish,
-        y: 155.ish,
+        y: floor_y.ish,
         rotation: 0.ish
 
       look_up
@@ -194,7 +201,7 @@ describe "Foxy jumping", acceptance: true do
 
       see_actor_attrs :foxy, 
         x: 120.ish,
-        y: 155.ish,
+        y: floor_y.ish,
         rotation: 0.ish
 
     end
