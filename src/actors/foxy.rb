@@ -25,6 +25,7 @@ define_actor :foxy do
     grounded
 
     accelerator air_speed: 12, speed: 14, max_speed: 12 
+    gibify
 
     sword
     shooter recharge_time: 4_000, shot_power: 15, kickback: 0.7
