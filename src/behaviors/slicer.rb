@@ -41,7 +41,9 @@ define_behavior :slicer do
         # sword_loc = actor_loc + rotated_look
         # stage.create_actor :slice_effect, x: sword_loc.x, y: sword_loc.y, view: :graphical_actor_view
 
-        stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, view: :graphical_actor_view
+        stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, 
+          x_scale: actor.flip_h? ? -1 : 1, 
+          view: :graphical_actor_view
 
         actor.emit :slice
 
