@@ -15,6 +15,7 @@ define_behavior :blasted_by_bomb do
       force = (1-(distance / bomb.radius)) * bomb.force
       forceV.scale! force
       actor.vel += forceV
+      actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
     end
 
     def remove

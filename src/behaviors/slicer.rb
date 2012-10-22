@@ -1,4 +1,4 @@
-define_behavior :sword do
+define_behavior :slicer do
   requires :timer_manager, :stage, :sword_coordinator
   setup do
     actor.has_attributes can_slice: true,
@@ -38,8 +38,11 @@ define_behavior :sword do
         end
 
         log "SWING #{rotated_look}"
-        sword_loc = actor_loc + rotated_look
-        stage.create_actor :slice_effect, x: sword_loc.x, y: sword_loc.y, view: :graphical_actor_view
+        # sword_loc = actor_loc + rotated_look
+        # stage.create_actor :slice_effect, x: sword_loc.x, y: sword_loc.y, view: :graphical_actor_view
+
+        stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, view: :graphical_actor_view
+
         actor.emit :slice
 
         setup_can_slice_timer

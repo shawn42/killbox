@@ -27,7 +27,7 @@ define_actor :foxy do
     accelerator air_speed: 12, speed: 14, max_speed: 12 
     gibify
 
-    sword
+    slicer
     shooter recharge_time: 4_000, shot_power: 15, kickback: 0.7
     shielded
     bomber kickback: 5
