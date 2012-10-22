@@ -7,8 +7,9 @@ define_behavior :die_by_sword do
   end
 
   helpers do
-    def sliced(sword)
+    def sliced(sword, arc_angle)
       log "UG.. you stabbed me"
+      # TODO need to track some sense of swung < N ms ago so I'm still swinging
       log "TODO parry"
 
       actor.react_to :play_sound, :death
