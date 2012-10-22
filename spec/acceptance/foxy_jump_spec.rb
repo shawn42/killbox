@@ -191,7 +191,7 @@ describe "Foxy jumping", acceptance: true do
 
       look_up
       10.times do
-        bomb 50
+        charge_and_throw_bomb 50
         update 1
       end
       update 2500, step: 20
@@ -214,10 +214,9 @@ describe "Foxy jumping", acceptance: true do
     release_key KbN
   end
 
-  def bomb(amount)
-    # charge & throw
+  def charge_and_throw_bomb(time_held)
     press_key KbM
-    update amount, step: 20
+    update time_held, step: 20
     release_key KbM
   end
 
