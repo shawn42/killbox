@@ -3,7 +3,7 @@ define_behavior :slicer do
   setup do
     actor.has_attributes can_slice: true,
                          lunge_distance: 20,
-                         slice_recharge_time: 1_500, 
+                         slice_recharge_time: 600, 
                          slice_reach: 40
                         
     sword_coordinator.register_sword actor
@@ -42,7 +42,6 @@ define_behavior :slicer do
         # stage.create_actor :slice_effect, x: sword_loc.x, y: sword_loc.y, view: :graphical_actor_view
 
         stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, 
-          x_scale: actor.flip_h? ? -1 : 1, 
           view: :graphical_actor_view
 
         actor.emit :slice

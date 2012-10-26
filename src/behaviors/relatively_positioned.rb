@@ -4,8 +4,11 @@ define_behavior :relatively_positioned do
     actor.has_attributes(
       x: 0,
       y: 0,
-      rotation: 0
+      rotation: 0,
+      x_scale: parent.flip_h? ? -1 : 1
     )
+
+    actor.offset_from_parent.rotate!(-actor.rotation)
 
     parent.when(:x_changed) { update_location }
     parent.when(:y_changed) { update_location }
@@ -19,12 +22,12 @@ define_behavior :relatively_positioned do
   helpers do
     def update_location
       parent = actor.parent
-      offset = actor.offset_from_parent
+      parent_pos = vec2(parent.x,parent.y)
+      rotated_pos = parent_pos + actor.offset_from_parent.rotate(degrees_to_radians(parent.rotation))
 
-      # TODO fix for rotational position change
-      actor.x = parent.x + offset.x
-      actor.y = parent.y + offset.y
-      actor.rotation = actor.rotation
+      actor.x = rotated_pos.x
+      actor.y = rotated_pos.y
+      actor.rotation = parent.rotation
 
     end
   end

@@ -1,5 +1,6 @@
 class PlayerViewport < Viewport
-  attr_accessor :x_scr_offset, :y_scr_offset
+  attr_accessor :x_scr_offset, :y_scr_offset,
+    :follow_offset_x, :follow_offset_y
 
   def initialize(x_scr_offset, y_scr_offset, width, height)
     super(width, height)
@@ -8,21 +9,26 @@ class PlayerViewport < Viewport
     @speed = 0.2
   end
 
+  def self.attach_player(vp, player)
+    vp.follow player
+    player.has_attributes viewport: vp
+  end
+
   def self.create_n(players, total_size)
     case players.size
     when 1  
       vp1 = PlayerViewport.new 0, 0, total_size[0], total_size[1]
-      vp1.follow players[0]#, [0,0]#, [100,100]
+      attach_player(vp1, players[0])
 
       [vp1]
     when 2  # SPLIT VERTICALLY IN HALF
       half_width = total_size[0]/2
 
       vp1 = PlayerViewport.new 0, 0, half_width, total_size[1]
-      vp1.follow players[0]#, [0,0]#, [100,100]
+      attach_player(vp1, players[0])
 
       vp2 = PlayerViewport.new half_width, 0, half_width, total_size[1]
-      vp2.follow players[1], [vp2.width, 0] #, [100,100]
+      attach_player(vp2, players[1])
       [vp1, vp2]
     else
       [] #TODO

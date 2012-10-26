@@ -23,6 +23,7 @@ define_actor :foxy do
       knocked_down: 0,
     }
     grounded
+    looker
 
     accelerator air_speed: 12, speed: 14, max_speed: 12 
     gibify

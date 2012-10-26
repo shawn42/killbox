@@ -5,8 +5,7 @@ define_behavior :accelerator do
                          air_speed: opts[:air_speed],
                          accel: vec2(0,0),
                          max_speed: opts[:max_speed],
-                         vel: vec2(0,0),
-                         flip_h: false
+                         vel: vec2(0,0)
                         
     director.when :before do |time, time_secs|
       input = actor.input
@@ -15,11 +14,9 @@ define_behavior :accelerator do
       if input.walk_right? && actor.vel.x < (actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
         force = actor.ground_normal.rotate(Math::HALF_PI) * speed * time_secs
         actor.accel += force 
-        actor.flip_h = false
       elsif input.walk_left? && actor.vel.x > -(actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
         force = actor.ground_normal.rotate(-Math::HALF_PI) * speed * time_secs
         actor.accel += force
-        actor.flip_h = true
       end
 
       actor.vel += actor.accel
