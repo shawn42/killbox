@@ -6,6 +6,8 @@ class PlayerViewport < Viewport
     super(width, height)
     @x_scr_offset = x_scr_offset
     @y_scr_offset = y_scr_offset
+    @x_offset = @x_scr_offset
+    @y_offset = @y_scr_offset
     @speed = 0.2
   end
 
@@ -48,7 +50,7 @@ class PlayerViewport < Viewport
         y = @y_offset_range.min if @y_offset_range.min > y 
         y = @y_offset_range.max if @y_offset_range.max < y 
       end
-      x_diff = @width/2 + @follow_offset_x - x - @x_offset
+      x_diff = @width/2 + @follow_offset_x - x - @x_offset + @x_scr_offset
       if x_diff.abs > @buffer_x
         # move screen 
         if x_diff > 0
@@ -60,7 +62,7 @@ class PlayerViewport < Viewport
         scrolled = true
       end
 
-      y_diff = @height/2 + @follow_offset_y - y - @y_offset
+      y_diff = @height/2 + @follow_offset_y - y - @y_offset + @y_scr_offset
       if y_diff.abs > @buffer_y
         # move screen
         if y_diff > 0
@@ -120,8 +122,8 @@ class PlayerViewport < Viewport
     @buffer_x = buff[0]
     @buffer_y = buff[1]
 
-    @x_offset = @width/2 - @follow_target.x + @follow_offset_x
-    @y_offset = @height/2 - @follow_target.y + @follow_offset_y
+    @x_offset = @width/2 - @follow_target.x + @follow_offset_x + @x_scr_offset
+    @y_offset = @height/2 - @follow_target.y + @follow_offset_y + @y_scr_offset
 
     if @target.respond_to? :rotation
       @rotation = @target.rotation

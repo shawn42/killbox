@@ -44,11 +44,12 @@ class LevelPlayStage < Stage
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
 
-    player = @players.first
-    @console.react_to :watch, :x do player.x.two end
-    @console.react_to :watch, :y do player.y.two end
-    @console.react_to :watch, :can_shoot do player.can_shoot? end
-    @console.react_to :watch, :can_slice do player.can_slice? end
+    player = @players[1]
+    if player
+      @console.react_to :watch, :p2x do player.x.two end
+      @console.react_to :watch, :p2y do player.y.two end
+      @console.react_to :watch, :sb2 do player.viewport.screen_bounds end
+    end
   end
 
   def setup_level(name)
@@ -151,16 +152,17 @@ class LevelPlayStage < Stage
   end
 
   def draw_viewport(target, viewport)
-    center_x = viewport.width / 2 + viewport.x_scr_offset
-    center_y = viewport.height / 2 + viewport.y_scr_offset
+    screen_bounds = viewport.screen_bounds
+    center_x = screen_bounds.width / 2 + screen_bounds.x
+    center_y = screen_bounds.height / 2 + screen_bounds.y
 
     target.draw_box(
-      viewport.x_scr_offset,
-      viewport.y_scr_offset, 
-      viewport.x_scr_offset+viewport.width,
-      viewport.y_scr_offset+viewport.height, Color::BLACK, ZOrder::HudText)
+      screen_bounds.x,
+      screen_bounds.y, 
+      screen_bounds.x+screen_bounds.width,
+      screen_bounds.y+screen_bounds.height, Color::BLACK, ZOrder::HudText)
 
-    target.clip_to(*viewport.screen_bounds) do
+    target.clip_to(*screen_bounds) do
       target.rotate(-viewport.rotation, center_x, center_y) do
         z = 0
         @parallax_layers.each do |parallax_layer|

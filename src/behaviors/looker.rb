@@ -21,6 +21,8 @@ define_behavior :looker do
 
 
   helpers do
+    include MinMaxHelpers
+
     def look_directions 
       {
       left: vec2(-1,0),
@@ -44,17 +46,26 @@ define_behavior :looker do
       end
 
       viewport = actor.viewport
-      offset_vec = vec2(viewport.follow_offset_x, viewport.follow_offset_y)
+      current_vec = vec2(viewport.follow_offset_x, viewport.follow_offset_y)
       if look_vector 
         rot = actor.do_or_do_not(:rotation) || 0
-        offset_vec -= look_vector.rotate_deg(rot) * actor.look_distance * time_secs
+        offset_vec = current_vec - look_vector.rotate_deg(rot) * actor.look_distance * time_secs
+
+        offset_vec.magnitude = actor.look_distance if offset_vec.magnitude > actor.look_distance
+
+        viewport.follow_offset_x = offset_vec.x
+        viewport.follow_offset_y = offset_vec.y
       else
-        offset_vec = vec2(0,0) 
+        current_magnitude = current_vec.magnitude 
+        magnitude_to_move_toward_player = actor.look_distance * time_secs
+        current_vec.magnitude = max(current_magnitude - magnitude_to_move_toward_player, 0)
+
+        current_vec = vec2(0,0) if current_vec.magnitude < 1
+
+        viewport.follow_offset_x = current_vec.x
+        viewport.follow_offset_y = current_vec.y
       end
 
-      offset_vec.magnitude = actor.look_distance if offset_vec.magnitude > actor.look_distance
-      viewport.follow_offset_x = offset_vec.x
-      viewport.follow_offset_y = offset_vec.y
     end
 
   end
