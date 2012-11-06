@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="fuxies.svg"
+   sodipodi:docname="mockup.svg"
    inkscape:export-filename="foxya.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -300,9 +300,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="14.256177"
-     inkscape:cy="47.143489"
+     inkscape:zoom="2"
+     inkscape:cx="111.00528"
+     inkscape:cy="128.95534"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -314,7 +314,9 @@
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
-     inkscape:snap-global="false" />
+     inkscape:snap-global="false"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -323,7 +325,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1323,14 +1325,15 @@
        id="g3984"
        inkscape:export-filename="idle.png"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-ydpi="90"
+       transform="translate(5,3.5)">
       <rect
          y="41.786873"
          x="-58.985737"
          height="39"
          width="30"
          id="rect3214"
-         style="fill:#000000;fill-opacity:1;stroke:none;opacity:0" />
+         style="opacity:0;fill:#000000;fill-opacity:1;stroke:none" />
       <g
          transform="matrix(0.83682387,0,0,0.83682387,-59.039986,13.51398)"
          id="g3166">
