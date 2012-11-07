@@ -13,14 +13,14 @@ define_actor :foxy do
     #   hurt:         9..11,
     #   knocked_down: 24..26,
     # }
-    animated_with_spritemap file: 'boxy.png', rows: 1, cols: 1, actions: {
-      idle:         0,
-      walking_right:0,
-      walking_left: 0,
-      jumping:      0,
-      falling:      0,
-      hurt:         0,
-      knocked_down: 0,
+    animated_with_spritemap file: 'trippers/animations.png', rows: 1, cols: 8, actions: {
+      idle:         7,
+      walking_right:7,
+      walking_left: 7,
+      jumping:      7,
+      falling:      7,
+      hurt:         7,
+      knocked_down: 7,
     }
     grounded
     looker
@@ -61,7 +61,7 @@ define_actor :foxy do
       offset_y = y+y_off
       x_scale = 1
       
-      if actor.flip_h
+      if actor.do_or_do_not :flip_h
         x_scale = -1
       end
 

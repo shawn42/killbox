@@ -5,10 +5,6 @@ define_behavior :tile_oriented do
     actor.has_attribute :ground_normal, vec2(0, -1)
 
     actor.when :tile_collisions do |collisions|
-      if ENV['DEBUG']
-        $logs ||= []
-        $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{collisions}"
-      end
       if collisions
         map = actor.map.map_data
         actor_loc = vec2(actor.x, actor.y)
@@ -17,14 +13,6 @@ define_behavior :tile_oriented do
           face_normal = FACE_NORMALS[collision[:tile_face]]
           # no tile next to
           face_normal && !map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
-        end
-        if ENV['DEBUG'] && interesting_collisions.empty?
-          $logs ||= []
-
-          $logs[-60..-1].each do |l|
-            log l
-          end
-          # binding.pry
         end
 
         # get collision that would occur first
@@ -81,11 +69,6 @@ define_behavior :tile_oriented do
       # tile_x = (new_x / 16).floor
       # tile_y = (actor.y / 16).floor + 1
       # map = actor.map.map_data
-
-      if ENV['DEBUG']
-        $logs ||= []
-        $logs << "#{actor.respond_to?(:name) ? actor.name : actor.object_id} #{actor.x},#{actor.y} #{actor.vel}:#{actor.rotation_vel} (#{new_x},#{new_y})"
-      end
 
       actor.x += actor.vel.x 
       actor.y += actor.vel.y

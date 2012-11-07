@@ -3,12 +3,10 @@ define_behavior :looker do
 
   setup do
     # in pixels
+    viewport = actor.do_or_do_not :viewport
+
     actor.has_attributes look_distance: 100,
                          flip_h: false
-
-    director.when :update do |t_ms, time_in_sec|
-      update_look_point time_in_sec
-    end
 
     input = actor.input
     input.when :look_left do
@@ -16,6 +14,12 @@ define_behavior :looker do
     end
     input.when :look_right do
       actor.flip_h = false
+    end
+
+    if viewport
+      director.when :update do |t_ms, time_in_sec|
+        update_look_point time_in_sec
+      end
     end
   end
 

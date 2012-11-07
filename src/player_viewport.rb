@@ -1,4 +1,71 @@
-class PlayerViewport < Viewport
+  
+# AHHHHHH designed myself into a corner!!
+# viewport is conjected and reads its size from config manager
+# hence the CopyViewport
+class CopyViewport
+  extend Publisher
+  can_fire :scrolled
+
+  attr_accessor :x_offset, :y_offset, :follow_target, :width,
+    :height, :x_offset_range, :y_offset_range, :boundary, :rotation
+
+  attr_reader :speed
+
+  def debug
+    "xoff:#{@x_offset} yoff:#{@y_offset}"
+  end
+
+  def initialize(width, height)
+    @width = width
+    @height = height
+    reset
+  end
+
+  def reset
+    @rotation = 0
+    @speed = 1
+    @x_offset = 0
+    @y_offset = 0
+  end
+
+  def scroll(x_delta,y_delta)
+    @x_offset += x_delta
+    @y_offset += y_delta
+
+    fire :scrolled
+  end
+
+  def speed=(new_speed)
+    if new_speed > 1
+      @speed = 1
+    elsif new_speed < 0
+      @speed = 0
+    else
+      @speed = new_speed
+    end
+  end
+
+  def x_offset(layer=1)
+    return 0 if layer == Float::INFINITY
+    return @x_offset if layer == 1
+    @x_offset / layer
+  end
+
+  def y_offset(layer=1)
+    return 0 if layer == Float::INFINITY
+    return @y_offset if layer == 1
+    @y_offset / layer
+  end
+
+  def bounds
+    left = -@x_offset
+    top = -@y_offset
+    Rect.new left, top, left + @width, top + @height
+  end
+
+end
+
+class PlayerViewport < CopyViewport
   attr_accessor :x_scr_offset, :y_scr_offset,
     :follow_offset_x, :follow_offset_y
 
@@ -145,3 +212,4 @@ class PlayerViewport < Viewport
   end
 
 end
+

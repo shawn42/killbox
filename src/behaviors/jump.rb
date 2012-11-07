@@ -37,7 +37,7 @@ define_behavior :jump do
 
           # degrees
           # TODO look at direction we're facing and rotate backwards
-          if actor.flip_h
+          if actor.do_or_do_not :flip_h
             actor.rotation_vel += actor.jump_rotation * time_secs
           else
             actor.rotation_vel -= actor.jump_rotation * time_secs
