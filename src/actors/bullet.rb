@@ -5,7 +5,7 @@ define_actor :bullet do
     audible
     bullet
     layered ZOrder::Player
-    animated_with_spritemap file: 'bullet.png', rows: 1, cols: 2, actions: {idle: 0..1}
+    animated_with_spritemap file: 'trippers/bullet.png', rows: 1, cols: 3, actions: {idle: 0..1}
     bound_by_box
     tile_bound
     tile_collision_detector
