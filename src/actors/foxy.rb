@@ -13,7 +13,7 @@ define_actor :foxy do
     #   hurt:         9..11,
     #   knocked_down: 24..26,
     # }
-    animated_with_spritemap file: 'trippers/animations.png', rows: 2, cols: 8, actions: {
+    animated_with_spritemap file: 'trippers/animations.png', rows: 3, cols: 8, actions: {
       idle:         0,
       walking_right:0,
       walking_left: 0,
