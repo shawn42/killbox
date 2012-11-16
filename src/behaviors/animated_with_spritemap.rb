@@ -1,7 +1,7 @@
 define_behavior :animated_with_spritemap do
   requires :resource_manager, :director
   setup do
-    @frame_update_time ||= 60
+    @frame_update_time = opts[:interval] || 60
     @frame_time = 0
 
     @frame_num = 0
@@ -20,7 +20,7 @@ define_behavior :animated_with_spritemap do
     
     @frames = {}
     actions.each do |action, frames|
-      frames_or_image = @sprites[frames]
+      frames_or_image = Array.wrap(frames).to_a.map { |f| @sprites[f] }
       @frames[action] = frames_or_image.is_a?(Array) ? frames_or_image : [frames_or_image]
     end
 

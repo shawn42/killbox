@@ -11,25 +11,21 @@ define_behavior :accelerator do
       input = actor.input
       speed = actor.on_ground ? actor.speed : actor.air_speed
 
+      
       if input.walk_right? && actor.vel.x < (actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
         force = actor.ground_normal.rotate(Math::HALF_PI) * speed * time_secs
         actor.accel += force 
+        actor.action = :walking_right unless actor.action == :walking_right
       elsif input.walk_left? && actor.vel.x > -(actor.max_speed / 3.0) && actor.on_ground? && actor.ground_normal
         force = actor.ground_normal.rotate(-Math::HALF_PI) * speed * time_secs
         actor.accel += force
+        actor.action = :walking_left unless actor.action == :walking_left
+      else
+        actor.action = :idle unless actor.action == :idle
       end
 
       actor.vel += actor.accel
 
-      if (0.0-actor.vel[1]).abs <= 0.1 && actor.action != :idle
-        actor.action = :idle
-      end
-      
-      if (actor.vel[0]) > 0.01
-        actor.action = :walking_right unless actor.action == :walking_right
-      elsif (actor.vel[0]) < -0.01
-        actor.action = :walking_left unless actor.action == :walking_left
-      end
       
       # if actor.vel[1] < 0.05
       #   actor.action = :jumping unless actor.action == :jumping
@@ -46,13 +42,10 @@ define_behavior :accelerator do
     director.when :before do |time, time_secs|
       input = actor.input
       actor.vel += actor.accel
-      
-      if actor.vel[1] < 0.05
-        actor.action = :jumping unless actor.action == :jumping
-      elsif actor.vel[1] > 0.1 && !actor.on_ground
-        actor.action = :falling unless actor.action == :falling
-      end
 
+      if !actor.on_ground
+        actor.action = :jumping unless actor.action == :jumping
+      end
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
 
       if (!input.walk_right? && !input.walk_right?) #&& actor.accel.magnitude < (1 * time_secs)
