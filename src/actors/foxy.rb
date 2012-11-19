@@ -15,8 +15,8 @@ define_actor :foxy do
     # }
     animated_with_spritemap file: 'trippers/animations.png', interval: 120, rows: 3, cols: 8, actions: {
       idle:         2,
-      walking_right:[8,9,10,12],
-      walking_left: [8,9,10,12],
+      walking_right:[8,9,10,11,12,13],
+      walking_left: [8,9,10,11,12,13],
       jumping:      11,
     }
     grounded

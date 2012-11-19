@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="19" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="tileset" tilewidth="36" tileheight="36">
+  <image source="../tileset.png" width="720" height="504"/>
+ </tileset>
+ <tileset firstgid="281" name="tripper" tilewidth="36" tileheight="36">
+  <image source="../src/tripper.png" width="36" height="36"/>
+ </tileset>
+ <layer name="bg" width="30" height="19">
+  <data encoding="base64" compression="zlib">
+   eJwzYmBgMILiL0hseuInSHbnQDE97MVmZw4WjEs/LrXniLSfWLOJ0UdKuBGjDpt5uPQRazc5bkTW8w0Lhsl/o8DPuUCcR0S4UzscG4G4icjwwIeDiHAfjD2FCvZRM56Hsr2kpBV62Udt95Cat7GpxZU3CZVxhOoj9HKbVP/gyptPCNiNLV8RYy+M/QWLHaTGK7a6Bxc2QrMbXzxgw9jKXWqkGXpiAD+KmcE=
+  </data>
+ </layer>
+ <layer name="terrain" width="30" height="19">
+  <data encoding="base64" compression="zlib">
+   eJzt1M8KAVEUx/EzRcqa8jJeAM+AjVgiiViiKZ4ADyB/1liQPfZIYY9n8FNnMd0Md5runVm49ampOZ1v0zRjEFFAswhESf85/7vaunGPul4cld0EJCGluZuGDGRtujmWZwWbPSMowQTG7H09hZllrshzZe5WoCqoQR0aFs0vz7CCtWAjzLSgDR3umtAV9Ejdd9SHAQw/3PPjf2MOC1hK7DnAkZ1cdrewg73Enjs82NNl9wJXuEnscXr8+H5Vd4MGUUgQ/kGcdyoGL3+WOVM=
+  </data>
+ </layer>
+ <objectgroup name="actors" width="30" height="19">
+  <object gid="281" x="828" y="269"/>
+ </objectgroup>
+ <layer name="fg" width="30" height="19">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYngAACOgAAQ==
+  </data>
+ </layer>
+</map>
