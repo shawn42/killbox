@@ -8,16 +8,17 @@
  </tileset>
  <layer name="bg" width="30" height="19">
   <data encoding="base64" compression="zlib">
-   eJwzYmBgMILiL0hseuInSHbnQDE97MVmZw4WjEs/LrXniLSfWLOJ0UdKuBGjDpt5uPQRazc5bkTW8w0Lhsl/o8DPuUCcR0S4UzscG4G4icjwwIeDiHAfjD2FCvZRM56Hsr2kpBV62Udt95Cat7GpxZU3CZVxhOoj9HKbVP/gyptPCNiNLV8RYy+M/QWLHaTGK7a6Bxc2QrMbXzxgw9jKXWqkGXpiAD+KmcE=
+   eJy9lcENwyAMRZmJUTJETmnFCG3VETpXp8gIUc7NASQL/V++UcLhKZYAf+PYJoYQYmYz9gjm/F2N9pK5SsuCNBcA88n2fsWYVN/KOU/elH3IHzunavfEaM/sgLK+Ez9JuPPt4C7kHcWI6qrWZXl8HrzEfPzjIdy52G8hHwofo5WA7hU9HHO+U0VPfZ2Bp1ZG6Z0dj7e30V7Wm60Z13qP6rntvQ/rzbWhjfpK0S32VmlMHf8VvT0M62cy9iz6QnPXWzNsTo7iB2zGnZ0=
   </data>
  </layer>
  <layer name="terrain" width="30" height="19">
   <data encoding="base64" compression="zlib">
-   eJzt1M8KAVEUx/EzRcqa8jJeAM+AjVgiiViiKZ4ADyB/1liQPfZIYY9n8FNnMd0Md5runVm49ampOZ1v0zRjEFFAswhESf85/7vaunGPul4cld0EJCGluZuGDGRtujmWZwWbPSMowQTG7H09hZllrshzZe5WoCqoQR0aFs0vz7CCtWAjzLSgDR3umtAV9Ejdd9SHAQw/3PPjf2MOC1hK7DnAkZ1cdrewg73Enjs82NNl9wJXuEnscXr8+H5Vd4MGUUgQ/kGcdyoGL3+WOVM=
+   eJxjZGBgYCECczJgB7xE6kfGIkAsisM8WoI7o/ZSFfgAsT8WHADEmlS2KxaI46E4AYgTgTgZDadQ2U4QKATiEiRcikXNHRrYSwwYCvauAOKVOPBaEu2tIFE9tUAPEHMyYmIuRtraCwpnkBVMaBhXWUwMOALER7HgY2j2DsfyatTegbeXFZig2dEwrnzEBxTnR8Lo+ojFEkAMAEsBIcE=
   </data>
  </layer>
  <objectgroup name="actors" width="30" height="19">
-  <object gid="281" x="812" y="273"/>
+  <object gid="281" x="975" y="107"/>
+  <object gid="281" x="91" y="614"/>
  </objectgroup>
  <layer name="fg" width="30" height="19">
   <data encoding="base64" compression="zlib">
