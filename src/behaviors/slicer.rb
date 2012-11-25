@@ -7,7 +7,7 @@ define_behavior :slicer do
                          slice_reach: 40
                         
     sword_coordinator.register_sword actor
-    actor.input.when(:shoot) { slice_if_able }
+    actor.when(:failed_to_shoot) { slice_if_able }
     reacts_with :remove
     actor.can_slice = true
   end
@@ -22,7 +22,7 @@ define_behavior :slicer do
     end
 
     def slice_if_able
-      if !actor.can_shoot? && actor.can_slice?
+      if actor.can_slice?
         log "SLICING"
         actor_loc = vec2(actor.x, actor.y)
 

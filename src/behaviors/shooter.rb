@@ -87,6 +87,8 @@ define_behavior :shooter do
           actor.can_shoot = true
           timer_manager.remove_timer timer_name
         end
+      else
+        actor.emit(:failed_to_shoot)
       end
     end
 
