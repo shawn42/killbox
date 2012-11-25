@@ -27,8 +27,8 @@ define_behavior :tile_bouncer do
 
         if closest_collision
           # log "ACTOR #{actor}"
-          log "CLOSEST"
-          log closest_collision
+          # log "CLOSEST"
+          # log closest_collision
 
           hit = closest_collision[:hit]
           hit_vector = vec2(hit[0], hit[1])
@@ -55,11 +55,11 @@ define_behavior :tile_bouncer do
           left_over_movement.magnitude = left_over
           new_loc = hit_vector + left_over_movement + (actor_loc - point_that_collided)
 
-          log "BEFORE ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
+          # log "BEFORE ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
           actor.rotation_vel = 0
           actor.x = new_loc.x
           actor.y = new_loc.y
-          log "UPDATED ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
+          # log "UPDATED ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
           # binding.pry if closest_collision[:tile_face] == :right
         else
           # raise "collided, but no good collisions in [#{collisions}]"
