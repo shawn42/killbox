@@ -31,21 +31,21 @@ define_behavior :foxy_collision_points do
     end
 
     def point_deltas
-      w = actor.width
-      h = actor.height
+      w = 32#actor.width
+      h = 60#actor.height
       hw = w / 2.0
       hh = h / 2.0
       qh = h * 0.25
 
       [
-        vec2(-hw,-hh+2),
+        vec2(-hw,-hh),
 
-        vec2(hw,-hh+2),
+        vec2(hw,-hh),
         vec2(hw,-qh),
         vec2(hw,qh),
-        vec2(hw,hh-2),
+        vec2(hw,hh),
 
-        vec2(-hw,hh-2),
+        vec2(-hw,hh),
         vec2(-hw,qh),
         vec2(-hw,-qh),
       ]

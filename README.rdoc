@@ -1,2 +1,0 @@
-== Welcome to Foxy
-Foxy is a platformer written in gamebox.

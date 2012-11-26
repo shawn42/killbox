@@ -15,7 +15,6 @@ define_behavior :die_by_bullet do
       actor.react_to :gibify, force: (bullet.vel * 0.2)
 
       # stage.create_actor :splat, x: actor.x, y: actor.y, view: :graphical_actor_view
-
     end
 
     def remove

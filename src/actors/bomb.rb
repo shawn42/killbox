@@ -4,7 +4,7 @@ define_actor :bomb do
     positioned
     audible
     layered ZOrder::Projectile
-    animated_with_spritemap file: 'trippers/bomb.png', rows: 1, cols: 3, actions: {idle: 0..2}
+    animated_with_spritemap file: 'trippers/props.png', rows: 2, cols: 3, actions: { idle: 0..2 }
     bound_by_box
     tile_bouncer
     tile_collision_detector

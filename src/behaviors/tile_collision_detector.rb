@@ -45,6 +45,7 @@ define_behavior :tile_collision_detector do
         trans_bb.b = max(point.y, trans_bb.b)
       end
 
+      # TODO optimization, check of from == to..
       lines_to_check = actor.collision_point_deltas.map do |point|
         current_rotation = degrees_to_radians(actor.rotation)
         next_rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
@@ -60,6 +61,7 @@ define_behavior :tile_collision_detector do
       # TODO the inflate here is a hack, it doesn't cost us much for now
       bb_to_check = bb.union(trans_bb).inflate(actor.width*2,actor.height*2)
       map_inspector.overlap_tiles(map, bb_to_check) do |tile, row, col|
+
         lines_to_check.each.with_index do |line, i|
           map_inspector.line_tile_collision(map, line, row, col) do |collision|
             collisions ||= []

@@ -18,9 +18,10 @@ class LevelLoader
     map_data.tile_grid, map_data.bg_tile_grid, map_data.fg_tile_grid = 
       generate_map(map)
 
-    map_data.tileset_image = "map/geo2.png"
     # all tiles will be square!
-    map_data.tile_size = 16
+    # TODO pull these from the file!?
+    map_data.tileset_image = "map/tileset.png"
+    map_data.tile_size = 36
     
     Level.new.tap do |level|
       level.map = stage.create_actor :map, map_data: map_data

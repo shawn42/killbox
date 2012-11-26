@@ -8,13 +8,15 @@ class BulletCoordinator
 
   def register_bullet(bullet)
     @active_bullets << bullet
-    bullet.when :bullet_moved do
+    bullet.when :remove_me do
       unregister_bullet bullet
+    end
+
+    bullet.when :bullet_moved do
       @shot_listeners.keys.each do |target|
         current = vec2(bullet.x, bullet.y)
         future = current + bullet.vel
-        if LineClipper.clip(current.x, current.y, future.x, future.y, target.bb)
-        # if target.bb.collide_point?(bullet.x, bullet.y)
+        if (bullet.armed? || (bullet.player != target)) && LineClipper.clip(current.x, current.y, future.x, future.y, target.bb)
           target.react_to :shot, bullet
         end
       end

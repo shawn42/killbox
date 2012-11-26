@@ -12,13 +12,13 @@ define_stage :level_play do
 
     @console = create_actor(:console, visible: false)
 
-    backstage[:level_name] ||= LEVELS.keys[0]
-    backstage[:player_count] ||= LEVELS.values[0]
+    backstage[:level_name] ||= levels.keys[0]
+    backstage[:player_count] ||= levels.values[0]
 
-    LEVELS.size.times do |i|
+    levels.size.times do |i|
       input_manager.reg :down, Object.const_get("Kb#{i+1}") do
-        backstage[:level_name] = LEVELS.keys[i]
-        backstage[:player_count] = LEVELS.values[i]
+        backstage[:level_name] = levels.keys[i]
+        backstage[:player_count] = levels.values[i]
 
         fire :restart_stage
       end
@@ -51,13 +51,15 @@ define_stage :level_play do
 
     attr_accessor :players, :viewports
 
-    LEVELS = {
-      :advanced_jump => 2,
-      :cave => 4,
-      :basic_jump => 1,
-      :hot_pocket => 2,
-    }
-
+    def levels 
+      {
+      :trippy => 4,
+      # :advanced_jump => 2,
+      # :cave => 4,
+      # :basic_jump => 1,
+      # :hot_pocket => 2,
+      }
+    end
 
     def setup_level(name)
       # TODO XXX hack until all other stages are in place
@@ -68,7 +70,7 @@ define_stage :level_play do
     def setup_players(player_count=1)
       @players = []
       player_count.times do |i|
-        setup_player "player#{i+1}".to_sym
+        setup_player i
       end
       # (4-player_count).times do |i|
       #   player_count + i
@@ -82,13 +84,19 @@ define_stage :level_play do
       player.remove if player
     end
 
-    def setup_player(name)
+    def setup_player(index)
+      name = "player#{index+1}".to_sym
       player = @level.named_objects[name]
       if player
         player.vel = vec2(0,3)
         player.input.map_input(controls[name])
+        player.animation_file = "trippers/#{player_color(index)}_tripper.png"
         @players << player
       end
+    end
+
+    def player_color(index)
+      %w(red green purple blue)[index]
     end
 
     def controls

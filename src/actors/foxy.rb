@@ -13,11 +13,11 @@ define_actor :foxy do
     #   hurt:         9..11,
     #   knocked_down: 24..26,
     # }
-    animated_with_spritemap file: 'trippers/animations.png', interval: 120, rows: 3, cols: 8, actions: {
-      idle:         2,
-      walking_right:[8,9,10,11,12,13],
-      walking_left: [8,9,10,11,12,13],
-      jumping:      11,
+    animated_with_spritemap interval: 120, rows: 6, cols: 8, actions: {
+      idle:         10,
+      walking_right: 8..13,
+      walking_left: 8..13,
+      jumping:      40,
     }
     grounded
     looker

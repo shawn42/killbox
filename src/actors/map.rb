@@ -24,14 +24,14 @@ define_actor :map do
 
       unless actor.map_image
         actor.map_image = wrapped_screen.record width, height do
-          map_data.tile_grid.each.with_index do |row, y|
+          map_data.bg_tile_grid.each.with_index do |row, y|
             row.each.with_index do |tile, x|
               unless tile.nil?
                 target.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z
               end
             end
           end
-          map_data.bg_tile_grid.each.with_index do |row, y|
+          map_data.tile_grid.each.with_index do |row, y|
             row.each.with_index do |tile, x|
               unless tile.nil?
                 target.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z

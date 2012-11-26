@@ -66,10 +66,6 @@ define_behavior :tile_oriented do
       new_x = (actor.x + actor.vel.x)
       new_y = (actor.y + actor.vel.y)
 
-      # tile_x = (new_x / 16).floor
-      # tile_y = (actor.y / 16).floor + 1
-      # map = actor.map.map_data
-
       actor.x += actor.vel.x 
       actor.y += actor.vel.y
     end
