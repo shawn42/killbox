@@ -1,3 +1,14 @@
+# 
+# define_menu do
+#   menu_items do
+#     item("Start") do
+#       on(KbRight) ...
+#     end
+#   end
+# end
+# 
+
+
 define_actor :menu do
 
   behavior do
@@ -28,6 +39,7 @@ define_actor :menu do
         actor.player_count = max(actor.player_count - 1, 1) if actor.current_selected_index == 1
       end
       input_manager.reg :down, KbReturn do
+        log "WAH??"
         actor.emit :start, actor.player_count if actor.current_selected_index == 0
       end
 
@@ -35,6 +47,7 @@ define_actor :menu do
         actor.labels << stage.create_actor(:label, text: item, x: actor.x, y: actor.y, font_size: 50)
       end
       update_highlight
+
     end
 
     helpers do
