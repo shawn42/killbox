@@ -61,7 +61,6 @@ class LevelLoader
       obj_group.each do |obj|
         if obj[:type]
           actor = stage.create_actor(obj[:type].to_sym, obj.merge(
-            session: stage.session,
             map: level.map
           ))
           

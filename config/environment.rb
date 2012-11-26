@@ -25,7 +25,7 @@ Gamebox.configure do |config|
   #   :game_over,
   #   :game_won
   # ]
-  config.stages = [:level_play]
+  config.stages = [:main_menu, :level_play, :score]
   config.game_name = "Foxy"
 end
 

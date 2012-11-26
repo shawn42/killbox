@@ -1,55 +1,49 @@
 define_stage :level_play do
   render_with :multi_viewport_renderer
 
-  setup do
-    # TODO cleaner way to summon these into existance at the stage context
-    # required_stage_hands :bomb_coordinator, :bullet_coordinator, etc.. 
-    bomb_c = this_object_context[:bomb_coordinator]
-    bullet_c = this_object_context[:bullet_coordinator]
-    sword_c = this_object_context[:sword_coordinator]
-
-    director.update_slots = [:first, :before, :update, :last]
-
-    @console = create_actor(:console, visible: false)
-
-    backstage[:level_name] ||= levels.keys[0]
-    backstage[:player_count] ||= levels.values[0]
-
-    levels.size.times do |i|
-      input_manager.reg :down, Object.const_get("Kb#{i+1}") do
-        backstage[:level_name] = levels.keys[i]
-        backstage[:player_count] = levels.values[i]
-
-        fire :restart_stage
-      end
-    end
-
-    setup_level backstage[:level_name]
-    setup_players backstage[:player_count]
-
-
-    director.when :update do |time|
-      unless @restarting
-        alive_players = @players.select{|player| player.alive?}
-        round_over if @players.size > 1 && alive_players.size == 1
-      end
-    end
-
-    # F1 console watch values
-    player = @players[1]
-    if player
-      @console.react_to :watch, :p2x do player.x.two end
-      @console.react_to :watch, :p2y do player.y.two end
-      @console.react_to :watch, :sb2 do player.viewport.screen_bounds end
-    end
-
-  end
-
-
   helpers do
-    include GameSession
-
     attr_accessor :players, :viewports
+
+    def curtain_up(opts={})
+      # TODO cleaner way to summon these into existance at the stage context
+      # required_stage_hands :bomb_coordinator, :bullet_coordinator, etc.. 
+      bomb_c = this_object_context[:bomb_coordinator]
+      bullet_c = this_object_context[:bullet_coordinator]
+      sword_c = this_object_context[:sword_coordinator]
+
+      director.update_slots = [:first, :before, :update, :last]
+
+      @console = create_actor(:console, visible: false)
+
+      backstage[:level_name] ||= levels.keys[0]
+      backstage[:player_count] ||= opts[:player_count]
+
+      setup_level backstage[:level_name]
+      setup_players backstage[:player_count]
+
+
+      director.when :update do |time|
+        unless @restarting
+          alive_players = @players.select{|player| player.alive?}
+          if @players.size > 1 && alive_players.size == 1
+            backstage[:scores] ||= {}
+            backstage[:scores][alive_players.first.number] ||= 0
+            backstage[:scores][alive_players.first.number] += 1
+            round_over 
+          end
+        end
+      end
+
+      # F1 console watch values
+      player = @players[1]
+      if player
+        @console.react_to :watch, :p2x do player.x.two end
+        @console.react_to :watch, :p2y do player.y.two end
+        @console.react_to :watch, :sb2 do player.viewport.screen_bounds end
+      end
+
+    end
+
 
     def levels 
       {
@@ -62,8 +56,6 @@ define_stage :level_play do
     end
 
     def setup_level(name)
-      # TODO XXX hack until all other stages are in place
-      init_session
       @level = LevelLoader.load self, name
     end
 
@@ -85,9 +77,11 @@ define_stage :level_play do
     end
 
     def setup_player(index)
-      name = "player#{index+1}".to_sym
+      number = index + 1
+      name = "player#{number}".to_sym
       player = @level.named_objects[name]
       if player
+        player.has_attributes number: number
         player.vel = vec2(0,3)
         player.input.map_input(controls[name])
         player.animation_file = "trippers/#{player_color(index)}_tripper.png"
@@ -141,7 +135,7 @@ define_stage :level_play do
       @restarting = true
       timer_manager.add_timer 'restart', 2000 do
         timer_manager.remove_timer 'restart'
-        fire :restart_stage 
+        fire :change_stage, :score
       end
     end
 

@@ -3,7 +3,6 @@ class MultiViewportRenderer < Renderer
   attr_accessor :viewports
 
   def initialize
-    super
     $debug_drawer = DebugDraw.new
     director.when :update do |time|
       @viewports.each { |vp| vp.update time }

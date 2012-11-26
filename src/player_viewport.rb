@@ -99,6 +99,20 @@ class PlayerViewport < CopyViewport
       vp2 = PlayerViewport.new half_width, 0, half_width, total_size[1]
       attach_player(vp2, players[1])
       [vp1, vp2]
+    when 3
+      half_width = total_size[0]/2
+      quarter_width = total_size[0]/4
+      half_height = total_size[1]/2
+
+      vp1 = PlayerViewport.new 0, 0, half_width, half_height
+      attach_player(vp1, players[0])
+
+      vp2 = PlayerViewport.new half_width, 0, half_width, half_height
+      attach_player(vp2, players[1])
+
+      vp3 = PlayerViewport.new quarter_width, half_height, half_width, half_height
+      attach_player(vp3, players[2])
+      [vp1, vp2, vp3]
     when 4
       half_width = total_size[0]/2
       half_height = total_size[1]/2
