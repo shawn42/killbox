@@ -4,7 +4,7 @@ gem 'tmx'
 gem 'pry'
 gem 'pry-remote'
 gem 'pry-debugger'
-gem "gamebox", '>= 0.4.0.rc9'
+gem "gamebox", '>= 0.4.0.rc10'
 gem "conject"
 gem 'kvo', '0.0.2'
 
