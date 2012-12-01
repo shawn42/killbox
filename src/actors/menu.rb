@@ -14,7 +14,7 @@ define_actor :menu do
   behavior do
     requires :input_manager, :stage
     setup do
-      actor.has_attributes title_lables: [],
+      actor.has_attributes title_labels: [],
                            menu_labels: [],
                            current_selected_index: 0,
                            player_count: 4
@@ -53,7 +53,7 @@ define_actor :menu do
       print_menu_header "Foxy", "a multi-player, same keyboard, action game."
 
       # add some help message for game on the menu screen
-      print_menu_help_text "Game Controls","A -> Move Left, D -> Move Right, W -> Look Up, V -> Shield Up/Dn, N -> Rotate, M -> Throw Bomb"
+      print_menu_help_text "Game Controls","A -> Move Left, D -> Move Right, W -> Look Up, V -> Shield Up/Dn, N -> Jump, M -> Throw Bomb"
     end
 
     helpers do
@@ -90,7 +90,7 @@ define_actor :menu do
       end
 
       def print_menu_text(text, size, x, y)
-        actor.title_lables << stage.create_actor(:label, text: text, x: x, y: y, font_size: size)
+        actor.title_labels << stage.create_actor(:label, text: text, x: x, y: y, font_size: size)
       end
     end
   end
