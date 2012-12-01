@@ -68,7 +68,7 @@ define_actor :foxy do
       end
 
       if actor.shields_up?
-        shield_image = resource_manager.load_image 'shield.png'
+        shield_image = resource_manager.load_image 'trippers/shield.png'
         target.draw_image shield_image, offset_x-shield_image.width/2, 4+offset_y-shield_image.height/2, ZOrder::PlayerDecoration
       end
 
