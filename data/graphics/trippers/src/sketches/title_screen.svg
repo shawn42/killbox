@@ -29,7 +29,7 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.8"
-     inkscape:cx="687.2582"
+     inkscape:cx="638.07991"
      inkscape:cy="363.86739"
      inkscape:document-units="px"
      inkscape:current-layer="layer7"
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -168,8 +168,7 @@
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="menu-text"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <text
        xml:space="preserve"
        style="font-size:100px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#a02c5a;fill-opacity:1;stroke:none;font-family:Vigilance BRK;-inkscape-font-specification:Vigilance BRK"
@@ -203,19 +202,19 @@
          id="tspan5166"
          x="639.29999"
          y="708"><tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5174">Game controls: A</tspan>, move left. <tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5182">D</tspan>, move right. <tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5184">W</tspan>, look up. <tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5186">S</tspan>, look down. <tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5188">V</tspan>, shield. <tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5190">N</tspan>, jump. <tspan
-   style="fill:#f4d7e3"
+   style="fill:#f4d7e3;fill-opacity:1"
    id="tspan5192">M</tspan>, bomb.</tspan></text>
     <text
        sodipodi:linespacing="125%"
