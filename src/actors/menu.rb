@@ -42,17 +42,21 @@ define_actor :menu do
       input_manager.reg :down, KbReturn do
         actor.emit :start, actor.player_count if actor.current_selected_index == 0
       end
-
+      
       menu_items.each.with_index do |item, i|
-        actor.menu_labels << stage.create_actor(:label, text: item, x: actor.x, y: actor.y, font_size: 50)
+        actor.menu_labels << stage.create_actor(:label, text: item, x: 900, y: 220, font_name: "vigilanc.ttf", font_size: 50, color: [222, 135, 170])
       end
       update_highlight
-
+      
+      # add background image
+      #stage.create_actor(:icon, image: "title_screen_reticle.png", x: 650, y: 350)
+      stage.create_actor(:icon, image: "title_screen.png", x: 670, y: 350)
+      
       # add title for game on the menu screen
       print_menu_header "Foxy", "a multi-player, same keyboard, action game."
 
       # add some help message for game on the menu screen
-      print_menu_help_text "Game Controls","A -> Move Left, D -> Move Right, W -> Look Up, V -> Shield Up/Dn, N -> Jump, M -> Throw Bomb"
+      print_menu_help_text "Game Controls: A, move left. D, move right. W, look up. S, look down. V, shield. N, jump. M, bomb."
     end
 
     helpers do
@@ -77,19 +81,18 @@ define_actor :menu do
         end
 
       end
-
+      
       def print_menu_header(title, sub_title)
-        print_menu_text(title, 80, 100, 10)
-        print_menu_text(sub_title, 30, 100, 100)
+        print_menu_text(title, 100, 900, 10, [160, 44, 90])
+        print_menu_text(sub_title, 28, 760, 120)
       end
 
-      def print_menu_help_text(title, text)
-        print_menu_text(title, 60, 100, actor.y + 400)
-        print_menu_text(text, 30, 100, actor.y + 470)
+      def print_menu_help_text(text)
+        print_menu_text(text, 28, 150, 700)
       end
 
-      def print_menu_text(text, size, x, y)
-        actor.title_labels << stage.create_actor(:label, text: text, x: x, y: y, font_size: size)
+      def print_menu_text(text, size, x, y, color=[244, 215, 227])
+        actor.title_labels << stage.create_actor(:label, text: text, x: x, y: y, font_name: "vigilanc.ttf" , font_size: size, color: color)
       end
     end
   end
