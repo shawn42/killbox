@@ -1,14 +1,20 @@
 define_stage :score do
 
   setup do
-
-    x = 400
-    y = 300
+    
+    # add background image
+    create_actor :icon, image: "score_screen.png", x: 670, y: 350
+    
+    # add labels
+    x = 100
+    y = 200
+    
+    create_actor :label, x: x, y: 50, text: "Score", font_size: 100, font_name: "vigilanc.ttf", color: [160, 44, 90]
 
     4.times do |i|
       score = backstage[:scores][i+1] || 0
-      label = create_actor :label, x: x, y: y, text: "P#{i+1}: #{score}", font_size: 70
-      y += label.font_size * 1.5
+      label = create_actor :label, x: x, y: y, text: "Player #{i+1}: #{score}", font_size: 70, font_name: "vigilanc.ttf"
+      y += label.font_size * 1.2
     end
 
     input_manager.reg :down do
