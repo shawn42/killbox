@@ -18,7 +18,7 @@ define_actor :foxy do
       walking_right: 8..13,
       walking_left:  8..13,
       jumping:       40,
-      asphyxiate:    0..5,
+      asphyxiate:    0..5, # TODO change the interval for one animation
     }
     grounded
     looker

@@ -21,30 +21,23 @@ define_behavior :accelerator do
         actor.accel += force
         actor.action = :walking_left unless actor.action == :walking_left
       else
-        actor.action = :idle unless actor.action == :idle
+        actor.action = :idle if actor.on_ground? && actor.action != :idle
       end
 
       actor.vel += actor.accel
-
-      
-      # if actor.vel[1] < 0.05
-      #   actor.action = :jumping unless actor.action == :jumping
-      # elsif actor.vel[1] > 0.1 && !actor.on_ground
-      #   actor.action = :falling unless actor.action == :falling
-      # end
     end
 
     director.when :last do |time, time_secs|
       actor.accel = vec2(0,0)
-      # actor.action = :idle
     end
 
     director.when :before do |time, time_secs|
       input = actor.input
       actor.vel += actor.accel
 
-      if !actor.on_ground
-        actor.action = :jumping unless actor.action == :jumping
+      # TODO eeewww.. asphyxiate leaked in here  :(
+      if !actor.on_ground && actor.action != :jumping && actor.action != :asphyxiate
+        actor.action = :jumping 
       end
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
 
