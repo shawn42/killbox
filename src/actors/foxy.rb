@@ -14,10 +14,11 @@ define_actor :foxy do
     #   knocked_down: 24..26,
     # }
     animated_with_spritemap interval: 120, rows: 6, cols: 8, actions: {
-      idle:         10,
+      idle:          10,
       walking_right: 8..13,
-      walking_left: 8..13,
-      jumping:      40,
+      walking_left:  8..13,
+      jumping:       40,
+      asphyxiate:    0..5,
     }
     grounded
     looker
@@ -44,6 +45,7 @@ define_actor :foxy do
 
     tile_oriented
     tile_collision_detector
+    asphyxiate
   end
 
   view do

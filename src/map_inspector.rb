@@ -88,4 +88,15 @@ class MapInspector
     solid? map, row, col
   end
 
+  def out_of_bounds?(map, pos)
+    tile_grid = map.tile_grid
+    tile_size = map.tile_size
+    width = tile_grid.size * tile_size
+    height = tile_grid.first.size * tile_size
+    map_box = Rect.new 0, 0, width, height
+    boundary = map_box.inflate tile_size*20, tile_size*20
+    
+    return !boundary.collide_point?(pos.x, pos.y)
+  end
+  
 end
