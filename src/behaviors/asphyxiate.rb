@@ -11,7 +11,7 @@ define_behavior :asphyxiate do
         end
           
         unless actor.action == :asphyxiate
-          puts actor.action
+          remove_behavior :accelerator
           actor.action = :asphyxiate 
         end
       end

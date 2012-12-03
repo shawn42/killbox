@@ -35,8 +35,7 @@ define_behavior :accelerator do
       input = actor.input
       actor.vel += actor.accel
 
-      # TODO eeewww.. asphyxiate leaked in here  :(
-      if !actor.on_ground && actor.action != :jumping && actor.action != :asphyxiate
+      if !actor.on_ground && actor.action != :jumping
         actor.action = :jumping 
       end
       actor.vel.magnitude = actor.max_speed if actor.vel.magnitude > actor.max_speed
