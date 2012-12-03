@@ -62,6 +62,7 @@ define_behavior :accelerator do
     def remove
       actor.vel = vec2(0,0) if actor.on_ground
       director.unsubscribe_all self
+      actor.input.unsubscribe_all self
     end
   end
 end

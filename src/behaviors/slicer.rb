@@ -23,7 +23,6 @@ define_behavior :slicer do
 
     def slice_if_able
       if actor.can_slice?
-        log "SLICING"
         actor_loc = vec2(actor.x, actor.y)
 
         actor.can_slice = false
@@ -55,8 +54,9 @@ define_behavior :slicer do
     end
 
     def remove
-      timer_manager.remove_timer timer_name
       actor.can_slice = false
+      timer_manager.remove_timer timer_name
+      actor.unsubscribe_all(self)
     end
   end
 

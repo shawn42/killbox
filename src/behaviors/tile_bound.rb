@@ -13,5 +13,13 @@ define_behavior :tile_bound do
         actor.y += actor.vel.y
       end
     end
+
+    reacts_with :remove
+  end
+
+  helpers do
+    def remove
+      actor.unsubscribe_all self
+    end
   end
 end

@@ -10,6 +10,8 @@ define_behavior :bomber do
     director.when :first do |time, time_secs|
       update_bombing time_secs
     end
+
+    reacts_with :remove
   end
 
   helpers do
@@ -47,6 +49,11 @@ define_behavior :bomber do
 
       # TODO Add some rotational force
       # TODO scale kickback by charge
+    end
+
+    def remove
+      actor.input.unsubscribe_all self
+      director.unsubscribe_all self
     end
 
   end

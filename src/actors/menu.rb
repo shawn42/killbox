@@ -40,7 +40,6 @@ define_actor :menu do
         actor.player_count = max(actor.player_count - 1, 1) if actor.current_selected_index == 1
       end
       input_manager.reg :down, KbReturn do
-        log "WAH??"
         actor.emit :start, actor.player_count if actor.current_selected_index == 0
       end
 

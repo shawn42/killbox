@@ -5,8 +5,7 @@ define_behavior :bullet do
   setup do
     actor.has_attributes vel: vec2(0,0), armed: false
 
-    # bandaid for shooting self..
-    timer_manager.add_timer "#{object_id}:self:arm", 4_000, false do
+    timer_manager.add_timer timer_name, 3_500, false do
       actor.armed = true
     end
     # always emits the event, but will have nil collisions if we didn't collide
@@ -17,6 +16,19 @@ define_behavior :bullet do
       else
         actor.emit :bullet_moved
       end
+    end
+
+    reacts_with :remove
+  end
+
+  helpers do
+    def timer_name
+      "#{object_id}:self:arm"
+    end
+
+    def remove
+      actor.unsubscribe_all self
+      timer_manager.remove_timer timer_name
     end
   end
 

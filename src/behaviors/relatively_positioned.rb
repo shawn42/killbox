@@ -17,9 +17,15 @@ define_behavior :relatively_positioned do
     parent.when(:rotation_changed) { update_location }
 
     update_location
+
+    reacts_with :remove
   end
 
   helpers do
+    def remove
+      actor.parent.unsubscribe_all self
+    end
+
     def update_location
       parent = actor.parent
       parent_pos = vec2(parent.x,parent.y)

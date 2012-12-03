@@ -14,9 +14,14 @@ define_behavior :grounded do
       # actor.action = :idle unless actor.action == :idle
     end
 
+    react_to :remove
   end
   
   helpers do
+    def remove
+      director.unsubscribe_all self
+    end
+
     def on_ground?(fp)
       down_vector = vec2(0,4).rotate(degrees_to_radians(actor.rotation))
       down_fp = down_vector + fp

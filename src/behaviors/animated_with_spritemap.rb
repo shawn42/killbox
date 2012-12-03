@@ -15,6 +15,7 @@ define_behavior :animated_with_spritemap do
       setup_animation
     end
 
+    reacts_with :remove
   end
   
   helpers do
@@ -77,6 +78,11 @@ define_behavior :animated_with_spritemap do
       actor.image = image
       actor.width = image.width
       actor.height = image.height
+    end
+
+    def remove
+      actor.input.unsubscribe_all self
+      actor.unsubscribe_all self
     end
   end
   

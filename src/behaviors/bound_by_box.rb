@@ -27,6 +27,8 @@ define_behavior :bound_by_box do
       update_bb
     end
     update_bb
+
+    reacts_with :remove
   end
 
   helpers do
@@ -55,6 +57,10 @@ define_behavior :bound_by_box do
         actor.bb.width = actor.width
         actor.bb.height = actor.height
       end
+    end
+
+    def remove
+      actor.unsubscribe_all self
     end
   end
 

@@ -53,6 +53,7 @@ define_behavior :shielded do
 
     def remove
       timer_manager.remove_timer "shields_down_#{object_id}"
+      actor.input.unsubscribe_all self
     end
 
   end

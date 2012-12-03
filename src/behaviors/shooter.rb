@@ -58,7 +58,6 @@ define_behavior :shooter do
 
     def shoot_if_able
       if actor.can_shoot?
-        log "SHOOTING"
         actor_loc = vec2(actor.x, actor.y)
 
         actor.can_shoot = false
@@ -82,7 +81,6 @@ define_behavior :shooter do
           end
         end
 
-        timer_name = "#{actor.object_id}:shot_recharge"
         timer_manager.add_timer timer_name, actor.shot_recharge_time do
           actor.can_shoot = true
           timer_manager.remove_timer timer_name
@@ -92,10 +90,15 @@ define_behavior :shooter do
       end
     end
 
+    def timer_name
+      "#{actor.object_id}:shot_recharge"
+    end
+
     def remove
-      timer_name = "#{actor.object_id}:shot_recharge"
-      timer_manager.remove_timer 'shot_recharge'
       actor.can_shoot = false
+      timer_manager.remove_timer 'shot_recharge'
+      actor.input.unsubscribe_all(self)
+      actor.unsubscribe_all(self)
     end
   end
 

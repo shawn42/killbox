@@ -3,8 +3,6 @@ define_behavior :looker do
 
   setup do
     # in pixels
-    viewport = actor.do_or_do_not :viewport
-
     actor.has_attributes look_distance: 100,
                          flip_h: false
 
@@ -16,16 +14,23 @@ define_behavior :looker do
       actor.flip_h = false
     end
 
-    if viewport
-      director.when :update do |t_ms, time_in_sec|
+    director.when :update do |t_ms, time_in_sec|
+      if actor.do_or_do_not :viewport
         update_look_point time_in_sec
       end
     end
+
+    reacts_with :remove
   end
 
 
   helpers do
     include MinMaxHelpers
+
+    def remove
+      actor.input.unsubscribe_all self
+      director.unsubscribe_all self
+    end
 
     def look_directions 
       {
