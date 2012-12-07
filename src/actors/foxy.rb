@@ -13,11 +13,11 @@ define_actor :foxy do
     #   hurt:         9..11,
     #   knocked_down: 24..26,
     # }
-    animated_with_spritemap interval: 120, rows: 6, cols: 8, actions: {
-      idle:          10,
-      walking_right: 8..13,
-      walking_left:  8..13,
-      jumping:       40,
+    animated_with_spritemap interval: 120, rows: 7, cols: 8, actions: {
+      idle:          9,
+      walking_right: 32..37,
+      walking_left:  32..37,
+      jumping:       16,
       asphyxiate:    0..5, # TODO change the interval for one animation
     }
     grounded

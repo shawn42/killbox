@@ -1,0 +1,12 @@
+Blue, green and purple sprite sheets are generated using the GIMP coloring
+tool on the original red tripper.
+
+blue tripper
+    tone:   195
+
+green tripper
+    tone:   88
+    satura: 36
+
+purple tripper
+    tone:   262
