@@ -92,11 +92,45 @@ define_behavior :tile_oriented do
         new_loc = lower_left_target + collision_point_delta
         new_loc.y = new_loc.y.floor
         actor.y = new_loc.y
+        
+        #fix misses in parallel axis
+        # TODO these could be treated uniformly using vectors and axis lookups
+        ar = actor.bb.r
+        tx = lower_left_target.x
+        fixup = tx - ar        
+        if fixup > 0
+          actor.x += fixup
+        end
+
+        al = actor.x
+        tr = lower_left_target.x + tile_size
+        fixup = al - tr
+        if fixup > 0
+          actor.x += fixup
+        end
+        
       when :bottom
         lower_left_target = vec2((tile_col + 1) * tile_size, (tile_row + 1) * tile_size + 1)
         new_loc = lower_left_target + collision_point_delta
         new_loc.y = new_loc.y.ceil
         actor.y = new_loc.y
+
+        #fix misses in parallel axis
+        # TODO these could be treated uniformly using vectors and axis lookups
+        ar = actor.bb.r
+        tx = lower_left_target.x
+        fixup = tx - ar        
+        if fixup > 0
+          actor.x += fixup
+        end
+        
+        al = actor.x
+        tr = lower_left_target.x + tile_size
+        fixup = al - tr
+        if fixup > 0
+          actor.x += fixup
+        end
+        
       when :left
         lower_left_target = vec2(tile_col * tile_size - 1 , tile_row * tile_size)
         new_loc = lower_left_target + collision_point_delta
