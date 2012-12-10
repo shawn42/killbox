@@ -39,7 +39,7 @@ define_stage :level_play do
       if player
         @console.react_to :watch, :p2x do player.x.two end
         @console.react_to :watch, :p2y do player.y.two end
-        @console.react_to :watch, :sb2 do player.viewport.screen_bounds end
+        @console.react_to :watch, :fps do Gosu.fps end
       end
 
     end
@@ -64,10 +64,9 @@ define_stage :level_play do
       player_count.times do |i|
         setup_player i
       end
-      # (4-player_count).times do |i|
-      #   player_count + i
-      #   remove_player "player#{player_count+i+1}".to_sym
-      # end
+      (4-player_count).times do |i|
+        remove_player "player#{3-i+1}".to_sym
+      end
       renderer.viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
     end
 

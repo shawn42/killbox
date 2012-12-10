@@ -12,32 +12,27 @@ class FakeLevel
   end
 end
 
-class JumpAcceptanceStage < LevelPlayStage
-  include TestStageHelpers
-  # construct_with *Stage.object_definition.component_names
+Stage.definitions[:level_play].curtain_up do
+  extend TestStageHelpers
 
-  def setup
-    clear_drawables
-    director.update_slots = [:first, :before, :update, :last]
+  director.update_slots = [:first, :before, :update, :last]
 
-    require 'tmx'
-    map = Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/basic_jump.tmx")
+  require 'tmx'
+  map = Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/basic_jump.tmx")
 
-    map_data = LevelLoader::MapData.new
-    map_data.tile_grid = LevelLoader.generate_map(map)[0]
+  map_data = LevelLoader::MapData.new
+  map_data.tile_grid = LevelLoader.generate_map(map)[0]
 
-    map_data.tileset_image = "map/tileset.png"
-    # all tiles will be square!
-    map_data.tile_size = 16
-    
-    map_actor = create_actor :map, map_data: map_data
+  map_data.tileset_image = "map/tileset.png"
+  # all tiles will be square!
+  map_data.tile_size = 16
+  
+  map_actor = create_actor :map, map_data: map_data
 
-    @level = FakeLevel.new
-    @level.named_objects[:player1] = create_actor :foxy, map: map_actor, x: 120, y: 60
+  @level = FakeLevel.new
+  @level.named_objects[:player1] = create_actor :foxy, map: map_actor, x: 120, y: 60
 
-    setup_players
-  end
-
+  setup_players
 end
 
 describe "Foxy jumping", acceptance: true do
@@ -49,12 +44,15 @@ describe "Foxy jumping", acceptance: true do
     mock_image 'boxy.png'
     mock_image 'bullet.png'
     mock_image 'bomb.png'
-    Gamebox.configuration.stages = [:jump_acceptance]
+    Gamebox.configuration.stages = [:level_play]
 
     game
   end
 
-  let(:floor_y) { 160 }
+  let(:floor_y) { 145 }
+  let(:foxy_h) { 60 }
+  let(:foxy_w) { 32 }
+
   let(:tile_size) { 16 }
   let(:map) { game.actor(:map) }
   let(:foxy) { game.actor(:foxy) }
@@ -76,7 +74,7 @@ describe "Foxy jumping", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 120.ish,
-      y: (tile_size + foxy.height / 2.0 + 1).ish,
+      y: (tile_size + foxy_h / 2.0 + 1).ish,
       rotation: 180.ish
 
     jump 2000
@@ -115,7 +113,7 @@ describe "Foxy jumping", acceptance: true do
     see_actor_attrs :foxy, 
       on_ground: true,
       rotation: 90.ish,
-      x: 32.ish
+      x: 47.ish
 
     foxy.y.should < floor_y
 
@@ -128,16 +126,17 @@ describe "Foxy jumping", acceptance: true do
   end
 
   it 'grabs the wall when we rotate next to it' do
-    foxy.x = 31
+    start_x = tile_size + foxy_w / 2 + 1
+    foxy.x = start_x
 
     see_actor_attrs :foxy, 
-      x: 31.ish
+      x: start_x.ish
 
     # settle
     update 4000, step: 20
 
     see_actor_attrs :foxy, 
-      x: 31.ish,
+      x: start_x.ish,
       y: floor_y.ish,
       rotation: 0.ish
 
@@ -152,27 +151,29 @@ describe "Foxy jumping", acceptance: true do
 
   context "shields up" do
     it 'grabs the wall when we rotate next to it' do
-      foxy.x = 31
+      start_x = tile_size + foxy_w / 2 + 1
+      foxy.x = start_x
 
       see_actor_attrs :foxy, 
-        x: 31.ish
+        x: start_x.ish
 
       # settle
       update 4000, step: 20
 
       see_actor_attrs :foxy, 
-        x: 31.ish,
+        x: start_x.ish,
         y: floor_y.ish,
         rotation: 0.ish
 
       jump 10
-
       update 20
 
       shields_up
 
+      # wait for shields to wear off
       update 3000, step: 20
 
+      # should now stick
       see_actor_attrs :foxy, 
         rotation: 90.ish,
         rotation_vel: 0.ish
@@ -201,8 +202,9 @@ describe "Foxy jumping", acceptance: true do
 
       see_actor_attrs :foxy, 
         x: 120.ish,
-        y: floor_y.ish,
         rotation: 0.ish
+
+      foxy.y.should be < floor_y
 
     end
   end

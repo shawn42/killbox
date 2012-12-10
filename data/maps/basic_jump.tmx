@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="20" height="16" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="Foxy" tilewidth="30" tileheight="39">
-  <image source="../graphics/foxy/idle.png" width="30" height="39"/>
+  <image source="../graphics/trippers/tripper.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="2" name="geo2" tilewidth="16" tileheight="16">
+ <tileset firstgid="3" name="geo2" tilewidth="16" tileheight="16">
   <image source="../graphics/map/geo2.png" width="256" height="192"/>
  </tileset>
  <layer name="terrain" width="20" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAxNiYGAQojKmFhg1b9S8oWoetfMRpXkNm3mUgKFgHjFhBQBbKz6tAAUAAA==
+   H4sIAAAAAAAAAxNmYGAQpjKmFhg1DzcQobJ5xIBR80jXS618RGlew2YeJWAomEdMWAEA2tdrwQAFAAA=
   </data>
  </layer>
  <objectgroup name="actors" width="20" height="16">

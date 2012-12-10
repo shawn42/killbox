@@ -92,45 +92,11 @@ define_behavior :tile_oriented do
         new_loc = lower_left_target + collision_point_delta
         new_loc.y = new_loc.y.floor
         actor.y = new_loc.y
-        
-        #fix misses in parallel axis
-        # TODO these could be treated uniformly using vectors and axis lookups
-        ar = actor.bb.r
-        tx = lower_left_target.x
-        fixup = tx - ar        
-        if fixup > 0
-          actor.x += fixup
-        end
-
-        al = actor.x
-        tr = lower_left_target.x + tile_size
-        fixup = al - tr
-        if fixup > 0
-          actor.x += fixup
-        end
-        
       when :bottom
         lower_left_target = vec2((tile_col + 1) * tile_size, (tile_row + 1) * tile_size + 1)
         new_loc = lower_left_target + collision_point_delta
         new_loc.y = new_loc.y.ceil
         actor.y = new_loc.y
-
-        #fix misses in parallel axis
-        # TODO these could be treated uniformly using vectors and axis lookups
-        ar = actor.bb.r
-        tx = lower_left_target.x
-        fixup = tx - ar        
-        if fixup > 0
-          actor.x += fixup
-        end
-        
-        al = actor.x
-        tr = lower_left_target.x + tile_size
-        fixup = al - tr
-        if fixup > 0
-          actor.x += fixup
-        end
-        
       when :left
         lower_left_target = vec2(tile_col * tile_size - 1 , tile_row * tile_size)
         new_loc = lower_left_target + collision_point_delta
@@ -145,7 +111,33 @@ define_behavior :tile_oriented do
         raise "cannot determin desired actor location from tile_face: #{collision[:tile_face]}"
       end
 
-      # log vec2(actor.x, actor.y)
+      # fix if not standing on the tile
+      axis = perp_axis(collision[:tile_face])
+      actor_hw = actor.bb.w / 2
+      tile_hw = tile_size / 2
+      max_diff = (actor_hw + tile_hw) - 1
+
+      tile_center = vec2(tile_col * tile_size + tile_hw, tile_row * tile_size + tile_hw)
+      axis_val = actor.send(axis)
+      diff = axis_val - tile_center.send(axis)
+      diff_dist = diff.abs
+
+      if diff_dist > max_diff
+        required_shift = diff_dist - max_diff
+
+        shift_direction = diff < 0 ? 1 : -1
+        actor.send("#{axis}=", axis_val + shift_direction * required_shift)
+        log "shifting on #{axis} by #{shift_direction * required_shift}"
+      end
+    end
+
+    def perp_axis(tile_face)
+      {
+        top: :x,
+        bottom: :x,
+        left: :y,
+        right: :y,
+      }[tile_face]
     end
 
     def clear_actor_velocity

@@ -1,6 +1,6 @@
 define_stage :main_menu do
 
-  setup do
+  curtain_up do
     menu = create_actor :menu, x: 300, y: 200
 
     menu.when :start do |player_count|

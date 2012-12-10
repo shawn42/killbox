@@ -1,7 +1,6 @@
 define_stage :score do
 
-  setup do
-    
+  curtain_up do
     # add background image
     create_actor :icon, image: "score_screen.png", x: 670, y: 350
     

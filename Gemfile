@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+gem "debugger-ruby_core_source"
 gem 'require_all'
 gem 'tmx'
 gem 'pry'

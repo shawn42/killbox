@@ -71,6 +71,7 @@ PLATFORMS
 DEPENDENCIES
   conject
   debugger-linecache (= 1.1.1)
+  debugger-ruby_core_source
   gamebox (>= 0.4.0.rc10)
   kvo (= 0.0.2)
   listen (= 0.5.3)

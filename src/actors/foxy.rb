@@ -14,7 +14,7 @@ define_actor :foxy do
     #   knocked_down: 24..26,
     # }
     animated_with_spritemap interval: 120, rows: 7, cols: 8, actions: {
-      idle:          9,
+      idle:          [8,8,8,8,9],
       walking_right: 32..37,
       walking_left:  32..37,
       jumping:       16,
