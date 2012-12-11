@@ -91,12 +91,13 @@ class MapInspector
   def out_of_bounds?(map, pos)
     tile_grid = map.tile_grid
     tile_size = map.tile_size
-    width = tile_grid.size * tile_size
-    height = tile_grid.first.size * tile_size
-    map_box = Rect.new 0, 0, width, height
-    boundary = map_box.inflate tile_size*20, tile_size*20
-    
-    return !boundary.collide_point?(pos.x, pos.y)
+    width = tile_grid.first.size * tile_size
+    height = tile_grid.size * tile_size
+    boundary_size = tile_size * 10
+
+    # TODO cache this on map?
+    bb = Rect.new -boundary_size, -boundary_size, width + 2 * boundary_size, 2 * height + boundary_size
+    return !bb.collide_point?(pos.x, pos.y)
   end
   
 end

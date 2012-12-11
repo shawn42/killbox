@@ -27,11 +27,11 @@ class MultiViewportRenderer < Renderer
     center_x = screen_bounds.width / 2 + screen_bounds.x
     center_y = screen_bounds.height / 2 + screen_bounds.y
 
-    target.draw_box(
-      screen_bounds.x,
-      screen_bounds.y, 
-      screen_bounds.x+screen_bounds.width,
-      screen_bounds.y+screen_bounds.height, Color::BLACK, ZOrder::HudText)
+    # target.draw_box(
+    #   screen_bounds.x,
+    #   screen_bounds.y, 
+    #   screen_bounds.x+screen_bounds.width,
+    #   screen_bounds.y+screen_bounds.height, Color::BLACK, ZOrder::HudText)
 
     target.clip_to(*screen_bounds) do
       target.rotate(-viewport.rotation, center_x, center_y) do

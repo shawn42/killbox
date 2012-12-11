@@ -33,6 +33,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.3.7)
     nokogiri (1.5.5)
+    perftools.rb (2.0.0)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -55,6 +56,7 @@ GEM
     rspec-expectations (2.11.3)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.11.3)
+    ruby-prof (0.11.2)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -76,6 +78,7 @@ DEPENDENCIES
   kvo (= 0.0.2)
   listen (= 0.5.3)
   mocha
+  perftools.rb
   pry
   pry-debugger
   pry-remote
@@ -86,5 +89,6 @@ DEPENDENCIES
   rspec-core
   rspec-expectations
   rspec-mocks
+  ruby-prof
   simplecov
   tmx

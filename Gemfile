@@ -20,6 +20,9 @@ gem "simplecov", require: false
 gem 'listen', '0.5.3'
 gem 'rb-fsevent', '~> 0.9.1'
 
+gem 'perftools.rb'
+gem "ruby-prof"
+
 # gem 'releasy', '0.2.2'
 # TURD to allow debugger to compile for newest version of ruby 1.9.3
 gem 'debugger-linecache', '1.1.1'

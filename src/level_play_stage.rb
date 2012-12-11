@@ -1,49 +1,63 @@
 define_stage :level_play do
   render_with :multi_viewport_renderer
+  curtain_up do |*args|
+    opts = args.first || {}
+    # require 'perftools'
+    # PerfTools::CpuProfiler.start("/tmp/foxy_perf.txt")
+    # require 'ruby-prof'
+    # RubyProf.start
+    # TODO cleaner way to summon these into existance at the stage context
+    # required_stage_hands :bomb_coordinator, :bullet_coordinator, etc.. 
+    bomb_c = this_object_context[:bomb_coordinator]
+    bullet_c = this_object_context[:bullet_coordinator]
+    sword_c = this_object_context[:sword_coordinator]
+
+    director.update_slots = [:first, :before, :update, :last]
+
+    @console = create_actor(:console, visible: false)
+    @fps = create_actor :fps, x: 100, y: 30
+
+    backstage[:level_name] ||= levels.keys[0]
+    backstage[:player_count] ||= opts[:player_count]
+
+    setup_level backstage[:level_name]
+    setup_players backstage[:player_count]
+
+
+    director.when :update do |time|
+      unless @restarting
+        alive_players = @players.select{|player| player.alive?}
+        if @players.size > 1 && alive_players.size == 1
+          backstage[:scores] ||= {}
+          backstage[:scores][alive_players.first.number] ||= 0
+          backstage[:scores][alive_players.first.number] += 1
+          round_over 
+        end
+      end
+    end
+
+    # F1 console watch values
+    player = @players[1]
+    if player
+      # @console.react_to :watch, :p2x do player.x.two end
+      # @console.react_to :watch, :p2y do player.y.two end
+      # @console.react_to :watch, :fps do Gosu.fps end
+    end
+    input_manager.reg :down, Kb4 do
+      # PerfTools::CpuProfiler.stop
+
+      # result = RubyProf.stop
+      # printer = RubyProf::FlatPrinter.new(result)
+      # printer = RubyProf::GraphHtmlPrinter.new(result)
+      # File.open "perf.html", 'w+' do |f|
+      #   printer.print(f, min_percent: 2)
+      # end
+    end
+
+  end
 
   helpers do
     attr_accessor :players, :viewports
-
-    def curtain_up(opts={})
-      # TODO cleaner way to summon these into existance at the stage context
-      # required_stage_hands :bomb_coordinator, :bullet_coordinator, etc.. 
-      bomb_c = this_object_context[:bomb_coordinator]
-      bullet_c = this_object_context[:bullet_coordinator]
-      sword_c = this_object_context[:sword_coordinator]
-
-      director.update_slots = [:first, :before, :update, :last]
-
-      @console = create_actor(:console, visible: false)
-
-      backstage[:level_name] ||= levels.keys[0]
-      backstage[:player_count] ||= opts[:player_count]
-
-      setup_level backstage[:level_name]
-      setup_players backstage[:player_count]
-
-
-      director.when :update do |time|
-        unless @restarting
-          alive_players = @players.select{|player| player.alive?}
-          if @players.size > 1 && alive_players.size == 1
-            backstage[:scores] ||= {}
-            backstage[:scores][alive_players.first.number] ||= 0
-            backstage[:scores][alive_players.first.number] += 1
-            round_over 
-          end
-        end
-      end
-
-      # F1 console watch values
-      player = @players[1]
-      if player
-        @console.react_to :watch, :p2x do player.x.two end
-        @console.react_to :watch, :p2y do player.y.two end
-        @console.react_to :watch, :fps do Gosu.fps end
-      end
-
-    end
-
 
     def levels 
       {
@@ -134,7 +148,7 @@ define_stage :level_play do
       @restarting = true
       timer_manager.add_timer 'restart', 2000 do
         timer_manager.remove_timer 'restart'
-        fire :change_stage, :score
+        fire :change_stage, :score, {}
       end
     end
 

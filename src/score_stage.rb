@@ -1,6 +1,6 @@
 define_stage :score do
 
-  curtain_up do
+  curtain_up do |*args|
     # add background image
     create_actor :icon, image: "score_screen.png", x: 670, y: 350
     
@@ -17,15 +17,13 @@ define_stage :score do
     end
 
     input_manager.reg :down do
-      fire :change_stage, :level_play
+      fire :change_stage, :level_play, {}
     end
   end
 
-  helpers do
-    def curtain_down(*args)
-      log "band-aid til gamebox gets updated"
-      input_manager.clear_hooks
-    end
+  curtain_down do |*args|
+    log "band-aid til gamebox gets updated"
+    input_manager.clear_hooks
   end
 end
 
