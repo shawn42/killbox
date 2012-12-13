@@ -1,5 +1,5 @@
 define_behavior :die_by_bomb do
-  requires :bomb_coordinator, :stage
+  requires :bomb_coordinator, :stage, :score_keeper
   setup do
     bomb_coordinator.register_bombable actor
 
@@ -13,6 +13,8 @@ define_behavior :die_by_bomb do
         blast_vel = vec2(actor.x, actor.y) - vec2(bomb.x, bomb.y)
         actor.react_to :gibify, force: (blast_vel * 0.2)
         actor.remove 
+
+        score_keeper.player_score(bomb.player) unless bomb.player == actor
       end
     end
 

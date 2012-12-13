@@ -1,5 +1,7 @@
 define_stage :level_play do
   render_with :multi_viewport_renderer
+  requires :score_keeper
+
   curtain_up do |*args|
     opts = args.first || {}
     # require 'perftools'
@@ -23,14 +25,12 @@ define_stage :level_play do
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
 
-
     director.when :update do |time|
       unless @restarting
         alive_players = @players.select{|player| player.alive?}
-        if @players.size > 1 && alive_players.size == 1
-          backstage[:scores] ||= {}
-          backstage[:scores][alive_players.first.number] ||= 0
-          backstage[:scores][alive_players.first.number] += 1
+        if @players.size > 1 && alive_players.size < 2
+          last_man_standing = alive_players.first
+          score_keeper.player_score(last_man_standing) if last_man_standing
           round_over 
         end
       end

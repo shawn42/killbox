@@ -45,19 +45,23 @@ define_behavior :tile_collision_detector do
         trans_bb.b = max(point.y, trans_bb.b)
       end
 
-      # TODO optimization, check of from == to..
-      lines_to_check = actor.collision_point_deltas.map do |point|
+      lines_to_check = []
+      actor.collision_point_deltas.each do |point|
         current_rotation = degrees_to_radians(actor.rotation)
         next_rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
 
         from = (actor_loc + point.rotate(current_rotation)).to_a
         to = (actor_loc + point.rotate(next_rotation) + vel).to_a
-        [from, to]
+        unless from == to
+          lines_to_check << [from, to]
+        end
       end
+
       actor.has_attribute :lines
       actor.lines = lines_to_check.dup
 
-      bb_to_check = bb.union(trans_bb)
+      # AAHH why do we need to do this inflate?
+      bb_to_check = bb.union(trans_bb).inflate!(30, 30)
       map_inspector.overlap_tiles(map, bb_to_check) do |tile, row, col|
 
         lines_to_check.each.with_index do |line, i|
