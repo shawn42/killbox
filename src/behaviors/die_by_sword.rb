@@ -1,5 +1,5 @@
 define_behavior :die_by_sword do
-  requires :sword_coordinator, :stage
+  requires :sword_coordinator, :stage, :score_keeper
   setup do
     sword_coordinator.register_sliceable actor
 
@@ -15,6 +15,7 @@ define_behavior :die_by_sword do
       actor.react_to :play_sound, :death
       sword_vel = vec2(actor.x, actor.y) - vec2(sword.x, sword.y)
       actor.react_to :gibify, force: (sword_vel * 0.2)
+      score_keeper.player_score(sword)
       actor.remove
     end
 

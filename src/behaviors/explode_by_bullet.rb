@@ -9,6 +9,7 @@ define_behavior :explode_by_bullet do
   helpers do
     def shot(bullet)
       actor.react_to :play_sound, :bomb
+      actor.player = bullet.player
       actor.emit :boom
       bullet.remove
       actor.remove
