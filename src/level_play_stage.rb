@@ -1,6 +1,6 @@
 define_stage :level_play do
   render_with :multi_viewport_renderer
-  requires :score_keeper
+  requires :score_keeper, :bomb_coordinator, :bullet_coordinator, :sword_coordinator
 
   curtain_up do |*args|
     opts = args.first || {}
@@ -8,12 +8,6 @@ define_stage :level_play do
     # PerfTools::CpuProfiler.start("/tmp/foxy_perf.txt")
     # require 'ruby-prof'
     # RubyProf.start
-    # TODO cleaner way to summon these into existance at the stage context
-    # required_stage_hands :bomb_coordinator, :bullet_coordinator, etc.. 
-    bomb_c = this_object_context[:bomb_coordinator]
-    bullet_c = this_object_context[:bullet_coordinator]
-    sword_c = this_object_context[:sword_coordinator]
-
     director.update_slots = [:first, :before, :update, :last]
 
     @console = create_actor(:console, visible: false)

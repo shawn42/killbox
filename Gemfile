@@ -6,8 +6,8 @@ gem 'pry'
 gem 'pry-remote'
 gem 'pry-debugger'
 gem "gamebox", '>= 0.4.0.rc10'
-gem "conject"
-gem 'kvo', '0.0.2'
+gem "conject", '>= 0.0.8'
+gem 'kvo', '0.0.4'
 
 gem "mocha"
 gem "rspec"
