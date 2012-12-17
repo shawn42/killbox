@@ -23,13 +23,13 @@ define_actor :foxy do
     grounded
     looker
 
-    accelerator air_speed: 12, speed: 14, max_speed: 12 
+    accelerator speed: 20
     gibify
 
     slicer
-    shooter recharge_time: 4_000, shot_power: 15, kickback: 0.7
+    shooter recharge_time: 4_000, shot_power: 15, kickback: 1.4
     shielded
-    bomber kickback: 5
+    bomber kickback: 1
 
     die_by_sword
     die_by_bullet

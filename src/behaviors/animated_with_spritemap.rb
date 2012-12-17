@@ -41,8 +41,10 @@ define_behavior :animated_with_spritemap do
       end
 
       actor.when :action_changed do |old_action, new_action|
-        action_changed old_action, new_action
-        actor.animating = @frames[new_action].size > 1
+        unless old_action == new_action
+          action_changed old_action, new_action
+          actor.animating = @frames[new_action].size > 1
+        end
       end
       
       action_changed nil, actor.action

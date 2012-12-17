@@ -5,7 +5,7 @@ define_behavior :bomber do
     actor.has_attributes bomb_charge: 0,
                          max_bomb_charge: 2,
                          was_charging_bomb: false,
-                         bomb_kickback: opts[:bomb_kickback] || 0
+                         bomb_kickback: opts[:kickback] || 0
                         
     director.when :first do |time, time_secs|
       update_bombing time_secs
@@ -45,10 +45,18 @@ define_behavior :bomber do
 
       actor.react_to :play_sound, :shoot
 
+      actor.accel += bomb_vel.dup.reverse! * actor.bomb_kickback
+
+      unless actor.on_ground?
+        gun_angle = actor.gun_direction.angle
+        if gun_angle == 0
+          actor.rotation_vel -= 0.3 
+        elsif gun_angle == Math::PI
+          actor.rotation_vel += 0.3 
+        end
+      end
       actor.bomb_charge = 0
 
-      # TODO Add some rotational force
-      # TODO scale kickback by charge
     end
 
     def remove

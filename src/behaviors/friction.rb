@@ -4,7 +4,7 @@ define_behavior :friction do
     actor.has_attributes friction: opts[:amount]
     director.when :first do |time_millis, time_secs|
 
-      if actor.on_ground and actor.vel.magnitude > 0.001
+      if actor.on_ground? and actor.vel.magnitude > 0.001
         time_to_stop_in_ms = 100
 
         friction = 1 - min(actor.friction, 1)
