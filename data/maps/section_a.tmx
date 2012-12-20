@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="70" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="space platform" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/space_platform.png" width="859" height="396"/>
+ </tileset>
+ <tileset firstgid="254" name="foxy" tilewidth="64" tileheight="64">
+  <image source="../../docs/tripper.png" width="64" height="64"/>
+ </tileset>
+ <layer name="bg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3auw3CQBBFUTfqLuiCwKIFEmogoAd3wrcAJkQWQjJrM4x0jvSCza4m3q4DfuEcu8SusVvsHnukFgEAAKxrlx3QqHp/ddXvX70f1tJnBzTaZAfMdJq8tykV35v271MqlnPMDmg0ZgcAAPyJITugUfX+6qrfv3o/wCeHl717A8BS/CmnsicSnDOkgDQAAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2aWW7EIAyGc+5ep8sh2l6i7SEyM13e+l5HSiSEHAPGC0n9SdYshJ9/CDGEzDQFQVDiAnHN4gbxCfFV8f0Pof3boH1dvbQyM+powfES/uUI/754+G/NGWm+w3JRqV5eh5OzUlp/P3U8p6y3/8N/X5mE/3QOxebjfB6myql2MKzHP1dLK0+G/zqt8K+va+X/suptIcUTUSaZf+ad95pI5n8P/3v9nN8/ttw7LuE9fnrxHj+j6lq107v+SPEYP5J4zF+SUB4lz7MWR+hjitQ/dS1Igp3X7X6kdr9xOf57DWus1m9aaLVpNX6i/+u0tPJn6/VbegawxxFy65nn3/Cvzxn9b3sFe/mntHeZgz1T5ByDgfkv9Tv3vMzZa0q+v1Kbuy39px4xzXuIB4jHhjYs/ZfafIZ4gXhtaIPjv3edhI2N5bs3iHeIj6l+jwa7To6QdzY4/T8SHuNHkv/Y/yMxSv7hMkr+l9QK/7r1S1pn90/N6zV1Sv+HucvqYp891w+hH/qhH/qhP6Z+vpdRE9Sakrs3EgSW/AGRGzQLgDQAAA==
+  </data>
+ </layer>
+ <objectgroup name="actors" width="48" height="70">
+  <object name="player1" type="foxy" gid="254" x="1512" y="288"/>
+  <object name="player2" type="foxy" gid="254" x="440" y="752"/>
+  <object name="player3" type="foxy" gid="254" x="1492" y="1580"/>
+  <object name="player4" type="foxy" gid="254" x="448" y="1988"/>
+ </objectgroup>
+ <layer name="fg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3WzQnCQBRG0XSkQXvQWIRgV1qF6cG/KrQW38JFGBTCLDKDOQcuTCCBbzdpGgAAAAAA+C+X6PqjW8Fdc3GMTpnV4Bz1mdXgHj2S+uRc8/5n9MoMmI/hXT/mbk//Db59M+YdAACgLotoGbWf51W0LjcnyybaRl20K7wlx35wPhRbAQBM4Q1T2WTngDQAAA==
+  </data>
+ </layer>
+</map>
