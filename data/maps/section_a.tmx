@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="70" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="space platform" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/space_platform.png" width="859" height="396"/>
+ </tileset>
+ <tileset firstgid="254" name="foxy" tilewidth="64" tileheight="64">
+  <image source="../../docs/tripper.png" width="64" height="64"/>
+ </tileset>
+ <layer name="bg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2avU7DMBDH/VwdKEVio2wMDEwIqQMDA5RHYEAUsUIBiYWZgYGBN2DgDRh4AD4FhQlbilX3dPFH7mw3wj/pr+Bz4vxx7hwHIUShUEjBi9Sr1JvUu9SH1GdWRwVIJ8KYKxHGrIPTfx8cY9MxxEkq/wNDVFTO9A35nL9KvGenuleMGnDh+3ti7EkNxex8qfY+jzUn5rNq8gyOLGoDI4+fY7IppvO/1XCMVF7roOR/7vlXqGcQMve6ZkfVcejZNpWqvjFsNRui3FByJHfNKIr/uLjWpSYeTgjXhtJ2/y7mPX9c/Mf55/ZP2fvb3q91EmL6bvbF9k1B2fukeP/avkupe/8U9Rvzu47b/wYSU94HAs8R6t6f2/9udcS+SbXgvpWS/xSU/3sQO6yOIXUTuvfnAvN/BfqxayAcfztpAublztGPxXLmD+TR0Q9j1PWTgqv2fec/B7oO9TqDCXu3wxjH304ocHxD58p/LnKtn4VC21mUWqqOFBakutU45phKywzjY+w42iGsgfY6YSxfOP1vg/YDYawcuPwfR7z3MxI7sJyPPSfoH17P6d+stXOpC6lLMVtvKtYzYqYw/6dSZ1JjMOa4Go8TWGu3yDlYTOMz//B6zvmH98L82GrZxz88h9M/zE0s16n5T1nL6tC5+SumuamkcrVrtLFYz7jex/8Nv/1aYuR/jPmvI0X+xySGf1v9cMPhX6//EzG7/k8qpeDaENa24Vr/sf2ca4+XYg+oceVP6Brt08+Jbf8A23UxpR+kn3v/gQHnHz77tuXPE2jPe/5A/19S36J+PYIxnTdYf478gYS+4336OXH5D33H+PRzMwmUovxPeaHN/AGhNA3agDQAAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2ayU7EMAyG+9y8DstDAC8BnIC5d4btxh1XaqQoch3bdbbiT/o10yXOP2nqpOlMk+M4Oc6gS6IP0Cfoi7H/h4j9K4h9Wb1ImRVlSqHx4v7tcP9taeFfmjPifIfloly5tIwmZ8VIfz91vubY3vbv2f8r6A30DjopykvPb9X+8RiKjcfpOEwdp+rBqN3/tbFK5Un3z4vl/svHreX/vMYLsuKOOGaZf+aN7yWxzP8t/G+1c/r8KHl2XMTxj/UL7r7ACPdvi3pG9793/hHTov9Y0mL8soTyKL3OnLm/NSO0MUXsn7oXLMGua3ge4a43Lud/r6pNrflbKUrVWav/ePvzYpXKn9L7N/cOYIsRcuuRx1/3X54j+g9rBVv5J7d2mYK9U9Scg4H5z7W79rrMyWdMur7Czd01/ccesZjXoBvQraCOmv5zdd6DHkCPgjo0/vfOk7C+sex7Aj2DXib+Gg12n4yQdwKa9u8Ji/4j3bbkP7Z/T/SSf7T0kv8tY7n/suVzsY7unxrXOWVy/4e5Sspi2y3nDx7f43t8j+/x+4yfrmVwRM0ptWsjjlOTP62nBj2ANAAA
+  </data>
+ </layer>
+ <objectgroup name="actors" width="48" height="70">
+  <object name="player1" type="foxy" gid="254" x="1512" y="288"/>
+  <object name="player2" type="foxy" gid="254" x="440" y="752"/>
+  <object name="player3" type="foxy" gid="254" x="1492" y="1580"/>
+  <object name="player4" type="foxy" gid="254" x="448" y="1988"/>
+ </objectgroup>
+ <layer name="fg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3WywkCMRRA0elIRXvwU4RgT36rcHrwV4XW4lu4GIZxxCzMqOfAhQRCeLukKAAAAAAA4LccouOTTi3nv8UyWkXraJN5libbaJdYF+yjMrEuOEeXWmVt3eX5r9EtMeB/VN/6pre97fyr/8A79wIAAHn1on40eOyH0SjfOEnG0SSaRrPMs6SYV9aLbFMAAJ9wB9k2dmeANAAA
+  </data>
+ </layer>
+</map>
