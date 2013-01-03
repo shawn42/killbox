@@ -1,3 +1,5 @@
+# TODO
+# jump need moar power!
 define_behavior :jump do
   requires :director
   setup do
@@ -34,14 +36,6 @@ define_behavior :jump do
           end
           actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
           actor.emit :jump
-
-          # degrees
-          # TODO look at direction we're facing and rotate backwards
-          if actor.do_or_do_not :flip_h
-            actor.rotation_vel += actor.jump_rotation * time_secs
-          else
-            actor.rotation_vel -= actor.jump_rotation * time_secs
-          end
         end
 
         actor.jump_power = actor.min_jump_power

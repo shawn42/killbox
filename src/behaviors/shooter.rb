@@ -54,6 +54,17 @@ define_behavior :shooter do
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(rotation))
       rotated_gun_dir.magnitude = 22
       actor.gun_tip = rotated_gun_dir + vec2(actor.x, actor.y)
+
+      if ENV['DEBUG']
+        # for debug drawing
+        actor.has_attribute :shot_vel
+        actor.shot_vel = shot_vel
+      end
+    end
+
+    def shot_vel
+      actor_loc = vec2(actor.x, actor.y)
+      (actor.gun_tip - actor_loc).unit * actor.shot_power
     end
 
     def shoot_if_able
@@ -62,13 +73,13 @@ define_behavior :shooter do
 
         actor.can_shoot = false
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
-        shot_vel = (actor.gun_tip - actor_loc).unit * actor.shot_power
 
         bullet_pos = actor_loc + ((actor.gun_tip - actor_loc) * 1.9)
         bullet = stage.create_actor :bullet, player: actor, x: bullet_pos.x, y: bullet_pos.y, map: actor.map, vel: shot_vel
         bullet_coordinator.register_bullet bullet
 
-        actor.accel += rotated_gun_dir.dup.reverse! * actor.kickback
+        kickback = rotated_gun_dir.dup.reverse! * actor.kickback
+        actor.accel += kickback
         actor.react_to :play_sound, :shoot
 
         # TODO per Dustin: move this to where we apply the velocity

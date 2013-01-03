@@ -19,8 +19,12 @@ class LevelLoader
       generate_map(map)
 
     # all tiles will be square!
-    # TODO pull these from the file!?
-    map_data.tileset_image = "map/tileset.png"
+    # TODO pull these from the file!? augment tmx gem?
+    if level_name == :trippy
+      map_data.tileset_image = "map/tileset.png"
+    else
+      map_data.tileset_image = "map/space_platform.png"
+    end
     map_data.tile_size = 36
     
     Level.new.tap do |level|

@@ -1,3 +1,6 @@
+# TODO
+# too much velocity
+# charge may be a little slow
 define_behavior :bomber do
   requires :stage, :director, :bomb_coordinator
   setup do
@@ -45,7 +48,10 @@ define_behavior :bomber do
 
       actor.react_to :play_sound, :shoot
 
-      actor.accel += bomb_vel.dup.reverse! * actor.bomb_kickback
+      # minimum kickback is 20 percent
+      kickback = bomb_vel.dup.unit!.reverse! * (actor.bomb_kickback * max(0.2, percent))
+      log kickback
+      actor.accel += kickback
 
       unless actor.on_ground?
         gun_angle = actor.gun_direction.angle

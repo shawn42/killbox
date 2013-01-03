@@ -13,7 +13,7 @@ define_stage :level_play do
     @console = create_actor(:console, visible: false)
     @fps = create_actor :fps, x: 100, y: 30
 
-    backstage[:level_name] ||= levels.keys[0]
+    backstage[:level_name] ||= levels.keys[1]
     backstage[:player_count] ||= opts[:player_count]
 
     setup_level backstage[:level_name]
@@ -56,6 +56,7 @@ define_stage :level_play do
     def levels 
       {
       :trippy => 4,
+      :section_a => 4,
       # :advanced_jump => 2,
       # :cave => 4,
       # :basic_jump => 1,

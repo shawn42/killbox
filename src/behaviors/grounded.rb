@@ -9,9 +9,7 @@ define_behavior :grounded do
 
       actor_loc = vec2(actor.x, actor.y)
       touching_points = actor.collision_points.select { |fp| on_ground?(fp) }
-      # TODO actor.react_to :left_ground # should rotate now
       actor.on_ground = touching_points.size > 0
-      # actor.action = :idle unless actor.action == :idle
     end
 
     actor.when :on_ground_changed do |was_grounded, is_grounded|
@@ -19,9 +17,9 @@ define_behavior :grounded do
       if was_grounded and !is_grounded
         gun_angle = actor.gun_direction.angle
         if gun_angle == 0
-          actor.rotation_vel -= 0.2 
+          actor.rotation_vel -= 0.3 
         elsif gun_angle == Math::PI
-          actor.rotation_vel += 0.2 
+          actor.rotation_vel += 0.3 
         end
       end
     end

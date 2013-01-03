@@ -29,7 +29,7 @@ define_actor :foxy do
     slicer
     shooter recharge_time: 4_000, shot_power: 15, kickback: 1.4
     shielded
-    bomber kickback: 1
+    bomber kickback: 1.6
 
     die_by_sword
     die_by_bullet
@@ -89,6 +89,11 @@ define_actor :foxy do
           target.draw_box x_off+bb.x, y_off+bb.y, x_off+bb.r, y_off+bb.b, Color::YELLOW, ZOrder::Debug
         end
 
+        shot_vel = actor.do_or_do_not :shot_vel
+        if shot_vel
+          target.draw_line offset_x, offset_y, offset_x + shot_vel.x, offset_y + shot_vel.y, 
+            Color::WHITE, ZOrder::PlayerDecoration
+        end
 
         actor.collision_points.each do |cp|
           target.draw_box x_off+cp.x, y_off+cp.y, x_off+cp.x+1, y_off+cp.y+1, Color::WHITE, ZOrder::Debug
