@@ -48,6 +48,7 @@ define_behavior :tile_oriented do
   end
 
   helpers do
+    include MinMaxHelpers
     FACE_NORMALS = {
       top:    vec2(0, -1),
       bottom: vec2(0, 1),
@@ -111,10 +112,11 @@ define_behavior :tile_oriented do
         raise "cannot determin desired actor location from tile_face: #{collision[:tile_face]}"
       end
 
+
       # fix if not standing on the tile
       axis = perp_axis(collision[:tile_face])
-      actor_hw = actor.bb.w / 2
-      tile_hw = tile_size / 2
+      actor_hw = (min(actor.bb.w, actor.bb.h) / 2).floor
+      tile_hw = (tile_size / 2).floor
       max_diff = (actor_hw + tile_hw) - 1
 
       tile_center = vec2(tile_col * tile_size + tile_hw, tile_row * tile_size + tile_hw)
@@ -122,13 +124,25 @@ define_behavior :tile_oriented do
       diff = axis_val - tile_center.send(axis)
       diff_dist = diff.abs
 
+      log "axis: #{axis}"
+      log "actor_hw: #{actor_hw}"
+      log "tile_hw: #{tile_hw}"
+      log "tile_center: #{tile_center}"
+      log "axis_val: #{axis_val}"
+
+      log "diff_dist: #{diff_dist} max_diff: #{max_diff}"
       if diff_dist > max_diff
+
         required_shift = diff_dist - max_diff
+        sign = required_shift < 0 ? -1 : 1
+        required_shift = required_shift.abs.ceil * sign
+
 
         shift_direction = diff < 0 ? 1 : -1
         actor.send("#{axis}=", axis_val + shift_direction * required_shift)
         log "shifting on #{axis} by #{shift_direction * required_shift}"
       end
+
     end
 
     def perp_axis(tile_face)
@@ -142,6 +156,8 @@ define_behavior :tile_oriented do
 
     def clear_actor_velocity
       actor.vel = vec2(0,0)
+      actor.accel = vec2(0,0)
+      actor.rotation_vel = 0
     end
 
     def remove

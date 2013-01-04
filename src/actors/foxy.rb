@@ -36,7 +36,7 @@ define_actor :foxy do
     die_by_bomb
     blasted_by_bomb
 
-    jump rotational_power: 20
+    jump max_power: 80, min_power: 20
     friction amount: 0.15
 
     foxy_collision_points
