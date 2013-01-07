@@ -26,7 +26,7 @@ define_behavior :slicer do
         actor_loc = vec2(actor.x, actor.y)
 
         actor.can_slice = false
-        actor.react_to :play_sound, :shoot
+        actor.react_to :play_sound, :slice
 
         looking = actor.flip_h? ? vec2(-1,0) : vec2(1,0)
         rotated_look = looking.rotate!(degrees_to_radians(actor.rotation)) * actor.slice_reach
@@ -37,11 +37,12 @@ define_behavior :slicer do
         end
 
         log "SWING #{rotated_look}"
-        # sword_loc = actor_loc + rotated_look
-        # stage.create_actor :slice_effect, x: sword_loc.x, y: sword_loc.y, view: :graphical_actor_view
-
-        stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, 
-          view: :graphical_actor_view
+        actor.when :action_loop_complete do
+          actor.action = :idle
+        end
+        actor.action = :slice
+        # stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, 
+        #   view: :graphical_actor_view
 
         actor.emit :slice
 
