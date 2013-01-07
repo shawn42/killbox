@@ -94,6 +94,7 @@ define_behavior :shooter do
 
         timer_manager.add_timer timer_name, actor.shot_recharge_time do
           actor.can_shoot = true
+          actor.react_to :play_sound, :reload
           timer_manager.remove_timer timer_name
         end
       else
