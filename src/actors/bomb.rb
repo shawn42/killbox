@@ -26,17 +26,19 @@ define_actor :bomb do
     end
 
     helpers do
+      def tick_timer_name; "#{object_id}_bomb_tick"; end
+      def death_timer_name; "#{object_id}_bomb_death"; end
+
       def remove
-        timer_name = "#{object_id}_bomb_tick"
-        timer_manager.remove_timer timer_name
+        timer_manager.remove_timer tick_timer_name
+        timer_manager.remove_timer death_timer_name
       end
 
       def setup_timers
-        timer_name = "#{object_id}_bomb_tick"
         timer_tick_acculation = 0
         interval = 30
         next_beep = 800
-        timer_manager.add_timer timer_name, interval do
+        timer_manager.add_timer tick_timer_name, interval do
           if timer_tick_acculation > next_beep
             actor.react_to :play_sound, :bomb_tick 
             timer_tick_acculation = 0
@@ -46,7 +48,7 @@ define_actor :bomb do
           end
         end
 
-        timer_manager.add_timer "#{object_id}_bomb_death", 3_000, false do
+        timer_manager.add_timer death_timer_name, 3_000, false do
           actor.react_to :play_sound, :bomb
           actor.emit :boom
           actor.remove
