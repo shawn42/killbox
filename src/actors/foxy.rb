@@ -4,21 +4,19 @@ define_actor :foxy do
     positioned
     audible
     layered ZOrder::Player
-    # animated_with_spritemap file: 'foxy.png', rows: 9, cols: 3, actions: {
-    #   idle:         2,
-    #   walking_right:21..23,
-    #   walking_left: 21..23,
-    #   jumping:      6..7,
-    #   falling:      8,
-    #   hurt:         9..11,
-    #   knocked_down: 24..26,
-    # }
+
+    # TODO change the interval for one animation
     animated_with_spritemap interval: 120, rows: 7, cols: 8, actions: {
-      idle:          [8,8,8,8,9],
+      idle:          [8]*20 + [9],
       walking_right: 32..37,
       walking_left:  32..37,
       jumping:       16,
-      asphyxiate:    0..5, # TODO change the interval for one animation
+      asphyxiate:    0..5, 
+      slice:         [48]*2+ [49]*3 + [50]*5, 
+      shoot_right:   40..41, # TODO do we need left and right?
+      shoot_left:    40..41, 
+      shoot_down:    42..43, 
+      shoot_up:      44..45, 
     }
     grounded
     looker

@@ -12,25 +12,34 @@ define_behavior :accelerator do
       # vvvvvvvvvvvvvvvv
       speed = actor.speed
 
-      if input.walk_right? && actor.on_ground?
-        force = actor.ground_normal.rotate(Math::HALF_PI) * speed * time_secs
-        actor.accel += force 
-        actor.action = :walking_right
-      elsif input.walk_left? && actor.on_ground?
-        force = actor.ground_normal.rotate(-Math::HALF_PI) * speed * time_secs
-        actor.accel += force
-        actor.action = :walking_left
-      else
-        actor.action = :idle if actor.on_ground?
+      if actor.on_ground?
+        if input.walk_right?
+          force = actor.ground_normal.rotate(Math::HALF_PI) * speed * time_secs
+          actor.accel += force 
+        elsif input.walk_left?
+          force = actor.ground_normal.rotate(-Math::HALF_PI) * speed * time_secs
+          actor.accel += force
+        end
       end
+
       # ^^^^^^^^^^^^^^^
 
-      actor.vel += actor.accel
-
-      # TODO this should probably live in jump behavior
-      if !actor.on_ground?
-        actor.action = :jumping 
+      # TODO XXX animation: need a state machine of some sort here
+      unless actor.action == :slice
+        if actor.on_ground?
+          if input.walk_right?
+            actor.action = :walking_right
+          elsif input.walk_left?
+            actor.action = :walking_left
+          else
+            actor.action = :idle
+          end
+        else
+          actor.action = :jumping 
+        end
       end
+
+      actor.vel += actor.accel
 
       if (!input.walk_right? && !input.walk_right?)
         # stop short
