@@ -64,15 +64,6 @@ define_behavior :looker do
 
         viewport.follow_offset_x = offset_vec.x
         viewport.follow_offset_y = offset_vec.y
-      else
-        current_magnitude = current_vec.magnitude 
-        magnitude_to_move_toward_player = actor.look_distance * time_secs
-        current_vec.magnitude = max(current_magnitude - magnitude_to_move_toward_player, 0)
-
-        current_vec = vec2(0,0) if current_vec.magnitude < 1
-
-        viewport.follow_offset_x = current_vec.x
-        viewport.follow_offset_y = current_vec.y
       end
 
     end
