@@ -1,3 +1,41 @@
+class ComputerPlayer
+  attr_accessor :player
+  def initialize(player)
+    @player = player
+    @turn = 0
+  end
+
+  def take_turn(time)
+    @turn += 1
+    if @turn % 480 == 0
+      player.input.emit :shoot
+    end
+    if @turn % 80 == 0
+      player.input.emit :shoot
+    end
+
+    if @turn % 500 < 100
+      player.input.define_singleton_method(:charging_jump?) { true }
+    else
+      player.input.define_singleton_method(:charging_jump?) { false }
+    end
+
+    if @turn % 200 > 100
+      player.input.define_singleton_method(:walk_right?) { false }
+      player.input.define_singleton_method(:walk_left?) { true }
+    else
+      player.input.define_singleton_method(:walk_right?) { true }
+      player.input.define_singleton_method(:walk_left?) { false }
+    end
+  end
+end
+
+class InputMapper
+  def emit(*args, &blk)
+    fire *args, &blk
+  end
+end
+
 define_stage :level_play do
   render_with :multi_viewport_renderer
   requires :score_keeper, :bomb_coordinator, :bullet_coordinator, :sword_coordinator
@@ -26,6 +64,9 @@ define_stage :level_play do
           last_man_standing = alive_players.first
           score_keeper.player_score(last_man_standing) if last_man_standing
           round_over 
+        end
+        @computer_players.each do |npc|
+          npc.take_turn time
         end
       end
     end
@@ -69,6 +110,7 @@ define_stage :level_play do
     end
 
     def setup_players(player_count=1)
+      @computer_players = []
       @players = []
       player_count.times do |i|
         setup_player i
@@ -91,8 +133,14 @@ define_stage :level_play do
       if player
         player.has_attributes number: number
         player.vel = vec2(0,3)
-        player.input.map_input(controls[name])
         player.animation_file = "trippers/#{player_color(index)}_tripper.png"
+
+        if index == 2
+          @computer_players << ComputerPlayer.new(player)
+        else
+          player.input.map_input(controls[name])
+        end
+
         @players << player
       end
     end

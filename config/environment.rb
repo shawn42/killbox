@@ -17,20 +17,20 @@ Gamebox.configure do |config|
   config.gb_gfx_path = GAMEBOX_PATH + "data/graphics/"
   config.gb_fonts_path = GAMEBOX_PATH + "data/fonts/"
   
-  config.stages = [:main_menu, :level_play, :score]
+  config.stages = [:player_select, :level_play, :score]
+  # config.stages = [:main_menu, :level_play, :score]
   config.game_name = "Foxy"
 end
 
 [GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }
 require "gamebox_application"
 
-
 require_all Dir.glob("src/*.rb").reject{ |f| f.match("src/app.rb") }
 directory_load_order = %w(behaviors actors)
 directory_load_order.each do |dir|
-  require_all "src/#{dir}/**/*.rb"
+  require_all Dir.glob("src/#{dir}/**/*.rb")
 end
-require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec/") || f.match("src/app.rb")}
+# require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec/") || f.match("src/app.rb")}
 Gosu::enable_undocumented_retrofication
 
 
