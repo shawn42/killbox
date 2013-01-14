@@ -1,11 +1,9 @@
-puts "HERE"
 define_actor :player_select_menu do
   behavior do
     requires :input_manager, :stage
     setup do
       actor.has_attributes player_count: 2,
-                           label_width: 80,
-                           current_selected_index: 1
+                           label_width: 80
 
       font = "vigilanc.ttf"
       font_size = 80
@@ -22,10 +20,11 @@ define_actor :player_select_menu do
       end
 
       input_manager.reg :down, KbRight do
-        actor.player_count = min(actor.player_count + 1, 4) if actor.current_selected_index == 1
+        actor.player_count = (actor.player_count % 4) + 1
       end
+    
       input_manager.reg :down, KbLeft do
-        actor.player_count = max(actor.player_count - 1, 1) if actor.current_selected_index == 1
+        actor.player_count = ((actor.player_count-2)%4)+1
       end
 
       input_manager.reg :down, Kb1 do actor.emit :start, 1 end
