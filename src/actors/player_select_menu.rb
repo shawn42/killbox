@@ -45,7 +45,7 @@ end
 
 define_actor_view :player_select_menu_view do
   requires :resource_manager
-  configure do
+  setup do
     @menu_indicator = resource_manager.load_image 'trippers/shield.png'
   end
 

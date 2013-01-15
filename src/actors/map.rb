@@ -7,7 +7,7 @@ define_actor :map do
   
   view do
     requires :wrapped_screen, :resource_manager
-    configure do
+    setup do
       map_data = actor.map_data
       tile_size = map_data.tile_size
       actor.has_attributes map_image: nil,
