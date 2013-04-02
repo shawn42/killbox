@@ -124,13 +124,13 @@ define_behavior :tile_oriented do
       diff = axis_val - tile_center.send(axis)
       diff_dist = diff.abs
 
-      log "axis: #{axis}"
-      log "actor_hw: #{actor_hw}"
-      log "tile_hw: #{tile_hw}"
-      log "tile_center: #{tile_center}"
-      log "axis_val: #{axis_val}"
+      # log "axis: #{axis}"
+      # log "actor_hw: #{actor_hw}"
+      # log "tile_hw: #{tile_hw}"
+      # log "tile_center: #{tile_center}"
+      # log "axis_val: #{axis_val}"
 
-      log "diff_dist: #{diff_dist} max_diff: #{max_diff}"
+      # log "diff_dist: #{diff_dist} max_diff: #{max_diff}"
       if diff_dist > max_diff
 
         required_shift = diff_dist - max_diff
@@ -140,7 +140,7 @@ define_behavior :tile_oriented do
 
         shift_direction = diff < 0 ? 1 : -1
         actor.send("#{axis}=", axis_val + shift_direction * required_shift)
-        log "shifting on #{axis} by #{shift_direction * required_shift}"
+        # log "shifting on #{axis} by #{shift_direction * required_shift}"
       end
 
     end

@@ -49,6 +49,7 @@ define_behavior :tile_bouncer do
           projected = motion.projected_onto(face_normal)
 
           new_vel = (projected - motion).reverse + projected.reverse
+          # log "MODIFYING VEL: #{actor.vel} .. #{new_vel}"
           actor.vel = new_vel
 
           left_over_movement = new_vel.dup

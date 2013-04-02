@@ -1,10 +1,11 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 gem "debugger-ruby_core_source"
 gem 'require_all'
 gem 'tmx'
 gem 'pry'
 gem 'pry-remote'
 gem 'pry-debugger'
+gem "gosu", '>= 0.7.47.1'
 gem "gamebox", '>= 0.4.0.rc10'
 gem "conject", '>= 0.0.8'
 gem 'kvo', '0.0.4'

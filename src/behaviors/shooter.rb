@@ -107,6 +107,7 @@ define_behavior :shooter do
     end
 
     def remove
+      timer_manager.remove_timer timer_name
       actor.can_shoot = false
       timer_manager.remove_timer 'shot_recharge'
       actor.input.unsubscribe_all(self)

@@ -50,7 +50,7 @@ define_behavior :bomber do
 
       # minimum kickback is 20 percent
       kickback = bomb_vel.dup.unit!.reverse! * (actor.bomb_kickback * max(0.2, percent))
-      log kickback
+      # log kickback
       actor.accel += kickback
 
       unless actor.on_ground?

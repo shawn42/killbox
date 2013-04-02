@@ -1,5 +1,3 @@
-# TODO
-# jump need moar power!
 define_behavior :jump do
   requires :director
   setup do
@@ -23,6 +21,7 @@ define_behavior :jump do
     def update_jump(time_secs)
       if actor.input.charging_jump? && actor.on_ground?
         actor.jump_power = min(actor.jump_power + actor.max_jump_power * time_secs * 1.5, actor.max_jump_power)
+        # log "JUMP: #{actor.jump_power}"
         remove_behavior :accelerator if actor.jump_power == actor.max_jump_power
 
       else

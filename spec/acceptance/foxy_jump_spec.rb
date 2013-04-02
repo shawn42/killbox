@@ -150,7 +150,7 @@ describe "Foxy jumping", acceptance: true do
   end
 
   context "shields up" do
-    it 'grabs the wall when we rotate next to it' do
+    it 'does not get stuck when glancing off the wall' do
       start_x = tile_size + foxy_w / 2 + 1
       foxy.x = start_x
 
@@ -165,6 +165,10 @@ describe "Foxy jumping", acceptance: true do
         y: floor_y.ish,
         rotation: 0.ish
 
+      foxy.when :vel do |old, n|
+        binding.pry
+      end
+
       jump 10
       update 20
 
@@ -173,10 +177,13 @@ describe "Foxy jumping", acceptance: true do
       # wait for shields to wear off
       update 3000, step: 20
 
-      # should now stick
+      # should now stick to the ceiling
       see_actor_attrs :foxy, 
-        rotation: 90.ish,
+        rotation: 180.ish,
         rotation_vel: 0.ish
+
+      # bounced off the wall
+      foxy.x.should > start_x
 
     end
   end
