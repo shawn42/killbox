@@ -13,13 +13,15 @@ define_behavior :grounded do
     end
 
     actor.when :on_ground_changed do |was_grounded, is_grounded|
-      # TODO ew.. maybe have some sort of "looking" vector instead of gun dir
-      if was_grounded and !is_grounded
-        gun_angle = actor.gun_direction.angle
-        if gun_angle == 0
-          actor.rotation_vel -= 0.3 
-        elsif gun_angle == Math::PI
-          actor.rotation_vel += 0.3 
+      unless was_grounded == is_grounded
+        # TODO ew.. maybe have some sort of "looking" vector instead of gun dir
+        if was_grounded and !is_grounded
+          gun_angle = actor.gun_direction.angle
+          if gun_angle == 0
+            actor.rotation_vel -= 0.3 
+          elsif gun_angle == Math::PI
+            actor.rotation_vel += 0.3 
+          end
         end
       end
     end

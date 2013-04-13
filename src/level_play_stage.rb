@@ -1,38 +1,83 @@
+class ComputerInput
+  extend Publisher
+  can_fire_anything
+
+  def initialize(player)
+    @old_input = player.input
+  end
+
+  def emit(*args, &blk)
+    @old_input.send :fire, *args, &blk
+  end
+
+  # TURD
+  def unsubscribe_all(*args)
+    @old_input.unsubscribe_all *args
+  end
+
+  attr_accessor :charging_jump, :walk_left, :walk_right, :charging_bomb, :look_left, :look_up, :look_down, :look_right
+  def shoot
+    puts "SHOOTING"
+    emit :shoot
+  end
+
+  def charging_jump?
+    @charging_jump
+  end
+  def charging_bomb?
+    @charging_bomb
+  end
+  def walk_left?
+    @walk_left
+  end
+  def walk_right?
+    @walk_right
+  end
+  def look_up?
+    @look_up
+  end
+  def look_down?
+    @look_down
+  end
+  def look_left?
+    @look_left
+  end
+  def look_right?
+    @look_right
+  end
+end
+
 class ComputerPlayer
   attr_accessor :player
   def initialize(player)
     @player = player
+    @input = ComputerInput.new @player
+    @player.instance_variable_set('@input_mapper', @input)
     @turn = 0
   end
 
   def take_turn(time)
     @turn += 1
     if @turn % 480 == 0
-      player.input.emit :shoot
+      @input.shoot
     end
     if @turn % 80 == 0
-      player.input.emit :shoot
+      @input.shoot
     end
 
     if @turn % 500 < 100
-      player.input.define_singleton_method(:charging_jump?) { true }
+      @input.charging_jump = true
     else
-      player.input.define_singleton_method(:charging_jump?) { false }
+      @input.charging_jump = false
     end
 
     if @turn % 200 > 100
-      player.input.define_singleton_method(:walk_right?) { false }
-      player.input.define_singleton_method(:walk_left?) { true }
+      @input.walk_right = false
+      @input.walk_left = true
     else
-      player.input.define_singleton_method(:walk_right?) { true }
-      player.input.define_singleton_method(:walk_left?) { false }
+      @input.walk_right = true
+      @input.walk_left = false
     end
-  end
-end
-
-class InputMapper
-  def emit(*args, &blk)
-    fire *args, &blk
   end
 end
 
@@ -72,9 +117,9 @@ define_stage :level_play do
     end
 
     # F1 console watch values
-    player = @players[1]
+    player = @players[0]
     if player
-      # @console.react_to :watch, :p2x do player.x.two end
+      # @console.react_to :watch, :p1vel do player.vel end
       # @console.react_to :watch, :p2y do player.y.two end
       # @console.react_to :watch, :fps do Gosu.fps end
     end
@@ -161,28 +206,48 @@ define_stage :level_play do
           '+s' => :look_down,
         },
         player2: {
-          '+i' => :shoot,
-          '+o' => :charging_jump,
-          '+p' => :charging_bomb, 
-          '+u' => :shields_up, 
-          '+t' => :look_up,
-          '+f' => [:look_left, :walk_left],
-          '+h' => [:look_right, :walk_right],
-          '+g' => :look_down,
+          # '+i' => :shoot,
+          # '+o' => :charging_jump,
+          # '+p' => :charging_bomb, 
+          # '+u' => :shields_up, 
+          # '+t' => :look_up,
+          # '+f' => [:look_left, :walk_left],
+          # '+h' => [:look_right, :walk_right],
+          # '+g' => :look_down,
 
-          '+gp_button_0' => :shoot,
-          '+gp_button_1' => :charging_jump,
-          '+gp_button_2' => :charging_bomb,
-          '+gp_button_3' => :shields_up,
-          '+gp_up' => :look_up,
-          '+gp_left' => [:look_left, :walk_left],
-          '+gp_right' => [:look_right, :walk_right],
-          '+gp_down' => :look_down,
+          '+gp0_button_0' => :shoot,
+          '+gp0_button_1' => :charging_jump,
+          '+gp0_button_2' => :charging_bomb,
+          '+gp0_button_3' => :shields_up,
+          '+gp0_up' => :look_up,
+          '+gp0_left' => [:look_left, :walk_left],
+          '+gp0_right' => [:look_right, :walk_right],
+          '+gp0_down' => :look_down,
+        },
+        player3: {
+          '+gp1_button_0' => :shoot,
+          '+gp1_button_1' => :charging_jump,
+          '+gp1_button_2' => :charging_bomb,
+          '+gp1_button_3' => :shields_up,
+          '+gp1_up' => :look_up,
+          '+gp1_left' => [:look_left, :walk_left],
+          '+gp1_right' => [:look_right, :walk_right],
+          '+gp1_down' => :look_down,
+        },
+        player4: {
+          '+gp2_button_0' => :shoot,
+          '+gp2_button_1' => :charging_jump,
+          '+gp2_button_2' => :charging_bomb,
+          '+gp2_button_3' => :shields_up,
+          '+gp2_up' => :look_up,
+          '+gp2_left' => [:look_left, :walk_left],
+          '+gp2_right' => [:look_right, :walk_right],
+          '+gp2_down' => :look_down,
         }
       }
 
-      they[:player3] = they[:player1]
-      they[:player4] = they[:player1]
+      # they[:player3] = they[:player1]
+      # they[:player4] = they[:player1]
       they
 
     end
