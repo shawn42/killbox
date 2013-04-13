@@ -4,6 +4,34 @@ require GAMEBOX_PATH + 'spec/helper'
 
 
 module FoxyAcceptanceHelpers
+  def configure_game_with_testing_stage(opts={})
+    opts[:tileset] ||= "tileset" # will look for a png in spec/fixtures/graphics/map/
+    opts[:tile_size] ||= 36 # 36x36 is the size of tiles in tileset.png, but this can be changed for testing purposes
+
+    Gamebox.configuration.stages = [:level_play]
+    Stage.definitions[:level_play].curtain_up do
+      extend TestStageHelpers
+
+      director.update_slots = [:first, :before, :update, :last]
+
+      tmx_map = FoxyAcceptanceHelpers.get_test_map(opts[:map_name])
+      map_data = LevelLoader::MapData.new
+      map_data.tile_grid = LevelLoader.generate_map(tmx_map)[0]
+
+      map_data.tileset_image = "map/#{opts[:tileset]}.png"
+      map_data.tile_size = opts[:tile_size]
+      
+      @level = FakeLevel.new
+      @level.map = self.create_actor :map, map_data: map_data
+      @level.map_extents = [0,0, map_data.tile_grid[0].size * map_data.tile_size, map_data.tile_grid.size * map_data.tile_size]
+      LevelLoader.load_objects self, tmx_map, @level
+
+      setup_players
+    end
+
+    game
+  end
+
   def jump(amount)
     # charge & jump
     press_key KbN

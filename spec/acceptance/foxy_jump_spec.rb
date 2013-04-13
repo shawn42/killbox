@@ -4,37 +4,11 @@ require 'spec_helper'
 describe "Foxy jumping", acceptance: true do
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
-    # mock_tiles 'foxy.png', 84/3, 360/9
-    # mock_image 'foxy.png'
-    # TEMP til we get new sprites
     mock_image 'boxy.png'
     mock_image 'bullet.png'
     mock_image 'bomb.png'
-    Gamebox.configuration.stages = [:level_play]
 
-    Stage.definitions[:level_play].curtain_up do
-      extend TestStageHelpers
-
-      director.update_slots = [:first, :before, :update, :last]
-
-      map = FoxyAcceptanceHelpers.get_test_map("basic_jump")
-
-      map_data = LevelLoader::MapData.new
-      map_data.tile_grid = LevelLoader.generate_map(map)[0]
-
-      map_data.tileset_image = "map/tileset.png"
-      # all tiles will be square!
-      map_data.tile_size = 16
-      
-      map_actor = create_actor :map, map_data: map_data
-
-      @level = FakeLevel.new
-      @level.named_objects[:player1] = create_actor :foxy, map: map_actor, x: 120, y: 60
-
-      setup_players
-    end
-
-    game
+    configure_game_with_testing_stage map_name: "basic_jump", tile_size: 16
   end
 
   let(:floor_y) { 145 }
