@@ -1,39 +1,5 @@
 require 'spec_helper'
 
-class MockImage
-  def width; 26; end
-  def height; 30; end
-end
-
-class FakeLevel
-  attr_accessor :named_objects
-  def initialize
-    @named_objects = {}
-  end
-end
-
-Stage.definitions[:level_play].curtain_up do
-  extend TestStageHelpers
-
-  director.update_slots = [:first, :before, :update, :last]
-
-  require 'tmx'
-  map = Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/basic_jump.tmx")
-
-  map_data = LevelLoader::MapData.new
-  map_data.tile_grid = LevelLoader.generate_map(map)[0]
-
-  map_data.tileset_image = "map/tileset.png"
-  # all tiles will be square!
-  map_data.tile_size = 16
-  
-  map_actor = create_actor :map, map_data: map_data
-
-  @level = FakeLevel.new
-  @level.named_objects[:player1] = create_actor :foxy, map: map_actor, x: 120, y: 60
-
-  setup_players
-end
 
 describe "Foxy jumping", acceptance: true do
   before do
@@ -45,6 +11,28 @@ describe "Foxy jumping", acceptance: true do
     mock_image 'bullet.png'
     mock_image 'bomb.png'
     Gamebox.configuration.stages = [:level_play]
+
+    Stage.definitions[:level_play].curtain_up do
+      extend TestStageHelpers
+
+      director.update_slots = [:first, :before, :update, :last]
+
+      map = FoxyAcceptanceHelpers.get_test_map("basic_jump")
+
+      map_data = LevelLoader::MapData.new
+      map_data.tile_grid = LevelLoader.generate_map(map)[0]
+
+      map_data.tileset_image = "map/tileset.png"
+      # all tiles will be square!
+      map_data.tile_size = 16
+      
+      map_actor = create_actor :map, map_data: map_data
+
+      @level = FakeLevel.new
+      @level.named_objects[:player1] = create_actor :foxy, map: map_actor, x: 120, y: 60
+
+      setup_players
+    end
 
     game
   end
@@ -90,8 +78,8 @@ describe "Foxy jumping", acceptance: true do
     # settle
     update 2000, step: 20
 
-    press_key KbUp
-    press_key KbB
+    look_up
+    shoot
 
     see_actor_attrs :foxy, 
       x: 120.ish,
@@ -235,6 +223,10 @@ describe "Foxy jumping", acceptance: true do
 
   def shields_up
     press_key KbV
+  end
+
+  def shoot
+    press_key KbB
   end
 
 end

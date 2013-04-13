@@ -2,8 +2,51 @@ $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '..', 'con
 require 'environment'
 require GAMEBOX_PATH + 'spec/helper'
 
+
+module FoxyAcceptanceHelpers
+  def jump(amount)
+    # charge & jump
+    press_key KbN
+    update amount, step: 20
+    release_key KbN
+  end
+
+  def get_test_map(name)
+    require 'tmx'
+    Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/#{name}.tmx")
+  end
+  module_function :get_test_map
+
+  def charge_and_throw_bomb(time_held)
+    press_key KbM
+    update time_held, step: 20
+    release_key KbM
+  end
+
+  def look_up
+    press_key KbW
+  end
+
+  def shields_up
+    press_key KbV
+  end
+
+  def shoot
+    press_key KbB
+  end
+
+  def see_bottom_right_standing_above(y)
+    foxy.collision_points[4].y.should == (y - 1).ish
+  end
+
+  def see_bottom_left_standing_above(y)
+    foxy.collision_points[5].y.should == (y - 1).ish
+  end
+end
+
 RSpec.configure do |config|
   config.mock_with :mocha
+  config.include FoxyAcceptanceHelpers
 end
 
 class Numeric
@@ -26,4 +69,19 @@ class ApproximateValue
     "within #{@acceptable_delta} of #{@me}"
   end
 end
+
+# class MockImage
+#   def width; 26; end
+#   def height; 30; end
+# end
+
+class FakeLevel
+  attr_accessor :named_objects, :objects, :map, :map_extents
+  def initialize
+    @named_objects = {}
+    @objects = []
+    @object_groups
+  end
+end
+
 
