@@ -2,15 +2,6 @@ require 'spec_helper'
 
 
 describe "Foxy shooting", acceptance: true do
-  before do
-    mock_tiles 'map/tileset.png', 256/16, 208/16
-    mock_image 'boxy.png' # TODO: provide width and height as 2nd and third args
-    mock_image 'bullet.png'
-    mock_image 'bomb.png'
-
-    configure_game_with_testing_stage  map_name: "shooting"
-  end
-
   let(:zones) { FoxyAcceptanceHelpers.get_test_map("shooting").object_groups["zones"].inject({}) do |h,x| h[x[:name]] = x; h; end }
   let(:floor_zone) { zones["floor"] }
   let(:right_wall_zone) { zones["right_wall"] }
@@ -22,18 +13,25 @@ describe "Foxy shooting", acceptance: true do
   let(:foxy_w) { 32 }
   let(:foxy_h) { 60 }
 
-  it 'shoots to the right' do
+  before do
+    mock_tiles 'map/tileset.png', 256/16, 208/16
+    mock_image 'boxy.png' # TODO: provide width and height as 2nd and third args
+    mock_image 'bullet.png'
+    mock_image 'bomb.png'
 
-    # settle
+    configure_game_with_testing_stage  map_name: "shooting"
+
+    # See foxy land standing where expected:
     update 2000, step: 20
-
     see_actor_attrs :foxy, 
-      gun_direction: vec2(1,0), # gun pointing right
       x: 504.ish, # as placed in shooting.tmx
       rotation: 0.ish
-
     see_bottom_right_standing_above floor_zone[:y]
     see_bottom_left_standing_above floor_zone[:y]
+  end
+
+  it 'shoots to the right' do
+    see_actor_attrs :foxy, gun_direction: vec2(1,0) # gun pointing right
 
     shoot
 
@@ -60,6 +58,29 @@ describe "Foxy shooting", acceptance: true do
     end
     bullet.should_not be_alive
     bullet.x.should == right_wall_zone[:x].ish(15)
+  end
+
+  it 'shoots at the correct angle when floating/spinning' do
+    # Jump and begin tumbling counter-clockwise, pausing at -15 degrees:
+    jump 1000
+    ticks = 0 # prevent infinite loop
+    while foxy.rotation > -15 && ticks < 250
+      update 20
+      puts "rotation: #{foxy.rotation}"
+      ticks += 1
+    end
+    foxy.rotation.should <= -15
+
+    # Now fire
+    shoot
+    
+    bullet = game.actor(:bullet)
+    bullet.should be # bullet exists
+
+    # See the bullet trajectory matches foxy's rotation:
+    radians_to_degrees(bullet.vel.angle).should == -15.ish
+
+    raise "MOAR: follow the bullet and make sure it follows the trajectory"
   end
 
 end

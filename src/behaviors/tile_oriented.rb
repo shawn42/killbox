@@ -64,8 +64,8 @@ define_behavior :tile_oriented do
 
     def apply_actor_velocities
       actor.rotation = actor.rotation + actor.rotation_vel
-      new_x = (actor.x + actor.vel.x)
-      new_y = (actor.y + actor.vel.y)
+      new_x = (actor.x + actor.vel.x) # XXX
+      new_y = (actor.y + actor.vel.y) # XXX
 
       actor.x += actor.vel.x 
       actor.y += actor.vel.y
