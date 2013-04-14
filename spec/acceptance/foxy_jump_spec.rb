@@ -201,41 +201,5 @@ describe "Foxy jumping", acceptance: true do
 
     end
   end
-
-  def jump(time_held)
-    # charge & jump
-    hold_key KbN, time_held, step: 20
-  end
-
-  def charge_and_throw_bomb(time_held)
-    hold_key KbM, time_held, step: 20
-  end
-
-  def walk_left(time_held)
-    hold_key KbA, time_held, step: 20
-  end
-
-  def walk_right(time_held)
-    hold_key KbD, time_held, step: 20
-  end
-
-  def look_up
-    press_key KbW
-  end
-
-  def shields_up
-    press_key KbV
-  end
-
-  def shoot
-    press_key KbB
-  end
-
-  def hold_key(key, time_held, opts={})
-    press_key key
-    update time_held, step: opts[:step]
-    release_key key
-  end
-
 end
 

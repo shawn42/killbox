@@ -32,23 +32,33 @@ module FoxyAcceptanceHelpers
     game
   end
 
-  def jump(amount)
-    # charge & jump
-    press_key KbN
-    update amount, step: 20
-    release_key KbN
-  end
-
   def get_test_map(name)
     require 'tmx'
     Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/#{name}.tmx")
   end
   module_function :get_test_map
 
+  def jump(time_held)
+    # charge & jump
+    hold_key KbN, time_held, step: 20
+  end
+
   def charge_and_throw_bomb(time_held)
-    press_key KbM
-    update time_held, step: 20
-    release_key KbM
+    hold_key KbM, time_held, step: 20
+  end
+
+  def walk_left(time_held)
+    hold_key KbA, time_held, step: 20
+  end
+
+  def walk_right(time_held)
+    hold_key KbD, time_held, step: 20
+  end
+
+  def hold_key(key, time_held, opts={})
+    press_key key
+    update time_held, step: opts[:step]
+    release_key key
   end
 
   def look_up
