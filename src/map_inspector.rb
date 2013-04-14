@@ -74,7 +74,7 @@ class MapInspector
           end
       end
 
-      yield row: row, col: col, tile_face: direction, hit: clipped_line
+      yield row: row, col: col, tile_face: direction, hit: clipped_line, tile_bb: tile_box
     end
 
   end

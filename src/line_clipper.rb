@@ -1,12 +1,12 @@
-INSIDE = 0 # 0000
-LEFT = 1   # 0001
-RIGHT = 2  # 0010
-BOTTOM = 4 # 0100
-TOP = 8    # 1000
- 
 # Compute the bit code for a point (x, y) using the clip rectangle
 # bounded diagonally by box
 class LineClipper
+  INSIDE = 0 # 0000
+  LEFT = 1   # 0001
+  RIGHT = 2  # 0010
+  BOTTOM = 4 # 0100
+  TOP = 8    # 1000
+ 
   def self.calculate_outcode(x, y, box)
     code = INSIDE
     xmin = box.x
@@ -19,9 +19,9 @@ class LineClipper
       code |= RIGHT
     end
     if y < ymin
-      code |= BOTTOM
-    elsif y > ymax
       code |= TOP
+    elsif y > ymax
+      code |= BOTTOM
     end
     code
   end
@@ -60,10 +60,10 @@ class LineClipper
 
         # Now find the intersection point
         # use formulas y = y0 + slope * (x - x0), x = x0 + (1 / slope) * (y - y0)
-        if (outcode_out & TOP) != 0
+        if (outcode_out & BOTTOM) != 0
           x = x0 + (x1 - x0) * (ymax - y0) / (y1 - y0)
           y = ymax
-        elsif (outcode_out & BOTTOM) != 0
+        elsif (outcode_out & TOP) != 0
           x = x0 + (x1 - x0) * (ymin - y0) / (y1 - y0)
           y = ymin
         elsif (outcode_out & RIGHT) != 0

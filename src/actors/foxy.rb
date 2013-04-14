@@ -35,6 +35,7 @@ define_actor :foxy do
     blasted_by_bomb
     die_by_bullet
     shielded
+    # melee
 
     jump max_power: 80, min_power: 20
     friction amount: 0.15

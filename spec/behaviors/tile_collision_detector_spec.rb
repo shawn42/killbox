@@ -18,7 +18,8 @@ describe :tile_collision_detector do
   let!(:actor) { subcontext[:actor] }
   # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  let(:map_data) { stub('map data', tile_size: 16, tile_grid: grid) }
+  let(:tile_size) { 16 }
+  let(:map_data) { stub('map data', tile_size: tile_size, tile_grid: grid) }
   let(:grid) { [
     [nil, 1 ,nil],
     [nil,nil,nil],
@@ -53,7 +54,7 @@ describe :tile_collision_detector do
       actor.vel = vec2(5,0)
       subject
       
-      expects_event actor, :tile_collisions, [[[{:row=>0, :col=>1, :tile_face=>:left, :hit=>[16.ish, 5.0.ish, 17.0.ish, 5.0.ish], :point_index=>0}]]] do
+      expects_event actor, :tile_collisions, [[[{row: 0, col: 1, tile_face: :left, hit: [16.ish, 5.0.ish, 17.0.ish, 5.0.ish], point_index: 0, tile_bb: tile_bb_for(1,0)}]]] do
         director.fire :update, 1
       end
     end
@@ -65,7 +66,8 @@ describe :tile_collision_detector do
       actor.vel = vec2(4.1,4.1)
       subject
       
-      expects_event actor, :tile_collisions, [[[{:row=>2, :col=>2, :tile_face=>:top, :hit=>[32.ish, 32.ish, 34.1.ish, 34.1.ish], :point_index=>0}]]] do
+      expects_event actor, :tile_collisions, [[[{row: 2, col: 2, tile_face: :top, 
+        hit: [32, 32, 34.1, 34.1].ish, point_index: 0, tile_bb: tile_bb_for(2,2)}]]] do
         director.fire :update, 1
       end
     end
@@ -97,11 +99,16 @@ describe :tile_collision_detector do
     it 'does not get stuck on a wall' do
       subject
       
-      expects_event actor, :tile_collisions, [[[{:row=>5, :col=>2, :tile_face=>:left, :hit=>
-        [32.ish, 80.367.ish, 32.027.ish, 80.239.ish], :point_index=>4}]]] do
+      expects_event actor, :tile_collisions, [[[{row: 5, col: 2, tile_face: :left, hit: 
+        [32, 80.367, 32.027, 80.239].ish, point_index: 4, tile_bb: tile_bb_for(2, 5)}]]] do
       director.fire :update, 1
       end
     end
   end
+
+  def tile_bb_for(col, row)
+    [col*tile_size, row*tile_size, tile_size, tile_size].ish
+  end
+
 
 end

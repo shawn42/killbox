@@ -83,6 +83,12 @@ class Numeric
   end
 end
 
+module Enumerable
+  def ish(acceptable_delta=0.001)
+    self.map { |item| ApproximateValue.new item, acceptable_delta }
+  end
+end
+
 class ApproximateValue
   def initialize(me, acceptable_delta)
     @me = me

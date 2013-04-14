@@ -19,6 +19,36 @@ describe "Foxy jumping", acceptance: true do
   let(:map) { game.actor(:map) }
   let(:foxy) { game.actor(:foxy) }
 
+  it 'walks over gaps in the floor (does not switch planes)' do
+    see_actor_attrs :foxy, 
+      x: 120.ish
+
+    # settle
+    # log "WAITING"
+    update 3000, step: 20
+    # log "SETTLED"
+
+    see_actor_attrs :foxy, 
+      x: 120.ish,
+      y: floor_y.ish,
+      rotation: 0.ish
+
+    count = 0
+    while foxy.on_ground? && count < 1000
+      # there's a hole 7 tiles from the left
+      break unless foxy.on_ground
+      count += 1
+      walk_right 10
+    end
+    update 3000, step: 20
+
+    see_actor_attrs :foxy, 
+      y: floor_y.ish,
+      rotation: 0.ish
+
+    foxy.x.should > 120
+  end
+
   it 'jumps from floor to ceiling and back' do
     see_actor_attrs :foxy, 
       x: 120.ish
@@ -79,12 +109,6 @@ describe "Foxy jumping", acceptance: true do
 
     foxy.y.should < floor_y
 
-  end
-
-  def walk_left(time_held)
-    press_key KbA
-    update time_held, step: 20
-    release_key KbA
   end
 
   it 'grabs the wall when we rotate next to it' do
@@ -178,17 +202,21 @@ describe "Foxy jumping", acceptance: true do
     end
   end
 
-  def jump(amount)
+  def jump(time_held)
     # charge & jump
-    press_key KbN
-    update amount, step: 20
-    release_key KbN
+    hold_key KbN, time_held, step: 20
   end
 
   def charge_and_throw_bomb(time_held)
-    press_key KbM
-    update time_held, step: 20
-    release_key KbM
+    hold_key KbM, time_held, step: 20
+  end
+
+  def walk_left(time_held)
+    hold_key KbA, time_held, step: 20
+  end
+
+  def walk_right(time_held)
+    hold_key KbD, time_held, step: 20
   end
 
   def look_up
@@ -201,6 +229,12 @@ describe "Foxy jumping", acceptance: true do
 
   def shoot
     press_key KbB
+  end
+
+  def hold_key(key, time_held, opts={})
+    press_key key
+    update time_held, step: opts[:step]
+    release_key key
   end
 
 end

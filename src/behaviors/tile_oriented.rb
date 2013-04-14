@@ -25,14 +25,16 @@ define_behavior :tile_oriented do
 
 
         if closest_collision
-          face_normal = FACE_NORMALS[closest_collision[:tile_face]]
-          raise "Y NO COL FACE?" if closest_collision[:tile_face].nil?
+          tile_face = tile_face_to_attach_to(closest_collision)
+          log "srsly: #{tile_face.inspect}"
+          face_normal = FACE_NORMALS[tile_face]
+
           raise "Y NO FACE?" if face_normal.nil?
           actor.ground_normal = face_normal 
 
-          set_actor_rotation closest_collision[:tile_face]
+          set_actor_rotation tile_face
           clear_actor_velocity
-          set_actor_location closest_collision
+          set_actor_location tile_face, closest_collision
           actor.emit :hit_bottom
         else
           apply_actor_velocities
@@ -76,7 +78,65 @@ define_behavior :tile_oriented do
       actor.rotation = ROTATIONS[tile_face]
     end
 
-    def set_actor_location(collision)
+    def tile_face_to_attach_to(collision)
+      code_to_face = {
+        LineClipper::LEFT => :left,
+        LineClipper::RIGHT => :right,
+        LineClipper::TOP => :top,
+        LineClipper::BOTTOM => :bottom,
+      }
+
+      less_interesting_outcodes = code_to_face.keys
+      outcode = LineClipper.calculate_outcode(actor.x, actor.y, collision[:tile_bb])
+      log "actor loc: #{actor.x}, #{actor.y}"
+      log "TILEBB: #{collision[:tile_bb]}"
+      log "outcode: #{outcode}"
+     
+      if less_interesting_outcodes.include?(outcode)
+        log "LOOKUP"
+        puts code_to_face[outcode]
+        code_to_face[outcode]
+      else
+        player_vec = vec2(0,-1).rotate(-actor.rotation)
+        log "player: #{player_vec}"
+        map = actor.map.map_data
+        left_ok = !map_inspector.solid?(map, collision[:row] + FACE_NORMALS[:left].y, collision[:col] + FACE_NORMALS[:left].x)
+        right_ok = !map_inspector.solid?(map, collision[:row] + FACE_NORMALS[:right].y, collision[:col] + FACE_NORMALS[:right].x)
+
+        if outcode == (LineClipper::LEFT | LineClipper::TOP)
+          return :top unless left_ok
+
+          left_ang_diff = FACE_NORMALS[:left].angle_with(player_vec)
+          top_ang_diff = FACE_NORMALS[:top].angle_with(player_vec)
+
+          left_ang_diff < top_ang_diff ? :left : :top
+
+        elsif outcode == (LineClipper::LEFT | LineClipper::BOTTOM)
+          return :bottom unless left_ok
+
+          left_ang_diff = FACE_NORMALS[:left].angle_with(player_vec)
+          bottom_ang_diff = FACE_NORMALS[:bottom].angle_with(player_vec)
+          left_ang_diff < bottom_ang_diff ? :left : :bottom
+
+        elsif outcode == (LineClipper::RIGHT | LineClipper::TOP)
+          return :top unless right_ok
+
+          right_ang_diff = FACE_NORMALS[:right].angle_with(player_vec)
+          top_ang_diff = FACE_NORMALS[:top].angle_with(player_vec)
+          right_ang_diff < top_ang_diff ? :right : :top
+
+        elsif outcode == (LineClipper::RIGHT | LineClipper::BOTTOM)
+          return :bottom unless right_ok
+
+          right_ang_diff = FACE_NORMALS[:right].angle_with(player_vec)
+          bottom_ang_diff = FACE_NORMALS[:bottom].angle_with(player_vec)
+          right_ang_diff < bottom_ang_diff ? :right : :bottom
+        end
+
+      end
+    end
+
+    def set_actor_location(tile_face, collision)
       tile_row = collision[:row] 
       tile_col = collision[:col] 
 
@@ -86,8 +146,8 @@ define_behavior :tile_oriented do
       tile_size = map.tile_size
       actor_loc = vec2(actor.x, actor.y)
 
-      collision_point_delta = actor_loc - cps[5]
-      case collision[:tile_face]
+      collision_point_delta = actor_loc - cps[5] # cps[5] lower left (maybe set as data in actor)
+      case tile_face
       when :top
         lower_left_target = vec2(tile_col * tile_size, tile_row * tile_size - 1)
         new_loc = lower_left_target + collision_point_delta
@@ -114,7 +174,7 @@ define_behavior :tile_oriented do
 
 
       # fix if not standing on the tile
-      axis = perp_axis(collision[:tile_face])
+      axis = perp_axis(tile_face)
       actor_hw = (min(actor.bb.w, actor.bb.h) / 2).floor
       tile_hw = (tile_size / 2).floor
       max_diff = (actor_hw + tile_hw) - 1
@@ -164,5 +224,13 @@ define_behavior :tile_oriented do
       actor.unsubscribe_all self
     end
 
+  end
+end
+class Vector2
+  def angle_with( vector )
+    log "checking"
+    log self
+    log vector
+    Math.acos( udot(vector) )
   end
 end
