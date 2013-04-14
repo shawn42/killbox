@@ -72,15 +72,22 @@ describe "Foxy shooting", acceptance: true do
     foxy.rotation.should <= -15
 
     # Now fire
+    puts "Shooting..."
     shoot
+    puts "...shot!"
     
     bullet = game.actor(:bullet)
     bullet.should be # bullet exists
 
+    # binding.pry
+
     # See the bullet trajectory matches foxy's rotation:
     radians_to_degrees(bullet.vel.angle).should == -15.ish
 
-    raise "MOAR: follow the bullet and make sure it follows the trajectory"
+    update 100, step: 20
+    radians_to_degrees(bullet.vel.angle).should == -15.ish
+
+    pending "MOAR: follow the bullet and make sure it follows the trajectory"
   end
 
 end
