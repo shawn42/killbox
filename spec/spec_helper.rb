@@ -32,6 +32,10 @@ module FoxyAcceptanceHelpers
     game
   end
 
+  def body_vector(body)
+    vec2(body.x,body.y)
+  end
+
   def jump(amount)
     # charge & jump
     press_key KbN
