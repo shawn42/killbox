@@ -32,6 +32,10 @@ module FoxyAcceptanceHelpers
     game
   end
 
+  def body_vector(body)
+    vec2(body.x,body.y)
+  end
+
   def get_test_map(name)
     require 'tmx'
     Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/#{name}.tmx")
