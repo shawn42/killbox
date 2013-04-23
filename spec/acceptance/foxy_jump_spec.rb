@@ -20,8 +20,7 @@ describe "Foxy jumping", acceptance: true do
   let(:foxy) { game.actor(:foxy) }
 
   it 'walks over gaps in the floor (does not switch planes)' do
-    see_actor_attrs :foxy, 
-      x: 120.ish
+    foxy.x = 40
 
     # settle
     # log "WAITING"
@@ -29,7 +28,7 @@ describe "Foxy jumping", acceptance: true do
     # log "SETTLED"
 
     see_actor_attrs :foxy, 
-      x: 120.ish,
+      x: 40.ish,
       y: floor_y.ish,
       rotation: 0.ish
 
@@ -40,7 +39,9 @@ describe "Foxy jumping", acceptance: true do
       count += 1
       walk_right 10
     end
-    update 3000, step: 20
+    count.should < 1000
+
+    update 3000, step: 10
 
     see_actor_attrs :foxy, 
       y: floor_y.ish,

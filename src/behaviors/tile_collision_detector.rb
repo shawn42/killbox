@@ -72,7 +72,10 @@ define_behavior :tile_collision_detector do
           end
 
         end
+
+
       end
+      # log "bb_to_check: #{bb_to_check}" if collisions
 
       actor.emit :tile_collisions, collisions
     end

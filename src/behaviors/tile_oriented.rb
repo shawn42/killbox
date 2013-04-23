@@ -6,6 +6,8 @@ define_behavior :tile_oriented do
 
     actor.when :tile_collisions do |collisions|
       if collisions
+        # log "lines: #{actor.lines}"
+        # log "COLLISIONS: #{collisions}"
         map = actor.map.map_data
         actor_loc = vec2(actor.x, actor.y)
 
@@ -26,7 +28,7 @@ define_behavior :tile_oriented do
 
         if closest_collision
           tile_face = tile_face_to_attach_to(closest_collision)
-          log "srsly: #{tile_face.inspect}"
+          # log "srsly: #{tile_face.inspect}"
           face_normal = FACE_NORMALS[tile_face]
 
           raise "Y NO FACE?" if face_normal.nil?
@@ -88,31 +90,38 @@ define_behavior :tile_oriented do
 
       less_interesting_outcodes = code_to_face.keys
       outcode = LineClipper.calculate_outcode(actor.x, actor.y, collision[:tile_bb])
-      log "actor loc: #{actor.x}, #{actor.y}"
-      log "TILEBB: #{collision[:tile_bb]}"
-      log "outcode: #{outcode}"
+      # log "actor loc: #{actor.x}, #{actor.y}"
+      # log "TILEBB: #{collision[:tile_bb]}"
+      # log "outcode: #{outcode}"
      
       if less_interesting_outcodes.include?(outcode)
-        log "LOOKUP"
-        puts code_to_face[outcode]
+        # log "LOOKUP"
+        # log code_to_face[outcode]
         code_to_face[outcode]
       else
+        return collision[:tile_face] if outcode == LineClipper::INSIDE
+
         player_vec = vec2(0,-1).rotate(-actor.rotation)
-        log "player: #{player_vec}"
+        # log "player: #{player_vec}"
         map = actor.map.map_data
         left_ok = !map_inspector.solid?(map, collision[:row] + FACE_NORMALS[:left].y, collision[:col] + FACE_NORMALS[:left].x)
         right_ok = !map_inspector.solid?(map, collision[:row] + FACE_NORMALS[:right].y, collision[:col] + FACE_NORMALS[:right].x)
+        top_ok = !map_inspector.solid?(map, collision[:row] + FACE_NORMALS[:top].y, collision[:col] + FACE_NORMALS[:top].x)
+        bottom_ok = !map_inspector.solid?(map, collision[:row] + FACE_NORMALS[:bottom].y, collision[:col] + FACE_NORMALS[:bottom].x)
 
         if outcode == (LineClipper::LEFT | LineClipper::TOP)
           return :top unless left_ok
+          return :left unless top_ok
 
           left_ang_diff = FACE_NORMALS[:left].angle_with(player_vec)
           top_ang_diff = FACE_NORMALS[:top].angle_with(player_vec)
 
           left_ang_diff < top_ang_diff ? :left : :top
 
+
         elsif outcode == (LineClipper::LEFT | LineClipper::BOTTOM)
           return :bottom unless left_ok
+          return :left unless bottom_ok
 
           left_ang_diff = FACE_NORMALS[:left].angle_with(player_vec)
           bottom_ang_diff = FACE_NORMALS[:bottom].angle_with(player_vec)
@@ -120,6 +129,7 @@ define_behavior :tile_oriented do
 
         elsif outcode == (LineClipper::RIGHT | LineClipper::TOP)
           return :top unless right_ok
+          return :right unless top_ok
 
           right_ang_diff = FACE_NORMALS[:right].angle_with(player_vec)
           top_ang_diff = FACE_NORMALS[:top].angle_with(player_vec)
@@ -127,6 +137,7 @@ define_behavior :tile_oriented do
 
         elsif outcode == (LineClipper::RIGHT | LineClipper::BOTTOM)
           return :bottom unless right_ok
+          return :right unless bottom_ok
 
           right_ang_diff = FACE_NORMALS[:right].angle_with(player_vec)
           bottom_ang_diff = FACE_NORMALS[:bottom].angle_with(player_vec)
@@ -169,7 +180,7 @@ define_behavior :tile_oriented do
         new_loc.x = new_loc.x.ceil
         actor.x = new_loc.x
       else
-        raise "cannot determin desired actor location from tile_face: #{collision[:tile_face]}"
+        raise "cannot determine desired actor location from tile_face: #{collision[:tile_face]}"
       end
 
 
@@ -224,13 +235,5 @@ define_behavior :tile_oriented do
       actor.unsubscribe_all self
     end
 
-  end
-end
-class Vector2
-  def angle_with( vector )
-    log "checking"
-    log self
-    log vector
-    Math.acos( udot(vector) )
   end
 end

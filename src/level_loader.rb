@@ -8,10 +8,7 @@ class LevelLoader
   end
 
   def self.load(stage, level_name="advanced_jump")
-    require 'tmx'
-    # map = Tmx::Map.new("#{APP_ROOT}/data/maps/level_#{level_indicator.world}_#{level_indicator.level}.tmx")
     map = Tmx::Map.new("#{APP_ROOT}data/maps/#{level_name}.tmx")
-    # map = Tmx::Map.new("#{APP_ROOT}/data/maps/geo.tmx")
 
     map_data = MapData.new
 

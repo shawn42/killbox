@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 gem "debugger-ruby_core_source"
 gem 'require_all'
-gem 'tmx'
+gem 'tmx', '0.0.1'
 gem 'pry'
 gem 'pry-remote'
 gem 'pry-debugger'

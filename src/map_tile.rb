@@ -5,4 +5,8 @@ class MapTile
     @col=col
     @gfx_index = index
   end
+
+  def to_s
+    "#{super} col: #{@col} row: #{@row} gfx: #{@gfx_index}"
+  end
 end

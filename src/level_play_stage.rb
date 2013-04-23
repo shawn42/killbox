@@ -143,9 +143,9 @@ define_stage :level_play do
       {
       :trippy => 4,
       :section_a => 4,
+      :basic_jump => 1,
       # :advanced_jump => 2,
       # :cave => 4,
-      # :basic_jump => 1,
       # :hot_pocket => 2,
       }
     end

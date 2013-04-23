@@ -11,6 +11,7 @@ module FoxyAcceptanceHelpers
     Gamebox.configuration.stages = [:level_play]
     Stage.definitions[:level_play].curtain_up do
       extend TestStageHelpers
+      begin
 
       director.update_slots = [:first, :before, :update, :last]
 
@@ -27,6 +28,10 @@ module FoxyAcceptanceHelpers
       LevelLoader.load_objects self, tmx_map, @level
 
       setup_players
+      rescue Exception => ex
+        binding.pry
+      end
+
     end
 
     game
