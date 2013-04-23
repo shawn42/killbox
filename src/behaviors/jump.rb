@@ -21,11 +21,18 @@ define_behavior :jump do
     def update_jump(time_secs)
       if actor.input.charging_jump? && actor.on_ground?
         actor.jump_power = min(actor.jump_power + actor.max_jump_power * time_secs * 1.5, actor.max_jump_power)
-        # log "JUMP: #{actor.jump_power}"
-        remove_behavior :accelerator if actor.jump_power == actor.max_jump_power
+        if actor.jump_power == actor.max_jump_power
+          remove_behavior :accelerator 
+          remove_behavior :friction
+          actor.vel = vec2(0,0)
+        end
 
       else
-        add_behavior :accelerator if actor.jump_power == actor.max_jump_power
+        if actor.jump_power == actor.max_jump_power
+          add_behavior :accelerator 
+          add_behavior :friction
+        end
+
 
         if actor.jump_power > actor.min_jump_power && actor.on_ground
           if actor.ground_normal

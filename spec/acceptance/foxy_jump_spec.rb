@@ -19,13 +19,33 @@ describe "Foxy jumping", acceptance: true do
   let(:map) { game.actor(:map) }
   let(:foxy) { game.actor(:foxy) }
 
+  it 'does not super jump in the wrong direction' do
+    foxy.x = 40
+    update 3000, step: 20
+    see_actor_attrs :foxy, 
+      x: 40.ish,
+      y: floor_y.ish,
+      rotation: 0.ish
+
+    press_key KbD # right
+    update 10
+    press_key KbN # start charge jump
+    update 1000, step: 20
+
+    release_key KbN
+    update 10
+    release_key KbD
+
+    update 1000, step: 20
+
+
+    foxy.vel.angle.should == 0.ish
+  end
+
   it 'walks over gaps in the floor (does not switch planes)' do
     foxy.x = 40
 
-    # settle
-    # log "WAITING"
     update 3000, step: 20
-    # log "SETTLED"
 
     see_actor_attrs :foxy, 
       x: 40.ish,

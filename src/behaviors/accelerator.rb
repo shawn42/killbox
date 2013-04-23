@@ -41,7 +41,7 @@ define_behavior :accelerator do
 
       actor.vel += actor.accel
 
-      if (!input.walk_right? && !input.walk_right?)
+      if (!input.walk_right? && !input.walk_left?)
         # stop short
         actor.vel = vec2(0,0) if actor.vel.magnitude < 0.3
       end
