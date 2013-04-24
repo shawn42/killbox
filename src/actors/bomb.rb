@@ -13,7 +13,7 @@ define_actor :bomb do
   end
 
   behavior do
-    requires :timer_manager
+    requires :timer_manager, :stage
 
     setup do
       reacts_with :remove
@@ -51,7 +51,17 @@ define_actor :bomb do
         timer_manager.add_timer death_timer_name, 3_000, false do
           actor.react_to :play_sound, :bomb
           actor.emit :boom
+          make_shrapnel
           actor.remove
+        end
+      end
+
+      def make_shrapnel(args={})
+        force = args[:force] || vec2(0,0)
+        count = args[:count] || 30
+        count.times do
+          vel = vec2(3,0).rotate!(degrees_to_radians(rand(359))) * rand(4)
+          stage.create_actor :shrapnel, x: actor.x, y: actor.y, vel: vel + force, map: actor.map, size: rand(4), color: Color::GRAY
         end
       end
     end

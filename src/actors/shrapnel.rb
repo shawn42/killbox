@@ -1,4 +1,4 @@
-define_actor :gib do
+define_actor :shrapnel do
   
   has_behaviors do
     positioned
@@ -7,6 +7,7 @@ define_actor :gib do
     tile_bouncer
     tile_collision_detector
     trivial_collision_point
+    short_lived ttl: 400
   end
   has_attributes color: Color::RED
 

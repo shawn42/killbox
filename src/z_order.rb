@@ -1,12 +1,12 @@
 module ZOrder
   MapTiles,
   Collectible,
-  Gib,
   Player,
   PlayerDecoration,
   MapForeground,
   Projectile,
   Enemy,
+  Effects,
   HudText,
   Debug,
   Console = *(0..100)
