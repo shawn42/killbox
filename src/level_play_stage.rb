@@ -17,7 +17,6 @@ class ComputerInput
 
   attr_accessor :charging_jump, :walk_left, :walk_right, :charging_bomb, :look_left, :look_up, :look_down, :look_right
   def shoot
-    puts "SHOOTING"
     emit :shoot
   end
 

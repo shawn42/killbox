@@ -11,12 +11,10 @@ define_behavior :shooter do
     actor.can_shoot = true
     setup_gun_looking
     update_gun_tip
-    actor.when :gun_direction_changed do
-      update_gun_tip
-    end
-    actor.when :rotation_changed do
-      update_gun_tip
-    end
+    actor.when(:gun_direction_changed){ update_gun_tip }
+    actor.when(:rotation_changed){ update_gun_tip }
+    actor.when(:x_changed){ update_gun_tip }
+    actor.when(:y_changed){ update_gun_tip }
 
     actor.input.when(:shoot) { shoot_if_able }
 
@@ -71,7 +69,7 @@ define_behavior :shooter do
 
     def shoot_if_able
       if actor.can_shoot?
-        update_gun_tip
+        # update_gun_tip
         actor_loc = vec2(actor.x, actor.y)
 
         actor.can_shoot = false

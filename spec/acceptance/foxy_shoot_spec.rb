@@ -66,15 +66,12 @@ describe "Foxy shooting", acceptance: true do
     ticks = 0 # prevent infinite loop
     while foxy.rotation > -15 && ticks < 250
       update 20
-      puts "rotation: #{foxy.rotation}"
       ticks += 1
     end
     foxy.rotation.should <= -15
 
     # Now fire
-    puts "Shooting..."
     shoot
-    puts "...shot!"
     
     bullet = game.actor(:bullet)
     bullet.should be # bullet exists
