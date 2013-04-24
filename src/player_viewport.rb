@@ -84,6 +84,7 @@ class PlayerViewport < CopyViewport
   end
 
   def self.create_n(players, total_size)
+    # TODO change to use conject context
     case players.size
     when 1  
       vp1 = PlayerViewport.new 0, 0, total_size[0], total_size[1]

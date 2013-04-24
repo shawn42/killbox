@@ -11,7 +11,7 @@ GEM
     debugger-linecache (1.1.1)
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.2.0)
-    diff-lcs (1.2.3)
+    diff-lcs (1.2.4)
     gamebox (0.4.0.rc10)
       conject (>= 0.0.8)
       gosu
@@ -22,9 +22,9 @@ GEM
       require_all
       thor (>= 0.14.6)
       tween
-    gosu (0.7.47.1)
+    gosu (0.7.47.4)
     i18n (0.6.4)
-    kvo (0.0.4)
+    kvo (0.1.0)
       publisher
     listen (0.5.3)
     metaclass (0.0.1)
@@ -33,7 +33,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.7.2)
     nokogiri (1.5.9)
-    pry (0.9.12)
+    pry (0.9.12.1)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
@@ -74,7 +74,7 @@ DEPENDENCIES
   debugger-ruby_core_source
   gamebox (>= 0.4.0.rc10)
   gosu (>= 0.7.47.1)
-  kvo (= 0.0.4)
+  kvo (= 0.1.0)
   listen (= 0.5.3)
   mocha
   pry

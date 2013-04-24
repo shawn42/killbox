@@ -8,7 +8,7 @@ gem 'pry-debugger'
 gem "gosu", '>= 0.7.47.1'
 gem "gamebox", '>= 0.4.0.rc10'
 gem "conject", '>= 0.0.8'
-gem 'kvo', '0.0.4'
+gem 'kvo', '0.1.0'
 
 gem "mocha"
 gem "rspec"
