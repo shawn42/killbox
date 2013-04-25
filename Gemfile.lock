@@ -12,11 +12,11 @@ GEM
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.2.0)
     diff-lcs (1.2.4)
-    gamebox (0.4.0.rc10)
+    gamebox (0.4.0.rc11)
       conject (>= 0.0.8)
       gosu
       i18n
-      kvo (>= 0.0.4)
+      kvo (>= 0.1.0)
       listen (>= 0.5.3)
       publisher
       require_all
@@ -72,7 +72,7 @@ DEPENDENCIES
   conject (>= 0.0.8)
   debugger-linecache (= 1.1.1)
   debugger-ruby_core_source
-  gamebox (>= 0.4.0.rc10)
+  gamebox (>= 0.4.0.rc11)
   gosu (>= 0.7.47.1)
   kvo (= 0.1.0)
   listen (= 0.5.3)
