@@ -1,3 +1,18 @@
+GIT
+  remote: git@github.com:shawn42/gamebox.git
+  revision: b86ff2117cffd6e1106555d99b8a589f55a84a70
+  specs:
+    gamebox (0.4.0.rc11)
+      conject (>= 0.0.8)
+      gosu
+      i18n
+      kvo (>= 0.1.0)
+      listen (>= 0.5.3)
+      publisher
+      require_all
+      thor (>= 0.14.6)
+      tween
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -12,17 +27,7 @@ GEM
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.2.0)
     diff-lcs (1.2.4)
-    gamebox (0.4.0.rc11)
-      conject (>= 0.0.8)
-      gosu
-      i18n
-      kvo (>= 0.1.0)
-      listen (>= 0.5.3)
-      publisher
-      require_all
-      thor (>= 0.14.6)
-      tween
-    gosu (0.7.47.4)
+    gosu (0.7.47.1)
     i18n (0.6.4)
     kvo (0.1.0)
       publisher
@@ -72,7 +77,7 @@ DEPENDENCIES
   conject (>= 0.0.8)
   debugger-linecache (= 1.1.1)
   debugger-ruby_core_source
-  gamebox (>= 0.4.0.rc11)
+  gamebox!
   gosu (>= 0.7.47.1)
   kvo (= 0.1.0)
   listen (= 0.5.3)

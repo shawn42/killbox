@@ -6,7 +6,7 @@ gem 'pry'
 gem 'pry-remote'
 gem 'pry-debugger'
 gem "gosu", '>= 0.7.47.1'
-gem "gamebox", '>= 0.4.0.rc11'
+gem "gamebox", git: 'git@github.com:shawn42/gamebox.git'
 gem "conject", '>= 0.0.8'
 gem 'kvo', '0.1.0'
 

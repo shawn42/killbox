@@ -23,27 +23,18 @@ define_behavior :slicer do
 
     def slice_if_able
       if actor.can_slice?
-        actor_loc = vec2(actor.x, actor.y)
-
         actor.can_slice = false
         actor.react_to :play_sound, :slice
-
-        looking = actor.flip_h? ? vec2(-1,0) : vec2(1,0)
-        rotated_look = looking.rotate!(degrees_to_radians(actor.rotation)) * actor.slice_reach
 
         if actor.on_ground?
           log "LUNGE"
           # actor.vel += directional_vec * lunge amount
         end
 
-        log "SWING #{rotated_look}"
         actor.when :action_loop_complete do
           actor.action = :idle
         end
         actor.action = :slice
-        # stage.create_actor :slice_effect, parent: actor, offset_from_parent: rotated_look, 
-        #   view: :graphical_actor_view
-
         actor.emit :slice
 
         setup_can_slice_timer

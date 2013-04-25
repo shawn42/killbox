@@ -13,8 +13,7 @@ define_behavior :shooter do
     update_gun_tip
     actor.when(:gun_direction_changed){ update_gun_tip }
     actor.when(:rotation_changed){ update_gun_tip }
-    actor.when(:x_changed){ update_gun_tip }
-    actor.when(:y_changed){ update_gun_tip }
+    actor.when(:position_changed){ update_gun_tip }
 
     actor.input.when(:shoot) { shoot_if_able }
 
@@ -51,7 +50,7 @@ define_behavior :shooter do
       rotation = actor.do_or_do_not(:rotation) || 0
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(rotation))
       rotated_gun_dir.magnitude = 22
-      actor.gun_tip = rotated_gun_dir + vec2(actor.x, actor.y)
+      actor.gun_tip = rotated_gun_dir + actor.position
       # log ">> update_gun_tip: gun_tip: #{actor.gun_tip.inspect}"
 
       if ENV['DEBUG']
@@ -62,21 +61,16 @@ define_behavior :shooter do
     end
 
     def shot_vel
-      actor_loc = vec2(actor.x, actor.y)
-      # binding.pry
-      (actor.gun_tip - actor_loc).unit * actor.shot_power
+      (actor.gun_tip - actor.position).unit * actor.shot_power
     end
 
     def shoot_if_able
       if actor.can_shoot?
-        # update_gun_tip
-        actor_loc = vec2(actor.x, actor.y)
-
         actor.can_shoot = false
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
 
         # puts ">> shoot_if_able: gun_tip: #{actor.gun_tip.inspect}"
-        bullet_pos = actor_loc + ((actor.gun_tip - actor_loc) * 1.9)
+        bullet_pos = actor.position + ((actor.gun_tip - actor.position) * 1.9)
         bullet = stage.create_actor :bullet, player: actor, x: bullet_pos.x, y: bullet_pos.y, map: actor.map, vel: shot_vel
         bullet_coordinator.register_bullet bullet
 
