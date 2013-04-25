@@ -23,6 +23,9 @@ define_actor :bomb do
         radius: 100 # radius of effect - the distance at which the effect's influence will drop to zero
       )
       setup_timers
+      actor.when :boom do
+        make_shrapnel
+      end
     end
 
     helpers do
@@ -51,7 +54,6 @@ define_actor :bomb do
         timer_manager.add_timer death_timer_name, 3_000, false do
           actor.react_to :play_sound, :bomb
           actor.emit :boom
-          make_shrapnel
           actor.remove
         end
       end
