@@ -25,8 +25,8 @@ define_behavior :shielded do
 
     def shields_up
       unless actor.shields_up?
-        log "UP"
         actor.shields_up = true
+        actor.action = :jumping
         timer_manager.add_timer "shields_down_#{object_id}", actor.shield_time_in_ms, false do
           shields_down
         end
@@ -42,7 +42,6 @@ define_behavior :shielded do
     end
 
     def shields_down
-      log "DOWN"
       actor.shields_up = false
 
       shielded_behaviors.each do |beh|
