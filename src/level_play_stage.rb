@@ -106,7 +106,10 @@ define_stage :level_play do
         alive_players = @players.select{|player| player.alive?}
         if @players.size > 1 && alive_players.size < 2
           last_man_standing = alive_players.first
-          score_keeper.player_score(last_man_standing) if last_man_standing
+
+          (@players - alive_players).each do |player_that_died| 
+            score_keeper.player_score(player_that_died, -1)
+          end
           round_over 
         end
         @computer_players.each do |npc|

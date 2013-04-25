@@ -7,7 +7,7 @@ class ScoreKeeper
   def initialize
     backstage[:scores] ||= {}
     4.times do |i|
-      backstage[:scores][i+1] = 10
+      backstage[:scores][i+1] ||= 10
     end
   end
 
