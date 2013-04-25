@@ -11,7 +11,7 @@ define_behavior :shielded do
 
   helpers do
     def unshielded_behaviors 
-      [:accelerator, :jump, :slicer, :shooter, :bomber,
+      [:accelerator, :jump, :slicer, :shooter, :bomber, :friction, :grounded,
         :tile_oriented, :die_by_bomb, :die_by_bullet, :die_by_sword]
     end
 
@@ -25,6 +25,7 @@ define_behavior :shielded do
 
     def shields_up
       unless actor.shields_up?
+        log "UP"
         actor.shields_up = true
         timer_manager.add_timer "shields_down_#{object_id}", actor.shield_time_in_ms, false do
           shields_down
@@ -41,6 +42,7 @@ define_behavior :shielded do
     end
 
     def shields_down
+      log "DOWN"
       actor.shields_up = false
 
       shielded_behaviors.each do |beh|

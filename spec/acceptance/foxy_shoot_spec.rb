@@ -30,6 +30,31 @@ describe "Foxy shooting", acceptance: true do
     see_bottom_left_standing_above floor_zone[:y]
   end
 
+  it 'does not snap strangle when shield wears off' do
+    # TODO setup movement spec to use a new map
+    # then move this spec back
+    max_x = foxy.x
+    foxy.when :x_changed do
+      max_x = foxy.x if foxy.x > max_x
+    end
+
+    # get going
+    press_key KbD
+    update 1000, step: 20
+
+    shields_up
+    update 20
+    release_key KbD
+    # should keep floating right
+    # what for shields to wear off
+    update 1300, step: 20
+
+    see_bottom_right_standing_above floor_zone[:y]
+    see_bottom_left_standing_above floor_zone[:y]
+    foxy.x.should >= max_x
+  end
+
+
   it 'shoots to the right' do
     see_actor_attrs :foxy, gun_direction: vec2(1,0) # gun pointing right
 

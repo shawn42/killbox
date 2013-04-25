@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe "Foxy jumping", acceptance: true do
+describe "Foxy movement", acceptance: true do
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
     mock_image 'boxy.png'

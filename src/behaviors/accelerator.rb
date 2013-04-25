@@ -4,7 +4,7 @@ define_behavior :accelerator do
     actor.has_attributes speed: opts[:speed],
                          accel: vec2(0,0),
                          vel: vec2(0,0)
-                        
+
     director.when :before do |time, time_secs|
       input = actor.input
 
