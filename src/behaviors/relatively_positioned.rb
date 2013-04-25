@@ -28,13 +28,9 @@ define_behavior :relatively_positioned do
 
     def update_location
       parent = actor.parent
-      parent_pos = vec2(parent.x,parent.y)
+      parent_pos = parent.position
       rotated_pos = parent_pos + actor.offset_from_parent.rotate(degrees_to_radians(parent.rotation))
-
-      actor.x = rotated_pos.x
-      actor.y = rotated_pos.y
-      actor.rotation = parent.rotation
-
+      actor.update_attributes x: rotated_pos.x, y: rotated_pos.y, rotation: parent.rotation
     end
   end
 

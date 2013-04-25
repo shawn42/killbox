@@ -5,23 +5,17 @@ define_behavior :grounded do
     actor.has_attributes on_ground: false
 
     director.when :first do
-      feet_points = [actor.collision_points[4], actor.collision_points[5]]
-
-      actor_loc = vec2(actor.x, actor.y)
-      touching_points = actor.collision_points.select { |fp| on_ground?(fp) }
-      actor.on_ground = touching_points.size > 0
+      feet_points = actor.collision_points[4..5]
+      actor.on_ground = feet_points.any? { |fp| on_ground?(fp) }
     end
 
     actor.when :on_ground_changed do |was_grounded, is_grounded|
-      unless was_grounded == is_grounded
-        # TODO ew.. maybe have some sort of "looking" vector instead of gun dir
-        if was_grounded and !is_grounded
-          gun_angle = actor.gun_direction.angle
-          if gun_angle == 0
-            actor.rotation_vel -= 0.3 
-          elsif gun_angle == Math::PI
-            actor.rotation_vel += 0.3 
-          end
+      unless is_grounded
+        gun_angle = actor.gun_direction.angle
+        if gun_angle == 0
+          actor.rotation_vel -= 0.3 
+        elsif gun_angle == Math::PI
+          actor.rotation_vel += 0.3 
         end
       end
     end

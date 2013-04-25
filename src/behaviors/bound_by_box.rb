@@ -10,22 +10,11 @@ define_behavior :bound_by_box do
                                       actor.width, actor.height)
 
 
-    actor.when :x_changed do
-      update_bb
-    end
-    actor.when :y_changed do
-      update_bb
-    end
-    actor.when :width_changed do
-      update_bb
-    end
-    actor.when :height_changed do
-      update_bb
-    end
+    actor.when(:position_changed) { update_bb }
+    actor.when(:width_changed) { update_bb }
+    actor.when(:height_changed) { update_bb }
+    actor.when(:rotation_changed) { update_bb }
 
-    actor.when :rotation_changed do
-      update_bb
-    end
     update_bb
 
     reacts_with :remove

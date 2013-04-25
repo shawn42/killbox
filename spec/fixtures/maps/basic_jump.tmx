@@ -8,7 +8,7 @@
  </tileset>
  <layer name="terrain" width="20" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAxNmYGAQpjKmFhg1DzcQobJ5xIBR80jXS26+wcanJK8RMp9UMBTMIyasACLXhAsABQAA
+   H4sIAAAAAAAAAxNmYGAQpjKmFhg1DzcQobJ5xIBR80jXS26+QRejNK9hM58SMBTMIyasAOit2HYABQAA
   </data>
  </layer>
  <objectgroup name="actors" width="20" height="16">

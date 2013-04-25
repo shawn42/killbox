@@ -15,10 +15,9 @@ define_behavior :bomb_collision_points do
     def points
       x = actor.x
       y = actor.y
-      actor_loc = vec2(x,y)
 
       point_deltas.map do |point|
-        rotate(actor_loc, point)
+        rotate(actor.position, point)
       end
     end
 

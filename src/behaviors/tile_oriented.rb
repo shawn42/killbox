@@ -5,11 +5,11 @@ define_behavior :tile_oriented do
     actor.has_attribute :ground_normal, vec2(0, -1)
 
     actor.when :tile_collisions do |collisions|
+      # log "info: #{actor.x}, #{actor.y} : => #{actor.vel} G #{actor.on_ground}"
       if collisions
         # log "lines: #{actor.lines}"
         # log "COLLISIONS: #{collisions}"
         map = actor.map.map_data
-        actor_loc = vec2(actor.x, actor.y)
 
         interesting_collisions = collisions.select do |collision|
           face_normal = FACE_NORMALS[collision[:tile_face]]
@@ -21,10 +21,8 @@ define_behavior :tile_oriented do
         closest_collision = interesting_collisions.min_by do |collision|
           hit = collision[:hit]
           hit_vector = vec2(hit[0], hit[1])
-          actor_loc = vec2(actor.x, actor.y)
-          (hit_vector - actor_loc).magnitude
+          (hit_vector - actor.position).magnitude
         end
-
 
         if closest_collision
           tile_face = tile_face_to_attach_to(closest_collision)
@@ -68,11 +66,9 @@ define_behavior :tile_oriented do
 
     def apply_actor_velocities
       actor.rotation = actor.rotation + actor.rotation_vel
-      new_x = (actor.x + actor.vel.x) # XXX
-      new_y = (actor.y + actor.vel.y) # XXX
 
-      actor.x += actor.vel.x 
-      actor.y += actor.vel.y
+      actor.update_attributes x: actor.x + actor.vel.x,
+        y: actor.y + actor.vel.y
     end
 
     def set_actor_rotation(tile_face)
@@ -155,30 +151,27 @@ define_behavior :tile_oriented do
       map = actor.map.map_data
       cps = actor.collision_points
       tile_size = map.tile_size
-      actor_loc = vec2(actor.x, actor.y)
 
-      collision_point_delta = actor_loc - cps[5] # cps[5] lower left (maybe set as data in actor)
+      new_values = {}
+
+      collision_point_delta = actor.position - cps[5] # cps[5] lower left (maybe set as data in actor)
       case tile_face
       when :top
         lower_left_target = vec2(tile_col * tile_size, tile_row * tile_size - 1)
-        new_loc = lower_left_target + collision_point_delta
-        new_loc.y = new_loc.y.floor
-        actor.y = new_loc.y
+        tmp_loc = lower_left_target + collision_point_delta
+        new_values[:y] = tmp_loc.y.floor
       when :bottom
         lower_left_target = vec2((tile_col + 1) * tile_size, (tile_row + 1) * tile_size + 1)
-        new_loc = lower_left_target + collision_point_delta
-        new_loc.y = new_loc.y.ceil
-        actor.y = new_loc.y
+        tmp_loc = lower_left_target + collision_point_delta
+        new_values[:y] = tmp_loc.y.ceil
       when :left
         lower_left_target = vec2(tile_col * tile_size - 1 , tile_row * tile_size)
-        new_loc = lower_left_target + collision_point_delta
-        new_loc.x = new_loc.x.floor
-        actor.x = new_loc.x
+        tmp_loc = lower_left_target + collision_point_delta
+        new_values[:x] = tmp_loc.x.floor
       when :right
         lower_left_target = vec2((tile_col + 1) * tile_size + 1, tile_row * tile_size)
-        new_loc = lower_left_target + collision_point_delta
-        new_loc.x = new_loc.x.ceil
-        actor.x = new_loc.x
+        tmp_loc = lower_left_target + collision_point_delta
+        new_values[:x] = tmp_loc.x.ceil
       else
         raise "cannot determine desired actor location from tile_face: #{collision[:tile_face]}"
       end
@@ -191,28 +184,21 @@ define_behavior :tile_oriented do
       max_diff = (actor_hw + tile_hw) - 1
 
       tile_center = vec2(tile_col * tile_size + tile_hw, tile_row * tile_size + tile_hw)
-      axis_val = actor.send(axis)
+      axis_val = new_values[axis] || actor.send(axis)
       diff = axis_val - tile_center.send(axis)
       diff_dist = diff.abs
 
-      # log "axis: #{axis}"
-      # log "actor_hw: #{actor_hw}"
-      # log "tile_hw: #{tile_hw}"
-      # log "tile_center: #{tile_center}"
-      # log "axis_val: #{axis_val}"
-
-      # log "diff_dist: #{diff_dist} max_diff: #{max_diff}"
       if diff_dist > max_diff
 
         required_shift = diff_dist - max_diff
         sign = required_shift < 0 ? -1 : 1
         required_shift = required_shift.abs.ceil * sign
 
-
         shift_direction = diff < 0 ? 1 : -1
-        actor.send("#{axis}=", axis_val + shift_direction * required_shift)
-        # log "shifting on #{axis} by #{shift_direction * required_shift}"
+        new_values[axis] = axis_val + shift_direction * required_shift
       end
+
+      actor.update_attributes new_values
 
     end
 

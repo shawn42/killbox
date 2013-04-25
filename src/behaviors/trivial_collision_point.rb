@@ -10,7 +10,7 @@ define_behavior :trivial_collision_point do
 
   helpers do
     def points
-      [vec2(actor.x,actor.y)]
+      [actor.position]
     end
   end
 end

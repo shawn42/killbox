@@ -15,10 +15,6 @@ define_behavior :foxy_collision_points do
 
   helpers do
     def points
-      x = actor.x
-      y = actor.y
-      actor_loc = vec2(x,y)
-
       #
       #  0     1
       #   -----
@@ -28,7 +24,7 @@ define_behavior :foxy_collision_points do
       #   -----
       #  5     4
       point_deltas.map do |point|
-        rotate(actor_loc, point)
+        rotate(actor.position, point)
       end
     end
 

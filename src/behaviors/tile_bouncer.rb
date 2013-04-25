@@ -8,8 +8,6 @@ define_behavior :tile_bouncer do
     actor.when :tile_collisions do |collisions|
       if collisions
         map = actor.map.map_data
-        actor_loc = vec2(actor.x, actor.y)
-
 
         # TODO move these to some sort of CollisionInspector
         interesting_collisions = collisions.select do |collision|
@@ -21,8 +19,7 @@ define_behavior :tile_bouncer do
         closest_collision = interesting_collisions.min_by do |collision|
           hit = collision[:hit]
           hit_vector = vec2(hit[0], hit[1])
-          actor_loc = vec2(actor.x, actor.y)
-          (hit_vector - actor_loc).magnitude
+          (hit_vector - actor.position).magnitude
         end
 
         if closest_collision
@@ -54,22 +51,19 @@ define_behavior :tile_bouncer do
 
           left_over_movement = new_vel.dup
           left_over_movement.magnitude = left_over
-          new_loc = hit_vector + left_over_movement + (actor_loc - point_that_collided)
+          new_loc = hit_vector + left_over_movement + (actor.position - point_that_collided)
 
-          # log "BEFORE ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
           actor.rotation_vel = 0
-          actor.x = new_loc.x
-          actor.y = new_loc.y
-          # log "UPDATED ACTOR #{actor.x} #{actor.y} #{actor.rotation} #{actor.vel} #{actor.rotation_vel}"
-          # binding.pry if closest_collision[:tile_face] == :right
+          actor.update_attributes x: new_loc.x, y: new_loc.y
+
         else
           # raise "collided, but no good collisions in [#{collisions}]"
         end
 
       else
         actor.rotation += actor.rotation_vel
-        actor.x += actor.vel.x 
-        actor.y += actor.vel.y
+        actor.update_attributes x: actor.x + actor.vel.x,
+          y: actor.y + actor.vel.y
       end
 
     end

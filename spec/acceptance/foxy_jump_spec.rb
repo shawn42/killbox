@@ -61,7 +61,7 @@ describe "Foxy jumping", acceptance: true do
     end
     count.should < 1000
 
-    update 3000, step: 10
+    update 2000, step: 10
 
     see_actor_attrs :foxy, 
       y: floor_y.ish,
@@ -71,30 +71,32 @@ describe "Foxy jumping", acceptance: true do
   end
 
   it 'jumps from floor to ceiling and back' do
+    foxy.x = 100
+
     see_actor_attrs :foxy, 
-      x: 120.ish
+      x: 100.ish
 
     # settle
     update 4000, step: 20
 
     see_actor_attrs :foxy, 
-      x: 120.ish,
+      x: 100.ish,
       y: floor_y.ish,
       rotation: 0.ish
 
-    jump 2000
-    update 1000, step: 20
-
-    see_actor_attrs :foxy, 
-      x: 120.ish,
-      y: (tile_size + foxy_h / 2.0 + 1).ish,
-      rotation: 180.ish
-
-    jump 2000
+    jump 3000
     update 2000, step: 20
 
     see_actor_attrs :foxy, 
-      x: 120.ish,
+      x: 100.ish,
+      y: (tile_size + foxy_h / 2.0 + 1).ish,
+      rotation: 180.ish
+
+    jump 3000
+    update 2000, step: 20
+
+    see_actor_attrs :foxy, 
+      x: 100.ish,
       y: floor_y.ish,
       rotation: 0.ish
   end

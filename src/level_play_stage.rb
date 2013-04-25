@@ -179,11 +179,11 @@ define_stage :level_play do
         player.vel = vec2(0,3)
         player.animation_file = "trippers/#{player_color(index)}_tripper.png"
 
-        if index == 2
-          @computer_players << ComputerPlayer.new(player)
-        else
+        # if index == 2
+        #   @computer_players << ComputerPlayer.new(player)
+        # else
           player.input.map_input(controls[name])
-        end
+        # end
 
         @players << player
       end
