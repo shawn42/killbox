@@ -7,6 +7,7 @@ module FoxyAcceptanceHelpers
   def configure_game_with_testing_stage(opts={})
     opts[:tileset] ||= "tileset" # will look for a png in spec/fixtures/graphics/map/
     opts[:tile_size] ||= 36 # 36x36 is the size of tiles in tileset.png, but this can be changed for testing purposes
+    opts[:player_count] ||= 1
 
     Gamebox.configuration.stages = [:level_play]
     Stage.definitions[:level_play].curtain_up do
@@ -27,7 +28,7 @@ module FoxyAcceptanceHelpers
       @level.map_extents = [0,0, map_data.tile_grid[0].size * map_data.tile_size, map_data.tile_grid.size * map_data.tile_size]
       LevelLoader.load_objects self, tmx_map, @level
 
-      setup_players
+      setup_players opts[:player_count]
       rescue Exception => ex
         binding.pry
       end
@@ -71,15 +72,24 @@ module FoxyAcceptanceHelpers
   end
 
   def look_up
-    press_key KbW
+    tap_key KbW
+  end
+
+  def look_right
+    tap_key KbD
   end
 
   def shields_up
-    press_key KbV
+    tap_key KbV
   end
 
   def shoot
-    press_key KbB
+    tap_key KbB
+  end
+
+  def tap_key(key)
+    press_key key
+    release_key key
   end
 
   def see_bottom_right_standing_above(y)

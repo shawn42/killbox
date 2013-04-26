@@ -119,10 +119,10 @@ define_stage :level_play do
     end
 
     # F1 console watch values
-    player = @players[0]
+    player = @players[1]
     if player
       # @console.react_to :watch, :p1vel do player.vel end
-      # @console.react_to :watch, :p2y do player.y.two end
+      @console.react_to :watch, :p2rotvel do player.rotation_vel end
       # @console.react_to :watch, :fps do Gosu.fps end
     end
     input_manager.reg :down, Kb4 do
