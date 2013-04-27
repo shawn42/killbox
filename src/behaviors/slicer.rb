@@ -2,7 +2,7 @@ define_behavior :slicer do
   requires :timer_manager, :stage, :sword_coordinator
   setup do
     actor.has_attributes can_slice: true,
-                         lunge_distance: 20,
+                         lunge_distance: 15,
                          slice_recharge_time: 600, 
                          slice_reach: 40
                         
@@ -27,13 +27,12 @@ define_behavior :slicer do
         actor.react_to :play_sound, :slice
 
         if actor.on_ground?
-          log "LUNGE"
-          # actor.vel += directional_vec * lunge amount
+          points = actor.collision_points
+          sign = actor.do_or_do_not(:flip_h) ? 1 : -1
+          actor.vel += (points[5] - points[4]).unit * actor.lunge_distance * sign
         end
 
-        actor.when :action_loop_complete do
-          actor.action = :idle
-        end
+        actor.when(:action_loop_complete) { actor.action = :idle }
         actor.action = :slice
         actor.emit :slice
 
