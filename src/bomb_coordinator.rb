@@ -14,8 +14,12 @@ class BombCoordinator
         if target != bomb and target.alive? and bomb.alive?
           distance = (target.position - bomb.position).magnitude
 
-          if distance < bomb.radius
-            target.react_to :esplode, bomb, distance
+          if distance < bomb.radius * 4
+            target.react_to :disoriented, bomb, distance
+
+            if distance < bomb.radius
+              target.react_to :esplode, bomb, distance
+            end
           end
         end
       end

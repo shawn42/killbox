@@ -17,7 +17,6 @@ define_behavior :slicer do
   helpers do
     def set_reach
       actor.slice_reach = actor.on_ground? ? 120 : 50
-      log actor.slice_reach
     end
 
     def setup_can_slice_timer

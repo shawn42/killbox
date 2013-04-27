@@ -33,6 +33,7 @@ define_actor :foxy do
     die_by_bullet
     die_by_bomb
     blasted_by_bomb
+    disoriented_by_bombs
     die_by_bullet
     shielded
     # melee
