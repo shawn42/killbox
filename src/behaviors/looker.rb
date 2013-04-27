@@ -4,15 +4,12 @@ define_behavior :looker do
   setup do
     # in pixels
     actor.has_attributes look_distance: 100,
-                         flip_h: false
+                         flip_h: false, 
+                         look_vector: look_directions[:left]
 
     input = actor.input
-    input.when :look_left do
-      actor.flip_h = true
-    end
-    input.when :look_right do
-      actor.flip_h = false
-    end
+    input.when(:look_left) { actor.flip_h = true }
+    input.when(:look_right) { actor.flip_h = false }
 
     director.when :update do |t_ms, time_in_sec|
       if actor.do_or_do_not :viewport
@@ -57,6 +54,7 @@ define_behavior :looker do
       viewport = actor.viewport
       current_vec = vec2(viewport.follow_offset_x, viewport.follow_offset_y)
       if look_vector 
+        actor.look_vector = look_vector
         rot = actor.do_or_do_not(:rotation) || 0
         offset_vec = current_vec - look_vector.rotate_deg(rot) * actor.look_distance * time_secs
 

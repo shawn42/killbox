@@ -11,7 +11,6 @@ define_behavior :die_by_sword do
       sword_vel = (actor.position - sword.position).unit
       if actor.action == :slice
         # TODO need to track some sense of swung < N ms ago so I'm still swinging
-
         log "parry"
         sword.vel -= sword_vel * 10
         actor.vel += sword_vel * 10
