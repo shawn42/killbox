@@ -32,10 +32,13 @@ define_actor :player_select_menu do
       input_manager.reg :down, Kb3 do actor.emit :start, 3 end
       input_manager.reg :down, Kb4 do actor.emit :start, 4 end
 
-      # probably need to clean up event
+      reacts_with :remove
     end
+
     helpers do
-      include MinMaxHelpers
+      def remove
+        input_manager.unsubscribe_all self
+      end
     end
 
 

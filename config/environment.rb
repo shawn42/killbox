@@ -19,7 +19,7 @@ Gamebox.configure do |config|
   config.gb_gfx_path = GAMEBOX_PATH + "data/graphics/"
   config.gb_fonts_path = GAMEBOX_PATH + "data/fonts/"
   
-  config.stages = [:player_select, :level_play, :score]
+  config.stages = [:player_select, :map_select, :level_play, :score]
   # config.stages = [:main_menu, :level_play, :score]
   config.game_name = "Foxy"
 end
