@@ -9,6 +9,7 @@ define_actor :bomb do
     tile_bouncer
     tile_collision_detector
     bomb_collision_points
+    explode_by_bomb
     explode_by_bullet
   end
 
