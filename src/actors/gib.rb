@@ -7,6 +7,7 @@ define_actor :gib do
     tile_bouncer
     tile_collision_detector
     trivial_collision_point
+    short_lived ttl: 3000
   end
   has_attributes color: Color::RED
 

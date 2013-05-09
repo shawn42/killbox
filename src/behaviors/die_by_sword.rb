@@ -8,15 +8,19 @@ define_behavior :die_by_sword do
 
   helpers do
     def sliced(sword, arc_angle)
-      log "UG.. you stabbed me"
-      # TODO need to track some sense of swung < N ms ago so I'm still swinging
-      log "TODO parry"
-
-      actor.react_to :play_sound, :death
-      sword_vel = vec2(actor.x, actor.y) - vec2(sword.x, sword.y)
-      actor.react_to :gibify, force: (sword_vel * 0.2)
-      score_keeper.player_score(sword)
-      actor.remove
+      sword_vel = (actor.position - sword.position).unit
+      if actor.action == :slice
+        # TODO need to track some sense of swung < N ms ago so I'm still swinging
+        log "parry"
+        sword.vel -= sword_vel * 10
+        actor.vel += sword_vel * 10
+      else
+        log "UG.. you stabbed me"
+        actor.react_to :play_sound, :death
+        actor.react_to :gibify, force: sword_vel * 4
+        score_keeper.player_score(sword)
+        actor.remove
+      end
     end
 
     def remove

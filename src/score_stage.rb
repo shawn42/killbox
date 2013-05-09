@@ -17,7 +17,7 @@ define_stage :score do
     end
 
     input_manager.reg :down do
-      fire :change_stage, :level_play, {}
+      fire :change_stage, :map_select
     end
   end
 

@@ -11,11 +11,12 @@ define_behavior :grounded do
 
     actor.when :on_ground_changed do |was_grounded, is_grounded|
       unless is_grounded
+        # TODO DO NOT USE GUN DIRECTION!!
         gun_angle = actor.gun_direction.angle
         if gun_angle == 0
-          actor.rotation_vel -= 0.3 
+          actor.rotation_vel = -0.3 
         elsif gun_angle == Math::PI
-          actor.rotation_vel += 0.3 
+          actor.rotation_vel = 0.3 
         end
       end
     end

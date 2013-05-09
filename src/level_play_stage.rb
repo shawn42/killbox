@@ -95,9 +95,6 @@ define_stage :level_play do
     @console = create_actor(:console, visible: false)
     @fps = create_actor :fps, x: 100, y: 30
 
-    backstage[:level_name] ||= levels.keys[1]
-    backstage[:player_count] ||= opts[:player_count]
-
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
 
@@ -119,10 +116,10 @@ define_stage :level_play do
     end
 
     # F1 console watch values
-    player = @players[0]
+    player = @players[1]
     if player
       # @console.react_to :watch, :p1vel do player.vel end
-      # @console.react_to :watch, :p2y do player.y.two end
+      @console.react_to :watch, :p2rotvel do player.rotation_vel end
       # @console.react_to :watch, :fps do Gosu.fps end
     end
     input_manager.reg :down, Kb4 do
@@ -208,14 +205,14 @@ define_stage :level_play do
           '+s' => :look_down,
         },
         player2: {
-          # '+i' => :shoot,
-          # '+o' => :charging_jump,
-          # '+p' => :charging_bomb, 
-          # '+u' => :shields_up, 
-          # '+t' => :look_up,
-          # '+f' => [:look_left, :walk_left],
-          # '+h' => [:look_right, :walk_right],
-          # '+g' => :look_down,
+          '+i' => :shoot,
+          '+o' => :charging_jump,
+          '+p' => :charging_bomb, 
+          '+u' => :shields_up, 
+          '+t' => :look_up,
+          '+f' => [:look_left, :walk_left],
+          '+h' => [:look_right, :walk_right],
+          '+g' => :look_down,
 
           '+gp0_button_0' => :shoot,
           '+gp0_button_1' => :charging_jump,

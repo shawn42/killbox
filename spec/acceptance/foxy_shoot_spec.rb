@@ -19,7 +19,7 @@ describe "Foxy shooting", acceptance: true do
     mock_image 'bullet.png'
     mock_image 'bomb.png'
 
-    configure_game_with_testing_stage  map_name: "shooting"
+    configure_game_with_testing_stage  map_name: "shooting", player_count: 2
 
     # See foxy land standing where expected:
     update 2000, step: 20
@@ -28,6 +28,23 @@ describe "Foxy shooting", acceptance: true do
       rotation: 0.ish
     see_bottom_right_standing_above floor_zone[:y]
     see_bottom_left_standing_above floor_zone[:y]
+  end
+
+  it 'can shoot another player' do
+    foxies = game.actors(:foxy)
+    foxies.size.should == 2
+
+    foxy1 = foxies[0]
+    foxy2 = foxies[1]
+
+    foxy1.y = foxy2.y
+
+    look_right
+    shoot
+    update 1000, step: 20
+
+    foxy2.should_not be_alive
+    game.actors(:foxy).size.should == 1
   end
 
   it 'does not snap strangle when shield wears off' do

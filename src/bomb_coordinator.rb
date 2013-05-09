@@ -11,10 +11,16 @@ class BombCoordinator
     bomb.when :boom do
       unregister_bomb bomb
       @explosion_listeners.each do |target, count|
-        distance = (vec2(target.x, target.y) - vec2(bomb.x, bomb.y)).magnitude
+        if target != bomb and target.alive? and bomb.alive?
+          distance = (target.position - bomb.position).magnitude
 
-        if distance < bomb.radius
-          target.react_to :esplode, bomb, distance
+          if distance < bomb.radius * 4
+            target.react_to :disoriented, bomb, distance
+
+            if distance < bomb.radius
+              target.react_to :esplode, bomb, distance
+            end
+          end
         end
       end
     end
