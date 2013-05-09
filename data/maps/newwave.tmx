@@ -24,7 +24,7 @@
  </objectgroup>
  <layer name="fg" width="48" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3WuwkCURCG0S1JsAjBIhYsQq3DKmxF3SJ8FOEjcwLDjfZemb1wDnzp8IfTdYw5RefoEg3JW6a4RrfoHj1yp0zyjF7RO/okbwH4l220i/bZQ6Bxx18tWGQPKLTKHlCor3BjWeFGpnX2gEKb7AHM0tx/qkP2gEKt7wcAAAAAAAAAoI4vDA/8P4A0AAA=
+   H4sIAAAAAAAAA+3Yyw3CQAxF0ZSERBFIFIFEEUAdVEErQHrgVwSfHV7AejIe2zOJ7pHecvwsRYEkXTfMxSA15fYfJSfJWdIrzlvL7b9KbpK75KE4by23/yl5Sd6Sj+K8tdJ+r/2j7j/P/SOwf+zcqJ4p7L+RbCU7p45/j9fciP/8Gr//7O8zy7Pz8IvFrFKpzpnhLA+pzkXmrOh3g9TclUHHfECPVsQ1Xzr2ROy/duyZwrNFhBb3z3mmqrH/PnGuhW8rJfu3QLsH+9tg/7rG+q0WAAAAAAAAAAAAADA+X9kURuCANAAA
   </data>
  </layer>
 </map>
