@@ -21,7 +21,7 @@ define_actor :bomb do
     
       actor.has_attributes(
         force: 8, # force of the effect at 0 distance (impulse will be force/distance)
-        radius: 100 # radius of effect - the distance at which the effect's influence will drop to zero
+        radius: 200 # radius of effect - the distance at which the effect's influence will drop to zero
       )
       setup_timers
       actor.when :boom do
