@@ -44,7 +44,7 @@ define_behavior :bomber do
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
         bomb_vel = actor.vel + ((actor.gun_tip - actor.position).unit * power)
 
-        bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel
+        bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel, rotation_vel: 2.4
         bomb_coordinator.register_bomb bomb
 
         actor.react_to :play_sound, :shoot
