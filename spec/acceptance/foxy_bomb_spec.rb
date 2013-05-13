@@ -19,7 +19,7 @@ describe "Foxy bombing", acceptance: true do
     mock_image 'bullet.png'
     mock_image 'bomb.png'
 
-    configure_game_with_testing_stage  map_name: "shooting", player_count: 2
+    configure_game_with_testing_stage  map_name: "shooting"
 
     # See foxy land standing where expected:
     update 2000, step: 20
@@ -39,18 +39,51 @@ describe "Foxy bombing", acceptance: true do
     see_actor_attrs :land_mine,
       armed: false,
       x: foxy.x.ish,
-      y: floor_zone[:y].ish
+      y: (floor_zone[:y] - 1).ish
 
     # warp to safety
     foxy.x += 300
 
     # wait for land mine to arm
-    update 1000, step: 20
+    update 3000, step: 20
 
     see_actor_attrs :land_mine,
       armed: true
   end
 
+  it 'blows up via player proximity' do
+    place_land_mine
+    foxy.x += 300
 
+    # wait for land mine to arm
+    update 3000, step: 20
+
+    see_actor_attrs :land_mine,
+      armed: true
+
+    # make sure it doesn't blow up on its own
+    update 10_000, step: 20
+    see_actor_attrs :land_mine,
+      armed: true
+
+    foxy.x -= 300
+    update 20
+
+    game.actors(:land_mine).should be_empty
+    foxy.should_not be_alive
+  end
+
+  it 'can be shot' do
+    place_land_mine
+    jump 1000
+    update 4000
+
+    look_up
+    shoot
+
+    update 4000, step: 20
+
+    game.actors(:land_mine).should be_empty
+  end
 end
 

@@ -45,8 +45,7 @@ define_behavior :bomber do
     def plant_landmine
       actor.bombs_left -= 1
       mine = stage.create_actor :land_mine, player: actor, x: actor.x, y: actor.collision_points[5].y, map: actor.map
-
-
+      bomb_coordinator.register_bomb mine
     end
 
     def throw_bomb
