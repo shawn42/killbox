@@ -92,6 +92,13 @@ module FoxyAcceptanceHelpers
     release_key key
   end
 
+  def place_land_mine
+    press_key KbS # look down
+    hold_key KbM, 10 # set land mine
+    update 1
+    release_key KbS
+  end
+
   def see_bottom_right_standing_above(y)
     foxy.collision_points[4].y.should == (y - 1).ish
   end

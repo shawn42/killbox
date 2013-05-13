@@ -1,13 +1,11 @@
-define_actor :bomb do
+define_actor :land_mine do
   
   has_behaviors do
     positioned
     audible
-    layered ZOrder::Projectile
+    layered ZOrder::PlayerDecoration
     animated_with_spritemap file: 'trippers/props.png', rows: 3, cols: 6, actions: { idle: 0..2 }
     bound_by_box
-    tile_bouncer
-    tile_collision_detector
     bomb_collision_points
     explode_by_bomb
     explode_by_bullet
@@ -23,43 +21,18 @@ define_actor :bomb do
         force: 8, # force of the effect at 0 distance (impulse will be force/distance)
         radius: 200 # radius of effect - the distance at which the effect's influence will drop to zero
       )
-      setup_timers
+      actor.react_to :play_sound, :bomb_tick 
       actor.when :boom do
         make_shrapnel
       end
     end
 
     helpers do
-      def tick_timer_name; "#{object_id}_bomb_tick"; end
-      def death_timer_name; "#{object_id}_bomb_death"; end
-
       def remove
-        timer_manager.remove_timer tick_timer_name
-        timer_manager.remove_timer death_timer_name
         actor.unsubscribe_all self
       end
 
-      def setup_timers
-        timer_tick_acculation = 0
-        interval = 30
-        next_beep = 800
-        timer_manager.add_timer tick_timer_name, interval do
-          if timer_tick_acculation > next_beep
-            actor.react_to :play_sound, :bomb_tick 
-            timer_tick_acculation = 0
-            next_beep = next_beep * 0.8
-          else
-            timer_tick_acculation += interval
-          end
-        end
-
-        timer_manager.add_timer death_timer_name, 3_000, false do
-          actor.react_to :play_sound, :bomb
-          actor.emit :boom
-          actor.remove
-        end
-      end
-
+      # TODO pull into common place?
       def make_shrapnel(args={})
         force = args[:force] || vec2(0,0)
         count = args[:count] || 30
