@@ -1,7 +1,7 @@
 --- 
 :title: 0fox
 :sound: true
-:auto_quit: KbEscape
+:auto_quit: KbF10
 :fullscreen: false
 :screen_resolution: 
 - 1920

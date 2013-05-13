@@ -8,7 +8,6 @@ define_behavior :die_by_bomb do
 
   helpers do
     def esplode(bomb, distance)
-      log "UG.. I died"
       if distance < (bomb.radius * 0.666)
         blast_vel = (vec2(actor.x, actor.y) - vec2(bomb.x, bomb.y))
 

@@ -14,6 +14,9 @@ define_stage :map_select do
       backstage[:level_name] = map
       fire :next_stage
     end
+    input_manager.reg :down, KbEscape do
+      fire :change_stage, :player_select
+    end
   end
 
   curtain_down do |*args|

@@ -9,7 +9,6 @@ define_stage :main_menu do
   end
 
   curtain_down do |*args|
-    log "band-aid til gamebox gets updated"
     input_manager.clear_hooks
   end
 end

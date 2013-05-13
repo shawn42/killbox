@@ -6,7 +6,6 @@ define_behavior :gibify do
 
   helpers do
     def gibify(args)
-      log "GIBIFY"
       force = args[:force] || vec2(0,0)
       count = args[:count] || 30
       count.times do

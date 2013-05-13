@@ -14,10 +14,12 @@ define_stage :player_select do
     menu.when :start do |count|
       fire :next_stage, player_count: count
     end
+    input_manager.reg :down, KbEscape do
+      exit
+    end
   end
 
   curtain_down do |*args|
-    log "band-aid til gamebox gets updated"
     input_manager.clear_hooks
   end
 

@@ -84,8 +84,17 @@ define_stage :level_play do
   render_with :multi_viewport_renderer
   requires :score_keeper, :bomb_coordinator, :bullet_coordinator, :sword_coordinator
 
+  curtain_down do |*args|
+    director.unsubscribe_all self
+    input_manager.clear_hooks
+  end
+
   curtain_up do |*args|
     opts = args.first || {}
+    input_manager.reg :down, KbEscape do
+      fire :change_stage, :map_select
+    end
+
     # require 'perftools'
     # PerfTools::CpuProfiler.start("/tmp/foxy_perf.txt")
     # require 'ruby-prof'
@@ -93,7 +102,7 @@ define_stage :level_play do
     director.update_slots = [:first, :before, :update, :last]
 
     @console = create_actor(:console, visible: false)
-    @fps = create_actor :fps, x: 100, y: 30
+    # @fps = create_actor :fps, x: 100, y: 30
 
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
@@ -118,21 +127,9 @@ define_stage :level_play do
     # F1 console watch values
     player = @players[1]
     if player
-      # @console.react_to :watch, :p1vel do player.vel end
       @console.react_to :watch, :p2rotvel do player.rotation_vel end
-      # @console.react_to :watch, :fps do Gosu.fps end
     end
-    input_manager.reg :down, Kb4 do
-      # PerfTools::CpuProfiler.stop
-
-      # result = RubyProf.stop
-      # printer = RubyProf::FlatPrinter.new(result)
-      # printer = RubyProf::GraphHtmlPrinter.new(result)
-      # File.open "perf.html", 'w+' do |f|
-      #   printer.print(f, min_percent: 2)
-      # end
-    end
-
+    @console.react_to :watch, :fps do Gosu.fps end
   end
 
   helpers do
