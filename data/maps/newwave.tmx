@@ -17,7 +17,7 @@
   </data>
  </layer>
  <objectgroup name="actors" width="48" height="70">
-  <object name="player1" type="foxy" gid="254" x="734" y="187"/>
+  <object name="player1" type="foxy" gid="254" x="734" y="167"/>
   <object name="player2" type="foxy" gid="254" x="1011" y="771"/>
   <object name="player3" type="foxy" gid="254" x="325" y="998"/>
   <object name="player4" type="foxy" gid="254" x="128" y="378"/>

@@ -5,7 +5,7 @@ define_behavior :looker do
     # in pixels
     actor.has_attributes look_distance: 100,
                          flip_h: false, 
-                         look_vector: look_directions[:left]
+                         look_vector: Look::DIRECTIONS[:left]
 
     input = actor.input
     input.when(:look_left) { actor.flip_h = true }
@@ -29,26 +29,17 @@ define_behavior :looker do
       director.unsubscribe_all self
     end
 
-    def look_directions 
-      {
-      left: vec2(-1,0),
-      right: vec2(1,0),
-      up: vec2(0,-1),
-      down: vec2(0,1)
-      }
-    end
-
     def update_look_point(time_secs)
       input = actor.input
 
       look_vector = if input.look_left?
-        look_directions[:left]
+        Look::DIRECTIONS[:left]
       elsif input.look_right?
-        look_directions[:right]
+        Look::DIRECTIONS[:right]
       elsif input.look_up?
-        look_directions[:up]
+        Look::DIRECTIONS[:up]
       elsif input.look_down?
-        look_directions[:down]
+        Look::DIRECTIONS[:down]
       end
 
       viewport = actor.viewport
