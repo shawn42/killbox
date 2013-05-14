@@ -1,5 +1,5 @@
 define_behavior :blasted_by_bomb do
-  requires :bomb_coordinator
+  requires :bomb_coordinator, :map_inspector
   setup do
     bomb_coordinator.register_bombable actor
 
@@ -9,7 +9,7 @@ define_behavior :blasted_by_bomb do
   helpers do
     def esplode(bomb, distance)
       # TODO only apply if below feet
-      if distance > (bomb.radius * 0.666)
+      if map_inspector.line_of_sight?(actor, bomb)
         blast_vel = (actor.position - bomb.position).unit * 15
         actor.vel += blast_vel
 

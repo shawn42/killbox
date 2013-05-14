@@ -1,5 +1,5 @@
 define_behavior :explode_by_bomb do
-  requires :bomb_coordinator, :stage
+  requires :bomb_coordinator, :stage, :map_inspector
   setup do
     bomb_coordinator.register_bombable actor
 
@@ -8,7 +8,7 @@ define_behavior :explode_by_bomb do
 
   helpers do
     def esplode(bomb, distance)
-      if distance < (bomb.radius * 0.666)
+      if distance < (bomb.radius * 0.666) && map_inspector.line_of_sight?(actor, bomb)
         actor.react_to :play_sound, :bomb
         actor.player = bomb.player
         actor.remove
@@ -21,7 +21,7 @@ define_behavior :explode_by_bomb do
         end
       end
     end
-
+    
     def remove
       bomb_coordinator.unregister_bombable actor
     end

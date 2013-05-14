@@ -1,5 +1,5 @@
 define_behavior :die_by_bomb do
-  requires :bomb_coordinator, :stage, :score_keeper, :timer_manager
+  requires :bomb_coordinator, :stage, :score_keeper, :timer_manager, :map_inspector
   setup do
     bomb_coordinator.register_bombable actor
 
@@ -8,7 +8,7 @@ define_behavior :die_by_bomb do
 
   helpers do
     def esplode(bomb, distance)
-      if distance < (bomb.radius * 0.666)
+      if distance < (bomb.radius * 0.666) && map_inspector.line_of_sight?(actor, bomb)
         blast_vel = (vec2(actor.x, actor.y) - vec2(bomb.x, bomb.y))
         delay = blast_vel.magnitude * 4
         blast_vel.magnitude = 130 / blast_vel.magnitude

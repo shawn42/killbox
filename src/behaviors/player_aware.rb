@@ -1,5 +1,5 @@
 define_behavior :player_aware do
-  requires :timer_manager, :stage
+  requires :timer_manager, :stage, :map_inspector
 
   setup do
     actor.has_attributes player_proximity_range: (actor.do_or_do_not(:player_proximity_range) || opts[:player_proximity_range] || 100)
@@ -16,7 +16,8 @@ define_behavior :player_aware do
       stage.players.any? do |player| 
         # WTF, shouldn't have to set this
         actor.position = vec2(actor.x, actor.y)
-        (player.position - actor.position).magnitude < actor.player_proximity_range
+        (player.position - actor.position).magnitude < actor.player_proximity_range && 
+          map_inspector.line_of_sight?(actor, player)
       end
     end
 
