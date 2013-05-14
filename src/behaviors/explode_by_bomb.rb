@@ -15,8 +15,10 @@ define_behavior :explode_by_bomb do
         actor.emit :boom
 
       else
-        blast_vel = (actor.position - bomb.position).unit * 5
-        actor.vel += blast_vel if actor.do_or_do_not(:vel)
+        if actor.do_or_do_not(:vel)
+          blast_vel = (actor.position - bomb.position).unit * 5
+          actor.vel += blast_vel 
+        end
       end
     end
 

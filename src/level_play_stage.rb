@@ -1,85 +1,3 @@
-class ComputerInput
-  extend Publisher
-  can_fire_anything
-
-  def initialize(player)
-    @old_input = player.input
-  end
-
-  def emit(*args, &blk)
-    @old_input.send :fire, *args, &blk
-  end
-
-  # TURD
-  def unsubscribe_all(*args)
-    @old_input.unsubscribe_all *args
-  end
-
-  attr_accessor :charging_jump, :walk_left, :walk_right, :charging_bomb, :look_left, :look_up, :look_down, :look_right
-  def shoot
-    emit :shoot
-  end
-
-  def charging_jump?
-    @charging_jump
-  end
-  def charging_bomb?
-    @charging_bomb
-  end
-  def walk_left?
-    @walk_left
-  end
-  def walk_right?
-    @walk_right
-  end
-  def look_up?
-    @look_up
-  end
-  def look_down?
-    @look_down
-  end
-  def look_left?
-    @look_left
-  end
-  def look_right?
-    @look_right
-  end
-end
-
-class ComputerPlayer
-  attr_accessor :player
-  def initialize(player)
-    @player = player
-    @input = ComputerInput.new @player
-    @player.instance_variable_set('@input_mapper', @input)
-    @turn = 0
-  end
-
-  def take_turn(time)
-    @turn += 1
-    if @turn % 480 == 0
-      @input.shoot
-    end
-    if @turn % 80 == 0
-      @input.shoot
-    end
-
-    if @turn % 500 < 100
-      @input.charging_jump = true
-    else
-      @input.charging_jump = false
-    end
-
-    if @turn % 200 > 100
-      @input.walk_right = false
-      @input.walk_left = true
-    else
-      @input.walk_right = true
-      @input.walk_left = false
-    end
-  end
-end
-
 define_stage :level_play do
   render_with :multi_viewport_renderer
   requires :score_keeper, :bomb_coordinator, :bullet_coordinator, :sword_coordinator
@@ -95,10 +13,6 @@ define_stage :level_play do
       fire :change_stage, :map_select
     end
 
-    # require 'perftools'
-    # PerfTools::CpuProfiler.start("/tmp/foxy_perf.txt")
-    # require 'ruby-prof'
-    # RubyProf.start
     director.update_slots = [:first, :before, :update, :last]
 
     @console = create_actor(:console, visible: false)
