@@ -41,9 +41,9 @@ define_behavior :foxy_collision_points do
         vec2(hw,-hh),
         vec2(hw,-qh),
         vec2(hw,qh),
-        vec2(hw,hh),
+        vec2(hw,hh-1),
 
-        vec2(-hw,hh),
+        vec2(-hw,hh-1),
         vec2(-hw,qh),
         vec2(-hw,-qh),
       ]
