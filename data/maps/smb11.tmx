@@ -13,7 +13,7 @@
  </layer>
  <layer name="terrain" width="53" height="44">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2ZDQrCMAxGe3/YjucVHHiJIViQsvzZZs0X+yAg2pa8tdUQt1LK5hQVr/VnxGwnjv0THM+L0HxGjZHev2K004i8pLkSnNOhmO+VFzVXg5dTb151/NVrCc7pYVjnTqRn7blPXrTPus3T8h0RhYxOPWcPleWEAaJTxvtkddLWdDPJ6CTROlnqqihIv7nWOjMilBOyF+eE6iU5IXppnKJ7tXW61im61zcWJxQvRKf2rElnLwPLKSbr7GHyi9PLL50hZNinjPcpSs/yUAQ1XurjU3VE1P6/Bs5pL5huVI/l7YK6X3fuU70Lvf8BrfukI3oP8B+cemLUul75ZXA6AZn1bnJwJAAA
+   H4sIAAAAAAAAA+2ZAQrCMAwA+27/sH1C/YT6CRX8ggM/YQUHUpYmaZO2qT0IiOtKbmlcqZNzblKKFa35a0RtpxjzN2I8N4JyDRqDfb+FtJNEXti9GDGnhXC/Vl7QvRS0nHLzWsdvfcaIOT0Y85QEe9aaddIifNZhnpzfiFbo0Sln7VllONnAopOFftoxx3OdqHu6mvTohBE6cfZVEux9HHwcM+bA3rncfWYKv/1z8nH2cQGupwA5larX1cfNx11wzphT6XUoBeZk0YviVLK/Ugj36VQnS/XiOFnxsugUrjVs7fXAcGqTsfZskuL00ktHhB7q1GM/tXJmuRACGo+d40P7iFbP/ynEnGZn0w06Y/m4WK1XyTqtvZD7H9DoJxqtnwH+g1NOSM2rlV8PTm/8rsphcCQAAA==
   </data>
  </layer>
  <objectgroup name="actors" width="53" height="44">
@@ -24,7 +24,7 @@
  </objectgroup>
  <layer name="fg" width="53" height="44">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3DsQ0AAAgDoL7t977QTQdISAAAAAAAALg2RQAA+GABR9ayz3AkAAA=
+   H4sIAAAAAAAAA+3TMQqDQBCFYU8mUckRUniHFLaewNoDBGtvGKycYsuICzvrOpP/g4dgMbxXbFUBuNq7dIEM2GQDm2xgkw1sssHjpql0gQTfH/lINskSvlpmxVt34XGTF2vI2T/ch8f35HETAAD/aIyIV7XkkZBG0ko6yTN32UgvhRu9wg1NQ+kCGbDJBjbZ4HETgGM7h5MMf3AkAAA=
   </data>
  </layer>
 </map>
