@@ -16,20 +16,41 @@ define_actor :land_mine do
 
     setup do
       reacts_with :remove
+
+      land_mine_arm_delay = opts[:land_mine_arm_delay] || 1_500
     
       actor.has_attributes(
         force: 8, # force of the effect at 0 distance (impulse will be force/distance)
-        radius: 200 # radius of effect - the distance at which the effect's influence will drop to zero
+        radius: 200, # radius of effect - the distance at which the effect's influence will drop to zero
+        armed: false
       )
       actor.react_to :play_sound, :bomb_tick 
+      actor.when :player_near do
+        actor.react_to :play_sound, :bomb
+        actor.emit :boom
+        actor.remove
+      end
       actor.when :boom do
         make_shrapnel
+      end
+
+      timer_manager.add_timer arm_me_timer_name, land_mine_arm_delay, false do
+        arm_and_register
+        add_behavior :player_aware
       end
     end
 
     helpers do
+      def arm_me_timer_name; "arm_me_#{object_id}"; end
+
+      def arm_and_register
+        actor.armed = true
+        actor.react_to :play_sound, :bomb_tick 
+      end
+
       def remove
         actor.unsubscribe_all self
+        timer_manager.remove_timer arm_me_timer_name
       end
 
       # TODO pull into common place?
@@ -38,7 +59,7 @@ define_actor :land_mine do
         count = args[:count] || 30
         count.times do
           vel = vec2(3,0).rotate!(degrees_to_radians(rand(359))) * rand(4)
-          stage.create_actor :shrapnel, x: actor.x, y: actor.y, vel: vel + force + actor.vel, map: actor.map, size: rand(8), color: Color::GRAY
+          stage.create_actor :shrapnel, x: actor.x, y: actor.y, vel: vel + force, map: actor.map, size: rand(8), color: Color::GRAY
         end
       end
     end
