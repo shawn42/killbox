@@ -20,7 +20,7 @@ define_behavior :shielded do
     end
 
     def shield_up_sound
-      actor.react_to :play_sound, (rand(2)%2 == 0 ? :jump1 : :jump2)
+      actor.react_to :play_sound, :shield
     end
 
     def shields_up
