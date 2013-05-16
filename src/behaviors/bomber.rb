@@ -6,7 +6,7 @@ define_behavior :bomber do
   setup do
     # lets start with infinite bombs, fixed vel
     actor.has_attributes bomb_charge: 0,
-                         bombs_left: 4,
+                         bombs_left: 5,
                          max_bomb_charge: 2,
                          was_charging_bomb: false,
                          bomb_kickback: opts[:kickback] || 0
@@ -44,7 +44,10 @@ define_behavior :bomber do
 
     def plant_landmine
       actor.bombs_left -= 1
-      mine = stage.create_actor :land_mine, player: actor, x: actor.x, y: actor.collision_points[5].y, map: actor.map
+      points = actor.collision_points[4..5]
+      center_feet_location = vec2(points.map(&:x).average, points.map(&:y).average)
+      mine = stage.create_actor :land_mine, player: actor, x: center_feet_location.x, y: center_feet_location.y, map: actor.map
+
       bomb_coordinator.register_bomb mine
     end
 
