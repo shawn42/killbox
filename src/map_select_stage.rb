@@ -10,7 +10,7 @@ define_stage :map_select do
     menu = create_actor :map_select_menu, x: 100, y: 30
 
     menu.when :start do |map|
-      backstage[:player_count] ||= opts[:player_count]
+      backstage[:player_count] = opts[:player_count] if opts.has_key?(:player_count)
       backstage[:level_name] = map
       fire :next_stage
     end
