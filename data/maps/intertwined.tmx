@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="70" height="70" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="space platform" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/space_platform.png" width="859" height="396"/>
+ </tileset>
+ <tileset firstgid="254" name="foxy" tilewidth="64" tileheight="64">
+  <image source="../../docs/tripper.png" width="64" height="64"/>
+ </tileset>
+ <layer name="bg" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAK8Gfpd2NZBMAAA=
+  </data>
+ </layer>
+ <layer name="terrain" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3WyQ2AMAwEQIqmC7qgC7riaID8MSBxKFEyI/mX/cVadx08M6dZ0qxptg/e1aDPlC3dkClbujFTtnRTpiy0RIcf6fCYDo+13OFX//2uh99kS2dXYi3vyhX37jk3CvzHvRvT4TEdHtPh53Q4AAAAAAAAAAAAAABAHXaeFhDXkEwAAA==
+  </data>
+ </layer>
+ <objectgroup name="actors" width="70" height="70">
+  <object name="player1" type="foxy" gid="254" x="532" y="605"/>
+  <object name="player2" type="foxy" gid="254" x="423" y="310"/>
+  <object name="player3" type="foxy" gid="254" x="783" y="857"/>
+  <object name="player4" type="foxy" gid="254" x="124" y="598"/>
+ </objectgroup>
+ <layer name="fg" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAK8Gfpd2NZBMAAA=
+  </data>
+ </layer>
+</map>
