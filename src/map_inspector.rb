@@ -113,7 +113,7 @@ class MapInspector
     boundary_size = tile_size * 10
 
     # TODO cache this on map?
-    bb = Rect.new -boundary_size, -boundary_size, width + 2 * boundary_size, 2 * height + boundary_size
+    bb = Rect.new -boundary_size, -boundary_size, width + 2 * boundary_size, height + 2 * boundary_size
     return !bb.collide_point?(pos.x, pos.y)
   end
   
