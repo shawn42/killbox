@@ -2,7 +2,7 @@ define_behavior :disoriented_by_bombs do
   requires :director
 
   setup do
-    actor.has_attributes shake_intensity: 200,
+    actor.has_attributes shake_intensity: 100,
                          disoriented_amount: 0
 
     director.when :update do |t_ms, time_in_sec|

@@ -1,8 +1,10 @@
 define_stage :level_play do
   render_with :multi_viewport_renderer
-  requires :score_keeper, :bomb_coordinator, :bullet_coordinator, :sword_coordinator
+  requires :score_keeper, :sound_manager,
+    :bomb_coordinator, :bullet_coordinator, :sword_coordinator
 
   curtain_down do |*args|
+    sound_manager.stop_music :smb11
     director.unsubscribe_all self
     input_manager.clear_hooks
   end
@@ -20,6 +22,8 @@ define_stage :level_play do
 
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
+
+    sound_manager.play_music :smb11, repeat: true
 
     director.when :update do |time|
       unless @restarting
