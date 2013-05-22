@@ -11,7 +11,7 @@ describe "Foxy movement", acceptance: true do
     configure_game_with_testing_stage map_name: "basic_jump", tile_size: 16
   end
 
-  let(:floor_y) { 145 }
+  let(:floor_y) { 146 }
   let(:foxy_h) { 60 }
   let(:foxy_w) { 32 }
 
@@ -89,7 +89,7 @@ describe "Foxy movement", acceptance: true do
 
     see_actor_attrs :foxy, 
       x: 100.ish,
-      y: (tile_size + foxy_h / 2.0 + 1).ish,
+      y: (tile_size + foxy_h / 2.0).ish,
       rotation: 180.ish
 
     jump 3000
@@ -128,7 +128,7 @@ describe "Foxy movement", acceptance: true do
     see_actor_attrs :foxy, 
       on_ground: true,
       rotation: 90.ish,
-      x: 47.ish
+      x: 46.ish
 
     foxy.y.should < floor_y
 

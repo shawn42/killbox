@@ -67,7 +67,8 @@ describe "Foxy bombing", acceptance: true do
       armed: true
 
     foxy.x -= 300
-    update 20
+    # wait for death delay
+    update 1000, step: 20
 
     game.actors(:land_mine).should be_empty
     foxy.should_not be_alive
