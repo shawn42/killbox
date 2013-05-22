@@ -20,9 +20,8 @@ define_behavior :slicer do
     end
 
     def setup_can_slice_timer
-      timer_manager.add_timer timer_name, actor.slice_recharge_time do
+      timer_manager.add_timer timer_name, actor.slice_recharge_time, false do
         actor.can_slice = true
-        timer_manager.remove_timer timer_name
       end
     end
 

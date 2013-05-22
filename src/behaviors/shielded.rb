@@ -2,7 +2,9 @@ define_behavior :shielded do
   requires :resource_manager, :timer_manager
   setup do
     actor.has_attributes shield_time_in_ms: opts[:shield_time_in_ms] || 1_200,
-                         shields_up: false
+                         shield_recharge_time_in_ms: opts[:shield_recharge_time_in_ms] || 600,
+                         shields_up: false,
+                         shields_recharging: false
 
     actor.input.when(:shields_up) { shields_up }
 
@@ -24,10 +26,10 @@ define_behavior :shielded do
     end
 
     def shields_up
-      unless actor.shields_up?
+      unless actor.shields_recharging? or actor.shields_up?
         actor.shields_up = true
         actor.action = :jumping
-        timer_manager.add_timer "shields_down_#{object_id}", actor.shield_time_in_ms, false do
+        timer_manager.add_timer shield_enabled_timer_name, actor.shield_time_in_ms, false do
           shields_down
         end
 
@@ -43,6 +45,7 @@ define_behavior :shielded do
 
     def shields_down
       actor.shields_up = false
+      recharge_shield
 
       shielded_behaviors.each do |beh|
         remove_behavior beh
@@ -52,9 +55,25 @@ define_behavior :shielded do
       end
     end
 
+    def recharge_shield
+      actor.shields_recharging = true
+      timer_manager.add_timer shield_recharging_timer_name, actor.shield_recharge_time_in_ms, false do
+        actor.shields_recharging = false
+      end
+    end
+
     def remove
-      timer_manager.remove_timer "shields_down_#{object_id}"
+      timer_manager.remove_timer shield_enabled_timer_name
+      timer_manager.remove_timer shield_recharging_timer_name
       actor.input.unsubscribe_all self
+    end
+
+    def shield_enabled_timer_name
+      "#{object_id}:shield_enabled"
+    end
+
+    def shield_recharging_timer_name
+      "#{object_id}:shield_recharging"
     end
 
   end
