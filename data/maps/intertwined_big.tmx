@@ -17,9 +17,9 @@
   </data>
  </layer>
  <objectgroup name="actors" width="70" height="70">
-  <object name="player1" type="foxy" gid="254" x="525" y="366"/>
-  <object name="player2" type="foxy" gid="254" x="1022" y="1092"/>
-  <object name="player3" type="foxy" gid="254" x="695" y="769"/>
+  <object name="player1" type="foxy" gid="254" x="525" y="356"/>
+  <object name="player2" type="foxy" gid="254" x="1014" y="1056"/>
+  <object name="player3" type="foxy" gid="254" x="693" y="742"/>
   <object name="player4" type="foxy" gid="254" x="148" y="752"/>
  </objectgroup>
  <layer name="fg" width="70" height="70">
