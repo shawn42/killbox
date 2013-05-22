@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="70" height="70" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="space platform" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/space_platform.png" width="859" height="396"/>
+ </tileset>
+ <tileset firstgid="254" name="foxy" tilewidth="64" tileheight="64">
+  <image source="../../docs/tripper.png" width="64" height="64"/>
+ </tileset>
+ <layer name="bg" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VsQ0CMQwF0BsJiSGQ2AEkdmALtmALtmAkREnh4mTnkgvvlZHi+Dc/ywIAAMDXsfcChSqznAtn9VaZ5VY4q7eZskBLUbceGr13aTS3WtStp+A8m+uevL+VqFuvwXk21yN5f1TZXM+SLcaTzfUq2WI82Vzvki3G0yrX1v/iXqz9F//F2n8R+DVTt1ZmmalbK7PM1K0zZQEAAAAAAAAAAADYgw8xXDmckEwAAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3azQkCMRCG4XTkZduxC7vQKhSLUCxCsYn4d9AKnNyWMEFXGCch7wMfQpjFIOyG2TEEAAA+i5KL5Cq5Se6SR2EtOu3Rw9yotnULo9rWLY1qW7c2qm3dzqi2dUej2rEhfH/m1bJWOnsH5VqPc3ovOTh8b+1OkrP3JgBMlj9bZ77bgYHUozwlr9FnT31LSepRVll66ltKUo+S/y499S0lqUfJ76Oe+paecC4C7dtItt6bqJDXuwxtFlN6tsZQx3upKWu/nhPMYnTMYnTMYnTMYnTMYnT/mMW0iP9MAAAAAAAAAAAAAAAAAOjBGzhamKmQTAAA
+  </data>
+ </layer>
+ <objectgroup name="actors" width="70" height="70">
+  <object name="player1" type="foxy" gid="254" x="1945" y="400"/>
+  <object name="player2" type="foxy" gid="254" x="1888" y="1021"/>
+  <object name="player3" type="foxy" gid="254" x="181" y="1267"/>
+  <object name="player4" type="foxy" gid="254" x="392" y="835"/>
+ </objectgroup>
+ <layer name="fg" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAK8Gfpd2NZBMAAA=
+  </data>
+ </layer>
+</map>
