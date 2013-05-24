@@ -46,7 +46,7 @@ define_behavior :bomber do
       actor.bombs_left -= 1
       points = actor.collision_points[4..5]
       center_feet_location = vec2(points.map(&:x).average, points.map(&:y).average)
-      mine = stage.create_actor :land_mine, player: actor, x: center_feet_location.x, y: center_feet_location.y, map: actor.map
+      mine = stage.create_actor :land_mine, player: actor, x: center_feet_location.x, y: center_feet_location.y, map: actor.map, rotation: actor.rotation
 
       bomb_coordinator.register_bomb mine
     end

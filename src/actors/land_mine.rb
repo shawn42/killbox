@@ -4,7 +4,7 @@ define_actor :land_mine do
     positioned
     audible
     layered ZOrder::PlayerDecoration
-    animated_with_spritemap file: 'trippers/props.png', rows: 4, cols: 6, actions: { idle: 18..20 }
+    animated_with_spritemap file: 'trippers/props.png', rows: 4, cols: 6, actions: { idle: 18..20 }, interval: 800
     bound_by_box
     bomb_collision_points
     explode_by_bomb
