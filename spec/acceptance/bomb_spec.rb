@@ -2,7 +2,7 @@ require 'spec_helper'
 
 
 describe "Foxy bombing", acceptance: true do
-  let(:zones) { FoxyAcceptanceHelpers.get_test_map("shooting").object_groups["zones"].inject({}) do |h,x| h[x[:name]] = x; h; end }
+  let(:zones) { FoxyAcceptanceHelpers.get_test_map("shooting").object_groups.detect{|og|og.name == "zones"}.objects.inject({}) do |h,x| h[x.name] = x; h; end }
   let(:floor_zone) { zones["floor"] }
   let(:right_wall_zone) { zones["right_wall"] }
 
@@ -27,8 +27,8 @@ describe "Foxy bombing", acceptance: true do
       x: 504.ish, # as placed in shooting.tmx
       rotation: 0.ish,
       on_ground: true
-    see_bottom_right_standing_above floor_zone[:y]
-    see_bottom_left_standing_above floor_zone[:y]
+    see_bottom_right_standing_above floor_zone.y
+    see_bottom_left_standing_above floor_zone.y
   end
 
   it 'can place and arm a land mine' do
@@ -39,7 +39,7 @@ describe "Foxy bombing", acceptance: true do
     see_actor_attrs :land_mine,
       armed: false,
       x: foxy.x.ish,
-      y: (floor_zone[:y] - 1).ish
+      y: (floor_zone.y - 1).ish
 
     # warp to safety
     foxy.x += 300

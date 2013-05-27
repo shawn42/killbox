@@ -12,7 +12,7 @@ module FoxyAcceptanceHelpers
     Gamebox.configuration.stages = [:level_play]
     Stage.definitions[:level_play].curtain_up do
       extend TestStageHelpers
-      begin
+      # begin
 
       director.update_slots = [:first, :before, :update, :last]
 
@@ -29,9 +29,9 @@ module FoxyAcceptanceHelpers
       LevelLoader.load_objects self, tmx_map, @level
 
       setup_players opts[:player_count]
-      rescue Exception => ex
-        binding.pry
-      end
+      # rescue Exception => ex
+      #   binding.pry
+      # end
 
     end
 
@@ -43,8 +43,7 @@ module FoxyAcceptanceHelpers
   end
 
   def get_test_map(name)
-    require 'tmx'
-    Tmx::Map.new("#{APP_ROOT}/spec/fixtures/maps/#{name}.tmx")
+    Tmx.load("#{APP_ROOT}/spec/fixtures/maps/#{name}.tmx")
   end
   module_function :get_test_map
 

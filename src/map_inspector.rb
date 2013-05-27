@@ -36,6 +36,7 @@ class MapInspector
 
   # TODO this will come from the map import eventually
   def solid?(map, row, col)
+    # binding.pry
     return false if row < 0 || col < 0
 
     trow = map.tile_grid[row]
@@ -99,8 +100,8 @@ class MapInspector
   def world_point_solid?(map, x, y)
     tile_size = map.tile_size
 
-    row = y / tile_size
-    col = x / tile_size
+    row = (y / tile_size).floor
+    col = (x / tile_size).floor
 
     solid? map, row, col
   end
