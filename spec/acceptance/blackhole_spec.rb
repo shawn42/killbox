@@ -37,8 +37,10 @@ describe "Blackhole interaction", acceptance: true do
 
     update 4_000, step: 20
 
-    log jump_target_zone
-    log foxy
+    see_actor_attrs :foxy, 
+      rotation: 180.ish,
+      on_ground: true
+
     see_foxy_within_zone jump_target_zone
   end
 end

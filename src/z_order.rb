@@ -1,6 +1,7 @@
 module ZOrder
   MapTiles,
   Collectible,
+  BackgroundEffects,
   Player,
   PlayerDecoration,
   MapForeground,

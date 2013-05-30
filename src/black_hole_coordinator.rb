@@ -5,6 +5,7 @@ class BlackHoleCoordinator
   end
 
   def register_black_hole(black_hole)
+    black_hole.x += 1
     @active_black_holes << black_hole
   end
 
@@ -17,7 +18,7 @@ class BlackHoleCoordinator
       @active_black_holes.each do |black_hole|
         distance = (pullable.position - black_hole.position).magnitude
 
-        if distance < black_hole.gravity
+        if distance < black_hole.gravity_range
           black_hole.react_to :pull, pullable
         end
       end

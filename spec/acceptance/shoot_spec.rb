@@ -37,7 +37,7 @@ describe "Foxy shooting", acceptance: true do
     foxy1 = foxies[0]
     foxy2 = foxies[1]
 
-    foxy1.y = foxy2.y
+    foxy2.x += 200
 
     look_right
     shoot

@@ -3,7 +3,7 @@ define_behavior :emits_gravity do
   requires_behaviors :positioned
 
   setup do
-    actor.has_attributes gravity: 600, force: 5
+    actor.has_attributes gravity_range: 150, force: 0.06
     black_hole_coordinator.register_black_hole actor
 
     reacts_with :remove, :pull
@@ -19,10 +19,8 @@ define_behavior :emits_gravity do
       # if map_inspector.line_of_sight?(actor, bomb)
       # TODO use director in black_hole_coordinator
       diff = actor.position - pullable.position
-      pull_vel = diff.unit * (actor.force / (diff.magnitude.to_f / actor.gravity ))
+      pull_vel = diff.unit * (actor.force / (diff.magnitude.to_f / actor.gravity_range ))
       pullable.vel += pull_vel
-
-      log "PULLING #{pull_vel}"
 
       # TODO eeewwww
       pullable.vel.magnitude = 12 if pullable.vel.magnitude > 12
