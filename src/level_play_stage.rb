@@ -1,7 +1,8 @@
 define_stage :level_play do
   render_with :multi_viewport_renderer
   requires :score_keeper, :sound_manager,
-    :bomb_coordinator, :bullet_coordinator, :sword_coordinator
+    :bomb_coordinator, :bullet_coordinator, 
+    :sword_coordinator, :black_hole_coordinator
 
   curtain_down do |*args|
     sound_manager.stop_music :smb11

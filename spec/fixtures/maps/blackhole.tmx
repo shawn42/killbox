@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="19" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="tileset" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/tileset.png" width="720" height="504"/>
+ </tileset>
+ <tileset firstgid="281" name="foxy" tilewidth="64" tileheight="64">
+  <image source="../graphics/trippers/tripper.png" width="64" height="64"/>
+  <terraintypes>
+   <terrain name="New Terrain" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <tileset firstgid="282" name="blackhole" tilewidth="128" tileheight="128">
+  <image source="../../../data/graphics/trippers/black_hole.png" width="128" height="128"/>
+ </tileset>
+ <layer name="bg" width="30" height="19" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA72VwQ3DIAxFmYlRMkROacUIbdUROlenyAhRzs0BJAv9X75RwuEplgB/49gmhhBiZjP2COb8XY32krlKy4I0FwDzyfZ+xZhU38o5T96UfcgfO6dq98Roz+yAsr4TP0m48+3gLuQdxYjqqtZleXwevMR8/OMh3LnYbyEfCh+jlYDuFT0cc75TRU99nYGnVkbpnR2Pt7fRXtabrRnXeo/que29D+vNtaGN+krRLfZWaUwd/xW9PQzrZzL2LPpCc9dbM2xOjuIH09fecegIAAA=
+  </data>
+ </layer>
+ <layer name="terrain" width="30" height="19">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NkYGBgoTMWAWJRBvqDOyPMXo0BtPfkqL00B3dGmL0VA2RvzwDZO9Lid6SVzyPRXlZGBgZ2NMxJAPNDMbo+YrEEEAMAu2of6+gIAAA=
+  </data>
+ </layer>
+ <layer name="fg" width="30" height="19" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAWjYBSMglEwCkbBKBieAABsPh5h6AgAAA==
+  </data>
+ </layer>
+ <objectgroup name="zones" width="30" height="19">
+  <object name="floor" x="0" y="648" width="1080" height="36"/>
+  <object type="start_location" x="464" y="584" width="42" height="62"/>
+  <object name="jump_target" x="591" y="29" width="179" height="78"/>
+  <object x="471" y="661" width="3"/>
+  <object name="ceiling" x="0" y="-3" width="1080" height="36"/>
+  <object name="start_zone" x="439" y="574" width="84" height="80"/>
+ </objectgroup>
+ <objectgroup name="actors" width="30" height="19">
+  <object type="black_hole" gid="282" x="513" y="399"/>
+ </objectgroup>
+</map>

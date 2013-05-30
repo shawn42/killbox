@@ -46,6 +46,10 @@ module FoxyAcceptanceHelpers
     hold_key KbN, time_held, step: 20
   end
 
+  def max_jump
+    jump 2_000
+  end
+
   def charge_and_throw_bomb(time_held)
     hold_key KbM, time_held, step: 20
   end
@@ -98,6 +102,13 @@ module FoxyAcceptanceHelpers
 
   def see_bottom_left_standing_above(y)
     foxy.collision_points[5].y.should == (y - 1).ish
+  end
+
+  def see_foxy_within_zone(zone)
+    zone_bb = Rect.new(zone.x, zone.y, zone.width, zone.height)
+
+    # TODO better helper to show the bounding boxes in question
+    zone_bb.contain?(foxy.bb).should be_true
   end
 end
 

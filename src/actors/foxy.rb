@@ -36,7 +36,9 @@ define_actor :foxy do
     disoriented_by_bombs
     die_by_bullet
     shielded
-    # melee
+
+    pulled_by_black_hole
+    # die_by_black_hole
 
     jump max_power: 80, min_power: 20
     friction amount: 0.15
