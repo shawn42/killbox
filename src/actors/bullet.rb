@@ -10,6 +10,7 @@ define_actor :bullet do
     tile_bound
     tile_collision_detector
     trivial_collision_point
+    pulled_by_black_hole
   end
 
   view do

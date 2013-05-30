@@ -11,6 +11,7 @@ define_actor :bomb do
     bomb_collision_points
     explode_by_bomb
     explode_by_bullet
+    pulled_by_black_hole
   end
 
   behavior do
