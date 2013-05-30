@@ -3,7 +3,7 @@ define_behavior :looker do
 
   setup do
     # in pixels
-    actor.has_attributes look_distance: 100,
+    actor.has_attributes look_distance: 150,
                          flip_h: false, 
                          look_vector: Look::DIRECTIONS[:left]
 

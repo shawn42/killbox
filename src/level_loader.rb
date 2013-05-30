@@ -1,6 +1,12 @@
 class LevelLoader
   class Level
-    attr_accessor :map, :objects, :foxy_info, :named_objects, :map_extents
+    attr_accessor :map, :objects, :foxy_info, :named_objects, :map_extents, :zones, :named_zones
+    def initialize
+      @named_objects = {}
+      @objects = []
+      @named_zones = {}
+      @zones = []
+    end
   end
 
   class MapData
@@ -21,11 +27,6 @@ class LevelLoader
     #   for now just take the first?
     map_data.tileset_image = map.tilesets.first.image
     map_data.tile_size = map.tilesets.first.tilewidth # 36
-    # if level_name == :trippy
-    #   map_data.tileset_image = "map/tileset.png"
-    # else
-    #   map_data.tileset_image = "map/space_platform.png"
-    # end
     
     Level.new.tap do |level|
       level.map = stage.create_actor :map, map_data: map_data
@@ -50,7 +51,6 @@ class LevelLoader
           end
 
           data_size = layer.data.size
-          # binding.pry
           layer.data.each.with_index do |tile_id, i|
             x = i % layer.width
             y = i / layer.width
@@ -65,9 +65,6 @@ class LevelLoader
   end
 
   def self.load_objects(stage, map, level)
-    level.objects = []
-    level.named_objects = {}
-
     actors_group = map.object_groups.detect{ |group| group.name == "actors" }
     if actors_group
       actors_group.objects.each do |obj|
@@ -80,6 +77,15 @@ class LevelLoader
           level.named_objects[name.to_sym] = actor if name
           level.objects << actor
         end
+      end
+    end
+
+    zones_group = map.object_groups.detect{ |group| group.name == "zones" }
+    if zones_group
+      zones_group.objects.each do |zone|
+        name = zone.name
+        level.named_zones[name.to_sym] = zone if name
+        level.zones << zone
       end
     end
   end

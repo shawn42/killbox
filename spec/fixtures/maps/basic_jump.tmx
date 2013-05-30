@@ -11,7 +11,7 @@
    H4sIAAAAAAAAAxNmYGAQpjKmFhg1DzcQobJ5xIBR80jXS26+QRejNK9hM58SMBTMIyasAOit2HYABQAA
   </data>
  </layer>
- <objectgroup name="actors" width="20" height="16">
-  <object name="player1" type="foxy" gid="1" x="120" y="60"/>
+ <objectgroup name="zones" width="20" height="16">
+  <object type="start_location" x="107" y="30" width="27" height="46"/>
  </objectgroup>
 </map>

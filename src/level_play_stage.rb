@@ -18,8 +18,6 @@ define_stage :level_play do
     director.update_slots = [:first, :before, :update, :last]
 
     @console = create_actor(:console, visible: false)
-    # @fps = create_actor :fps, x: 100, y: 30
-
     setup_level backstage[:level_name]
     setup_players backstage[:player_count]
 
@@ -71,41 +69,46 @@ define_stage :level_play do
     def setup_players(player_count=1)
       @computer_players = []
       @players = []
-      player_count.times do |i|
-        setup_player i
-      end
-      (4-player_count).times do |i|
-        remove_player "player#{3-i+1}".to_sym
+      starting_positions = @level.zones.select{ |zone| zone.type=="start_location" }.sample(player_count)
+      starting_positions.each.with_index do |start_zone, i|
+        number = i + 1
+        name = "player#{number}".to_sym
+
+        zone_properties = start_zone.properties
+        rotation = (zone_properties['rotation'] || 0).to_i
+
+        zone_rect = Rect.new start_zone.x, start_zone.y, start_zone.width, start_zone.height
+        x = zone_rect.centerx
+        y = zone_rect.centery
+
+        player = create_actor :foxy,
+          map: @level.map,
+          x: x,
+          y: y,
+          rotation: 0,
+          number: number,
+          vel: player_velocity(rotation)
+
+        player.rotation = rotation # needed to trigger behaviors
+        player.animation_file = "trippers/#{player_color(i)}_tripper.png"
+        player.input.map_input(controls[name])
+
+        @players << player
       end
       renderer.viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
     end
 
-    def remove_player(name)
-      player = @level.named_objects[name]
-      player.remove if player
-    end
-
-    def setup_player(index)
-      number = index + 1
-      name = "player#{number}".to_sym
-      player = @level.named_objects[name]
-      if player
-        player.has_attributes number: number
-        player.vel = vec2(0,3)
-        player.animation_file = "trippers/#{player_color(index)}_tripper.png"
-
-        # if index == 2
-        #   @computer_players << ComputerPlayer.new(player)
-        # else
-          player.input.map_input(controls[name])
-        # end
-
-        @players << player
-      end
-    end
-
     def player_color(index)
       %w(red green purple blue)[index]
+    end
+
+    def player_velocity(rotation)
+      {
+        0 => vec2(0,3),
+        180 => vec2(0,-3),
+        90 => vec2(-3,0),
+        270 => vec2(3,0)
+      }[rotation]
     end
 
     def controls

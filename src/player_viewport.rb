@@ -80,6 +80,7 @@ class PlayerViewport < CopyViewport
 
   def self.attach_player(vp, player)
     vp.follow player
+    vp.rotation = normalize_angle(player.rotation)
     player.has_attributes viewport: vp
   end
 

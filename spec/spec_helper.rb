@@ -12,8 +12,6 @@ module FoxyAcceptanceHelpers
     Gamebox.configuration.stages = [:level_play]
     Stage.definitions[:level_play].curtain_up do
       extend TestStageHelpers
-      # begin
-
       director.update_slots = [:first, :before, :update, :last]
 
       tmx_map = FoxyAcceptanceHelpers.get_test_map(opts[:map_name])
@@ -23,16 +21,12 @@ module FoxyAcceptanceHelpers
       map_data.tileset_image = "map/#{opts[:tileset]}.png"
       map_data.tile_size = opts[:tile_size]
       
-      @level = FakeLevel.new
+      @level = LevelLoader::Level.new
       @level.map = self.create_actor :map, map_data: map_data
       @level.map_extents = [0,0, map_data.tile_grid[0].size * map_data.tile_size, map_data.tile_grid.size * map_data.tile_size]
       LevelLoader.load_objects self, tmx_map, @level
 
       setup_players opts[:player_count]
-      # rescue Exception => ex
-      #   binding.pry
-      # end
-
     end
 
     game
@@ -143,14 +137,3 @@ end
 #   def width; 26; end
 #   def height; 30; end
 # end
-
-class FakeLevel
-  attr_accessor :named_objects, :objects, :map, :map_extents
-  def initialize
-    @named_objects = {}
-    @objects = []
-    @object_groups
-  end
-end
-
-

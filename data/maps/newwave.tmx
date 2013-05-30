@@ -13,18 +13,33 @@
  </layer>
  <layer name="terrain" width="48" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3YWwqDMBCF4dlgd+Mu7LN9d4O9rKBKU0iLuXam0fB/MC+CMwcxgUQkz8XVKVJT4Pn73ZZ+nU/+tvPJH+77vS4n+VyLGuvPMv8/HCH/sNTd1WA4x6rvvNTZ1Ww4x6ov+cv5+4+/79TsOS3yx5C/vpeG3vLH9vfV3vOPEs4nks6/dX6wPBto5i+Zo6U0f+r/yp2jpTS/1hyrvuTPm2PVt6f8N3mt04eUrdWcOVpi+f0aN95L3RW12P/X73x11eKsVao2B/l19JB/rdC97F7vagEAAAAAAAAAAAAAx/ME4RpL2IA0AAA=
+   H4sIAAAAAAAAA+3YSw6DMAxFUS+aXdBxO2eD/aygoAapgybYqU0gukfyEPsJEUtEROeW6lpR67Mt/Tuf/G3nkz/fd+tcepy/yPx7OEP+Ya5nqiFwTlTfaa5LqilwTlRf8tvl9k/NzmmRv4T89b089Ja/tN8XR88/Sj6fyHZ+rz2h5ZnfMseLNf/W96Wd48Wa32tOVF/y6+ZE9e0p/0M+5/QltrOqmeOllP+7xh/Pae+K9tz/y3u+p2rxr2VVm4P8PnrIb72zPcJdLQAAAAAAAAAAAADgfN7zaDAZgDQAAA==
   </data>
  </layer>
- <objectgroup name="actors" width="48" height="70">
-  <object name="player1" type="foxy" gid="254" x="734" y="167"/>
-  <object name="player2" type="foxy" gid="254" x="1011" y="771"/>
-  <object name="player3" type="foxy" gid="254" x="325" y="998"/>
-  <object name="player4" type="foxy" gid="254" x="128" y="378"/>
- </objectgroup>
  <layer name="fg" width="48" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3WvQnCUBiF4YwUsBfRIuAQATewiZkjA6R2AYfwZwg17qCm8xSWqe5NONzwPvC2H6f8sgxDzuqirupm3hLirh7qqTrvlCBv9VFf1Zu3AMBUKnVQtXsIkLjjvxTk7gGRCveASOUINxYj3HDaugdE2rkHJGyj1qp1Dwl0Ui/3iAmk8A827gGYnaVauUdE2LsHAAAAAAAAAAAAAABg8gNh3HFmgDQAAA==
+   H4sIAAAAAAAAA+3YywnCQBSF4ZQkuBfRhWARgh24UeuwANc2YBE+evDZg4+dV3AhISSZyb0zif4fnEWUuWcwmGiSpJzDV9LHZROTa/9GspXsJHuP9dpc+4+Sk+QsuXis1+baf5PcJQ/J02O9tqr9VvvP+15mHVfpsRDqvDZ9/1b4/ON6738qmUnmxj1Wc0Pc82OcZ/ZvM8uyc/WJxqyqijpbirMsFHUOHGeF/m9QNHek0NEu0eMrxDkfGvaE2P/YsOfXfxv1JT3J0rjHau5acg3QE3qu6+/BGPeGRc57edf3Ol3/tddp+7f9dyRdj3VWXPcx8VxnJetZUPr1Oj6rBQAAAAAAAAAAAAA0zws6u9BVgDQAAA==
   </data>
  </layer>
+ <objectgroup name="zones" width="48" height="70">
+  <object type="start_location" x="762" y="44" width="34" height="53">
+   <properties>
+    <property name="gravity" value="up"/>
+    <property name="rotation" value="180"/>
+   </properties>
+  </object>
+  <object type="start_location" x="191" y="337" width="34" height="53"/>
+  <object type="start_location" x="293" y="960" width="48" height="35">
+   <properties>
+    <property name="gravity" value="left"/>
+    <property name="rotation" value="90"/>
+   </properties>
+  </object>
+  <object type="start_location" x="1128" y="780" width="56" height="35">
+   <properties>
+    <property name="gravity" value="right"/>
+    <property name="rotation" value="270"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

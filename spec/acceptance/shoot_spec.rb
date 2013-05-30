@@ -102,50 +102,50 @@ describe "Foxy shooting", acceptance: true do
     bullet.x.should == right_wall_zone.x.ish(15)
   end
 
-  it 'shoots at the correct angle when floating/spinning' do
-    # Jump and begin tumbling counter-clockwise, pausing at -15 degrees:
-    jump 1000
-    ticks = 0 # prevent infinite loop
-    while foxy.rotation > -15 && ticks < 250
-      update 20
-      ticks += 1
+    it 'shoots at the correct angle when floating/spinning' do
+      # Jump and begin tumbling counter-clockwise, pausing at -15 degrees:
+      jump 1000
+      ticks = 0 # prevent infinite loop
+      while foxy.rotation > -15 && ticks < 250
+        update 20
+        ticks += 1
+      end
+      foxy.rotation.should <= -15
+
+      # Now fire
+      shoot
+      
+      bullet = game.actor(:bullet)
+      bullet.should be # bullet exists
+
+      bullet_start_x = bullet.x
+      bullet_start_y = bullet.y
+
+      # See the bullet trajectory matches foxy's rotation:
+      radians_to_degrees(bullet.vel.angle).should == -15.ish
+
+      # sanity-check vector alignment: should be a straight line from foxy's center, through the gun tip, to the bullet.
+      # (Ie, the vector angles need to be the same)
+      foxy_vector             = body_vector(foxy)
+      original_gun_tip_vector = body_vector(foxy.gun_tip)
+      bullet_vector           = body_vector(bullet)
+      foxy_to_bullet          = bullet_vector - foxy_vector
+      foxy_to_gun_tip         = original_gun_tip_vector - foxy_vector
+      gun_tip_to_bullet       = bullet_vector - original_gun_tip_vector
+
+      foxy_to_gun_tip.angle.should == foxy_to_bullet.angle.ish
+
+      # See the rotation stays correct over time:
+      update 100, step: 20
+      radians_to_degrees(bullet.vel.angle).should == -15.ish
+      bullet.x.should > bullet_vector.x # bullet should have moved right
+      bullet.y.should < bullet_vector.y # bullet should have moved up
+
+      # See that a vector from the original gun tip to the new bullet matches the angle of the original gun_tip_to_bullet
+      new_bullet_vector = body_vector(bullet)
+      original_gun_tip_to_new_bullet_vector = new_bullet_vector - original_gun_tip_vector
+      original_gun_tip_to_new_bullet_vector.angle.should == gun_tip_to_bullet.angle.ish
     end
-    foxy.rotation.should <= -15
-
-    # Now fire
-    shoot
-    
-    bullet = game.actor(:bullet)
-    bullet.should be # bullet exists
-
-    bullet_start_x = bullet.x
-    bullet_start_y = bullet.y
-
-    # See the bullet trajectory matches foxy's rotation:
-    radians_to_degrees(bullet.vel.angle).should == -15.ish
-
-    # sanity-check vector alignment: should be a straight line from foxy's center, through the gun tip, to the bullet.
-    # (Ie, the vector angles need to be the same)
-    foxy_vector             = body_vector(foxy)
-    original_gun_tip_vector = body_vector(foxy.gun_tip)
-    bullet_vector           = body_vector(bullet)
-    foxy_to_bullet          = bullet_vector - foxy_vector
-    foxy_to_gun_tip         = original_gun_tip_vector - foxy_vector
-    gun_tip_to_bullet       = bullet_vector - original_gun_tip_vector
-
-    foxy_to_gun_tip.angle.should == foxy_to_bullet.angle.ish
-
-    # See the rotation stays correct over time:
-    update 100, step: 20
-    radians_to_degrees(bullet.vel.angle).should == -15.ish
-    bullet.x.should > bullet_vector.x # bullet should have moved right
-    bullet.y.should < bullet_vector.y # bullet should have moved up
-
-    # See that a vector from the original gun tip to the new bullet matches the angle of the original gun_tip_to_bullet
-    new_bullet_vector = body_vector(bullet)
-    original_gun_tip_to_new_bullet_vector = new_bullet_vector - original_gun_tip_vector
-    original_gun_tip_to_new_bullet_vector.angle.should == gun_tip_to_bullet.angle.ish
-  end
 
 end
 

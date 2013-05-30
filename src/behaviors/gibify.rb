@@ -5,7 +5,7 @@ define_behavior :gibify do
   end
 
   helpers do
-    def gibify(args)
+    def gibify(args={})
       force = args[:force] || vec2(0,0)
       count = args[:count] || 30
       count.times do

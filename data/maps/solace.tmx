@@ -16,11 +16,27 @@
    H4sIAAAAAAAAA+2Z0W0CQQxEaTRdpAsK4D8h+aCDAEUkpBACSQH4PiIhtGt592xufMyT5utWHmuk49Z4sSCEEExWyXQvpuovSy5R59F8o/yYi895NN8ov0fP5VW0Fr0Zz29ER9GP6CQ6d/jWPDXfKGp+W9FOtDfWeXLoRfNEyeVLdBB9G+s8O/SieaLk0srSoYZG1lxeOp9ZyZrLR+czK0hzQAufnc8iexpDVA/X3+x3kJ5ae8gCcynDXMowlzKIuYz5HbXUHOapX9GfUh8xl2s87mkatVkLPRePe5pGbdZCyEWbd1rvaa3UvBFyiX5XeuYphFyi35We+gi5RL8rPfURchm+lbXvqAe39S0g5IIIcynDXMowlzIZ/5fq+R2N7gmhB+2e1rpbQsplLNo9zWO3lDUX7Z7msVvKmovGnPZH2g69FessNMe9vYZ1Fsq8t7f0dztPbYy+mff2Xv1N5Rvlx1x8zqP5Rvk9Wi6tyuob3d9UIoQQQgghhBBCCCGEEEII+ecC5POs1JBMAAA=
   </data>
  </layer>
- <objectgroup name="actors" width="70" height="70">
-  <object name="player1" type="foxy" gid="254" x="1337" y="569"/>
-  <object name="player2" type="foxy" gid="254" x="1734" y="1002"/>
-  <object name="player3" type="foxy" gid="254" x="1346" y="1434"/>
-  <object name="player4" type="foxy" gid="254" x="852" y="966"/>
+ <objectgroup name="zones" width="70" height="70">
+  <object type="start_location" x="1697" y="966" width="69" height="45">
+   <properties>
+    <property name="rotation" value="90"/>
+   </properties>
+  </object>
+  <object type="start_location" x="969" y="878" width="69" height="45">
+   <properties>
+    <property name="rotation" value="270"/>
+   </properties>
+  </object>
+  <object type="start_location" x="1299" y="1264" width="42" height="64">
+   <properties>
+    <property name="rotation" value="180"/>
+   </properties>
+  </object>
+  <object type="start_location" x="1394" y="543" width="42" height="64">
+   <properties>
+    <property name="rotation" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="fg" width="70" height="70">
   <data encoding="base64" compression="gzip">
