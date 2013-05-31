@@ -31,7 +31,7 @@ define_actor :black_hole do
       #target.fill offset_x, offset_y, offset_x+2, offset_y+2, Color::YELLOW, z
       target.draw_rotated_image img, offset_x, offset_y, z, rot#, 0.5, 0.5, x_scale
 
-      if ENV['DEBUG'] || true
+      if ENV['DEBUG']
         target.draw_circle offset_x, offset_y, actor.gravity_range, Color::WHITE, ZOrder::PlayerDecoration
       end
       
