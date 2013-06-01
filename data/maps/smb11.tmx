@@ -6,6 +6,9 @@
  <tileset firstgid="254" name="foxy" tilewidth="64" tileheight="64">
   <image source="../../docs/tripper.png" width="64" height="64"/>
  </tileset>
+ <tileset firstgid="255" name="blackhole" tilewidth="128" tileheight="128">
+  <image source="../graphics/trippers/black_hole.png" width="384" height="128"/>
+ </tileset>
  <layer name="bg" width="53" height="44">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3DAQ0AAAzDoPoXOS23cAGQsGqqqqqqqqqqqqqPByBEkvJwJAAA
@@ -43,4 +46,10 @@
    H4sIAAAAAAAAA+3TMQqDQBCFYU8mUckRUniHFLaewNoDBGtvGKycYsuICzvrOpP/g4dgMbxXbFUBuNq7dIEM2GQDm2xgkw1sssHjpql0gQTfH/lINskSvlpmxVt34XGTF2vI2T/ch8f35HETAAD/aIyIV7XkkZBG0ko6yTN32UgvhRu9wg1NQ+kCGbDJBjbZ4HETgGM7h5MMf3AkAAA=
   </data>
  </layer>
+ <objectgroup name="actors" width="53" height="44">
+  <object type="black_hole" gid="255" x="664" y="964"/>
+  <object type="black_hole" gid="255" x="604" y="536"/>
+  <object type="black_hole" gid="255" x="1298" y="516"/>
+  <object type="black_hole" gid="255" x="1282" y="1084"/>
+ </objectgroup>
 </map>

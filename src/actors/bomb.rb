@@ -65,7 +65,7 @@ define_actor :bomb do
         force = args[:force] || vec2(0,0)
         count = args[:count] || 30
         count.times do
-          vel = vec2(3,0).rotate!(degrees_to_radians(rand(359))) * rand(4)
+          vel = vec2(3,0).rotate!(degrees_to_radians(rand(360))) * rand(4)
           stage.create_actor :shrapnel, x: actor.x, y: actor.y, vel: vel + force + actor.vel, map: actor.map, size: rand(8), color: Color::GRAY
         end
       end

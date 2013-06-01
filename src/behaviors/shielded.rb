@@ -14,7 +14,8 @@ define_behavior :shielded do
   helpers do
     def unshielded_behaviors 
       [:accelerator, :jump, :slicer, :shooter, :bomber, :friction, :grounded,
-        :tile_oriented, :die_by_bomb, :die_by_bullet, :die_by_sword, :disoriented_by_bombs]
+        :tile_oriented, :die_by_bomb, :die_by_bullet, :die_by_sword, :disoriented_by_bombs,
+        :pulled_by_black_hole ]
     end
 
     def shielded_behaviors 

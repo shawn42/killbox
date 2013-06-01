@@ -106,7 +106,6 @@ module FoxyAcceptanceHelpers
 
   def see_foxy_within_zone(zone)
     zone_bb = Rect.new(zone.x, zone.y, zone.width, zone.height)
-
     # TODO better helper to show the bounding boxes in question
     zone_bb.contain?(foxy.bb).should be_true
   end

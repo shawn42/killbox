@@ -10,7 +10,7 @@
   </terraintypes>
  </tileset>
  <tileset firstgid="282" name="blackhole" tilewidth="128" tileheight="128">
-  <image source="../../../data/graphics/trippers/black_hole.png" width="128" height="128"/>
+  <image source="../../../data/graphics/trippers/black_hole.png" width="384" height="128"/>
  </tileset>
  <layer name="bg" width="30" height="19" visible="0">
   <data encoding="base64" compression="gzip">
@@ -34,6 +34,7 @@
   <object x="471" y="661" width="3"/>
   <object name="ceiling" x="0" y="-3" width="1080" height="36"/>
   <object name="start_zone" x="439" y="574" width="84" height="80"/>
+  <object name="shielded_jump_target" x="416" y="20" width="179" height="78"/>
  </objectgroup>
  <objectgroup name="actors" width="30" height="19">
   <object type="black_hole" gid="282" x="590" y="386"/>
