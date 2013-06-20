@@ -19,7 +19,6 @@ define_behavior :tile_collision_detector do
       collisions = nil
       map = actor.map.map_data
       vel = actor.vel
-      actor_loc = vec2(actor.x, actor.y)
       actor_rot_vel = actor.do_or_do_not(:rotation_vel) || 0
 
       bb = actor.bb
@@ -50,8 +49,8 @@ define_behavior :tile_collision_detector do
         current_rotation = degrees_to_radians(actor.rotation)
         next_rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
 
-        from = (actor_loc + point.rotate(current_rotation)).to_a
-        to = (actor_loc + point.rotate(next_rotation) + vel).to_a
+        from = (actor.position + point.rotate(current_rotation)).to_a
+        to = (actor.position + point.rotate(next_rotation) + vel).to_a
         unless from == to
           lines_to_check << [from, to]
         end
@@ -61,6 +60,7 @@ define_behavior :tile_collision_detector do
       actor.lines = lines_to_check.dup
 
       # AAHH why do we need to do this inflate?
+      # possible bug in #overlap_tiles
       bb_to_check = bb.union(trans_bb).inflate!(30, 30)
       map_inspector.overlap_tiles(map, bb_to_check) do |tile, row, col|
 
