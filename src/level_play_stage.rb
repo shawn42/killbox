@@ -16,6 +16,21 @@ define_stage :level_play do
       fire :change_stage, :map_select
     end
 
+    # input_manager.reg :down, KbQ do
+    #   if $profiling
+    #     result = RubyProf.stop
+    #     printer = RubyProf::GraphPrinter.new(result)
+    #     printer.print(STDOUT, min_percent: 1)
+    #     # PerfTools::CpuProfiler.stop
+    #   else
+    #     require 'ruby-prof'
+    #     RubyProf.start
+    #     # require 'perftools'
+    #     # PerfTools::CpuProfiler.start("/tmp/killbox_#{Time.now.to_i}_profile")
+    #     $profiling = true
+    #   end
+    # end
+
     director.update_slots = [:first, :before, :update, :last]
 
     @console = create_actor(:console, visible: false)
@@ -47,6 +62,7 @@ define_stage :level_play do
       @console.react_to :watch, :p2rotvel do player.rotation_vel end
     end
     @console.react_to :watch, :fps do Gosu.fps end
+    @console.react_to :watch, :gc_stat do GC.stat.to_s end
   end
 
   helpers do
