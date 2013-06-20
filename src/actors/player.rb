@@ -26,11 +26,9 @@ define_actor :player do
 
     slicer
     shooter recharge_time: 4_000, shot_power: 15, kickback: 1.4
-    shielded
     bomber kickback: 1.6
 
     die_by_sword
-    die_by_bullet
     die_by_bomb
     blasted_by_bomb
     disoriented_by_bombs
