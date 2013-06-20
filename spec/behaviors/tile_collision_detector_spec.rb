@@ -73,7 +73,7 @@ describe :tile_collision_detector do
     end
   end
 
-  describe "a foxy-like object at glancing angle" do
+  describe "a player-like object at glancing angle" do
     let(:grid) { [[nil,nil, 1]] * 8 }
     before do
       actor.has_attributes vel: vec2(0,-4), 

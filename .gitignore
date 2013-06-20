@@ -1,4 +1,5 @@
 pkg
+*.sublime*
 *.swp
 *.swo
 *.log

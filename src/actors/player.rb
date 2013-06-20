@@ -1,4 +1,4 @@
-define_actor :foxy do
+define_actor :player do
 
   has_behaviors do
     positioned
@@ -43,7 +43,7 @@ define_actor :foxy do
     jump max_power: 80, min_power: 20
     friction amount: 0.15
 
-    foxy_collision_points
+    player_collision_points
 
     bound_by_box
 

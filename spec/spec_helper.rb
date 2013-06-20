@@ -3,7 +3,7 @@ require 'environment'
 require GAMEBOX_PATH + 'spec/helper'
 
 
-module FoxyAcceptanceHelpers
+module KillboxAcceptanceHelpers
   def configure_game_with_testing_stage(opts={})
     opts[:tileset] ||= "tileset" # will look for a png in spec/fixtures/graphics/map/
     opts[:tile_size] ||= 36 # 36x36 is the size of tiles in tileset.png, but this can be changed for testing purposes
@@ -14,7 +14,7 @@ module FoxyAcceptanceHelpers
       extend TestStageHelpers
       director.update_slots = [:first, :before, :update, :last]
 
-      tmx_map = FoxyAcceptanceHelpers.get_test_map(opts[:map_name])
+      tmx_map = KillboxAcceptanceHelpers.get_test_map(opts[:map_name])
       map_data = LevelLoader::MapData.new
       map_data.tile_grid = LevelLoader.generate_map(tmx_map)[0]
 
@@ -97,23 +97,23 @@ module FoxyAcceptanceHelpers
   end
 
   def see_bottom_right_standing_above(y)
-    foxy.collision_points[4].y.should == (y - 1).ish
+    player.collision_points[4].y.should == (y - 1).ish
   end
 
   def see_bottom_left_standing_above(y)
-    foxy.collision_points[5].y.should == (y - 1).ish
+    player.collision_points[5].y.should == (y - 1).ish
   end
 
-  def see_foxy_within_zone(zone)
+  def see_player_within_zone(zone)
     zone_bb = Rect.new(zone.x, zone.y, zone.width, zone.height)
     # TODO better helper to show the bounding boxes in question
-    zone_bb.contain?(foxy.bb).should be_true
+    zone_bb.contain?(player.bb).should be_true
   end
 end
 
 RSpec.configure do |config|
   config.mock_with :mocha
-  config.include FoxyAcceptanceHelpers
+  config.include KillboxAcceptanceHelpers
 end
 
 class Numeric

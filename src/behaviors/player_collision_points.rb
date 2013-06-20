@@ -1,4 +1,4 @@
-define_behavior :foxy_collision_points do
+define_behavior :player_collision_points do
   setup do
     actor.has_attributes collision_point_deltas: point_deltas,
     collision_points: points
@@ -18,9 +18,9 @@ define_behavior :foxy_collision_points do
       #
       #  0     1
       #   -----
-      # 7 |    | 2
-      #   |FOXY|
-      # 6 |    | 3
+      # 7 | 0  | 2
+      #   |-+- |
+      # 6 |/ \ | 3
       #   -----
       #  5     4
       point_deltas.map do |point|

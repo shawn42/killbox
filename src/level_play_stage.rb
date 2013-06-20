@@ -82,7 +82,7 @@ define_stage :level_play do
         x = zone_rect.centerx
         y = zone_rect.centery
 
-        player = create_actor :foxy,
+        player = create_actor :player,
           map: @level.map,
           x: x,
           y: y,

@@ -9,7 +9,7 @@
   </data>
  </layer>
  <objectgroup name="actors" width="32" height="16">
-  <object name="player1" type="foxy" x="45" y="157" width="24" height="42"/>
-  <object name="player2" type="foxy" x="429" y="165" width="23" height="38"/>
+  <object name="player1" type="player" x="45" y="157" width="24" height="42"/>
+  <object name="player2" type="player" x="429" y="165" width="23" height="38"/>
  </objectgroup>
 </map>

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe "Foxy movement", acceptance: true do
+describe "Killbox movement", acceptance: true do
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
     mock_image 'boxy.png'
@@ -12,17 +12,17 @@ describe "Foxy movement", acceptance: true do
   end
 
   let(:floor_y) { 146 }
-  let(:foxy_h) { 60 }
-  let(:foxy_w) { 32 }
+  let(:player_h) { 60 }
+  let(:player_w) { 32 }
 
   let(:tile_size) { 16 }
   let(:map) { game.actor(:map) }
-  let(:foxy) { game.actor(:foxy) }
+  let(:player) { game.actor(:player) }
 
   it 'does not super jump in the wrong direction' do
-    foxy.x = 40
+    player.x = 40
     update 3000, step: 20
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 40.ish,
       y: floor_y.ish,
       rotation: 0.ish
@@ -39,23 +39,23 @@ describe "Foxy movement", acceptance: true do
     update 1000, step: 20
 
 
-    foxy.vel.angle.should == 0.ish
+    player.vel.angle.should == 0.ish
   end
 
   it 'walks over gaps in the floor (does not switch planes)' do
-    foxy.x = 40
+    player.x = 40
 
     update 3000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 40.ish,
       y: floor_y.ish,
       rotation: 0.ish
 
     count = 0
-    while foxy.on_ground? && count < 1000
+    while player.on_ground? && count < 1000
       # there's a hole 7 tiles from the left
-      break unless foxy.on_ground
+      break unless player.on_ground
       count += 1
       walk_right 10
     end
@@ -63,23 +63,23 @@ describe "Foxy movement", acceptance: true do
 
     update 2000, step: 10
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       y: floor_y.ish,
       rotation: 0.ish
 
-    foxy.x.should > 120
+    player.x.should > 120
   end
 
   it 'jumps from floor to ceiling and back' do
-    foxy.x = 100
+    player.x = 100
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 100.ish
 
     # settle
     update 4000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 100.ish,
       y: floor_y.ish,
       rotation: 0.ish
@@ -87,15 +87,15 @@ describe "Foxy movement", acceptance: true do
     jump 3000
     update 2000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 100.ish,
-      y: (tile_size + foxy_h / 2.0).ish,
+      y: (tile_size + player_h / 2.0).ish,
       rotation: 180.ish
 
     jump 3000
     update 2000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 100.ish,
       y: floor_y.ish,
       rotation: 0.ish
@@ -108,7 +108,7 @@ describe "Foxy movement", acceptance: true do
     look_up
     shoot
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 120.ish,
       y: floor_y.ish,
       rotation: 0.ish
@@ -119,32 +119,32 @@ describe "Foxy movement", acceptance: true do
     # settle
     update 4000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 120.ish,
       y: floor_y.ish
 
     walk_left 1200
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       on_ground: true,
       rotation: 90.ish,
       x: 46.ish
 
-    foxy.y.should < floor_y
+    player.y.should < floor_y
 
   end
 
   it 'grabs the wall when we rotate next to it' do
-    start_x = tile_size + foxy_w / 2 + 1
-    foxy.x = start_x
+    start_x = tile_size + player_w / 2 + 1
+    player.x = start_x
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: start_x.ish
 
     # settle
     update 4000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: start_x.ish,
       y: floor_y.ish,
       rotation: 0.ish
@@ -152,7 +152,7 @@ describe "Foxy movement", acceptance: true do
     jump 100
     update 1000, step: 20
 
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       rotation: 90.ish,
       rotation_vel: 0.ish
 
@@ -160,16 +160,16 @@ describe "Foxy movement", acceptance: true do
 
   context "shields up" do
     it 'does not get stuck when glancing off the wall' do
-      start_x = tile_size + foxy_w / 2 + 1
-      foxy.x = start_x
+      start_x = tile_size + player_w / 2 + 1
+      player.x = start_x
 
-      see_actor_attrs :foxy, 
+      see_actor_attrs :player, 
         x: start_x.ish
 
       # settle
       update 4000, step: 20
 
-      see_actor_attrs :foxy, 
+      see_actor_attrs :player, 
         x: start_x.ish,
         y: floor_y.ish,
         rotation: 0.ish
@@ -183,12 +183,12 @@ describe "Foxy movement", acceptance: true do
       update 3000, step: 20
 
       # should now stick to the ceiling
-      see_actor_attrs :foxy, 
+      see_actor_attrs :player, 
         rotation: 180.ish,
         rotation_vel: 0.ish
 
       # bounced off the wall
-      foxy.x.should > start_x
+      player.x.should > start_x
 
     end
   end
@@ -197,7 +197,7 @@ describe "Foxy movement", acceptance: true do
     it 'does not blast you through the floor' do
       update 4000, step: 20
 
-      see_actor_attrs :foxy, 
+      see_actor_attrs :player, 
         x: 120.ish,
         y: floor_y.ish,
         rotation: 0.ish
@@ -212,11 +212,11 @@ describe "Foxy movement", acceptance: true do
 
       update 1200, step: 20
 
-      see_actor_attrs :foxy, 
+      see_actor_attrs :player, 
         x: 120.ish,
         rotation: 0.ish
 
-      foxy.y.should be < floor_y
+      player.y.should be < floor_y
 
     end
   end

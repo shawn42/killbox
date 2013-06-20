@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 
-describe "Foxy bombing", acceptance: true do
-  let(:zones) { FoxyAcceptanceHelpers.get_test_map("shooting").object_groups.detect{|og|og.name == "zones"}.objects.inject({}) do |h,x| h[x.name] = x; h; end }
+describe "Killbox bombing", acceptance: true do
+  let(:zones) { KillboxAcceptanceHelpers.get_test_map("shooting").object_groups.detect{|og|og.name == "zones"}.objects.inject({}) do |h,x| h[x.name] = x; h; end }
   let(:floor_zone) { zones["floor"] }
   let(:right_wall_zone) { zones["right_wall"] }
 
   let(:tile_size) { 36 }
   let(:map) { game.actor(:map) }
-  let(:foxy) { game.actor(:foxy) }
+  let(:player) { game.actor(:player) }
 
-  let(:foxy_w) { 32 }
-  let(:foxy_h) { 60 }
+  let(:player_w) { 32 }
+  let(:player_h) { 60 }
 
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
@@ -21,9 +21,9 @@ describe "Foxy bombing", acceptance: true do
 
     configure_game_with_testing_stage  map_name: "shooting"
 
-    # See foxy land standing where expected:
+    # See player land standing where expected:
     update 2000, step: 20
-    see_actor_attrs :foxy, 
+    see_actor_attrs :player, 
       x: 504.ish, # as placed in shooting.tmx
       rotation: 0.ish,
       on_ground: true
@@ -38,11 +38,11 @@ describe "Foxy bombing", acceptance: true do
 
     see_actor_attrs :land_mine,
       armed: false,
-      x: foxy.x.ish,
+      x: player.x.ish,
       y: (floor_zone.y - 1).ish
 
     # warp to safety
-    foxy.x += 300
+    player.x += 300
 
     # wait for land mine to arm
     update 3000, step: 20
@@ -53,7 +53,7 @@ describe "Foxy bombing", acceptance: true do
 
   it 'blows up via player proximity' do
     place_land_mine
-    foxy.x += 300
+    player.x += 300
 
     # wait for land mine to arm
     update 3000, step: 20
@@ -66,12 +66,12 @@ describe "Foxy bombing", acceptance: true do
     see_actor_attrs :land_mine,
       armed: true
 
-    foxy.x -= 300
+    player.x -= 300
     # wait for death delay
     update 1000, step: 20
 
     game.actors(:land_mine).should be_empty
-    foxy.should_not be_alive
+    player.should_not be_alive
   end
 
   it 'can be shot' do

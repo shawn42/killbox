@@ -21,7 +21,7 @@ Gamebox.configure do |config|
   
   config.stages = [:player_select, :map_select, :level_play, :score]
   # config.stages = [:main_menu, :level_play, :score]
-  config.game_name = "Foxy"
+  config.game_name = "Killbox"
 end
 
 [GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }

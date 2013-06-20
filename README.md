@@ -1,3 +1,3 @@
-# Foxy
+# Killbox
 
-### Foxy is a multi-player, same keyboard, action game.
+### Killbox is a multi-player, same keyboard, action game.

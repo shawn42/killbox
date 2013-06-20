@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="tileset" tilewidth="36" tileheight="36">
   <image source="../graphics/map/tileset.png" width="720" height="504"/>
  </tileset>
- <tileset firstgid="281" name="foxy" tilewidth="64" tileheight="64">
+ <tileset firstgid="281" name="player" tilewidth="64" tileheight="64">
   <image source="../graphics/trippers/tripper.png" width="64" height="64"/>
   <terraintypes>
    <terrain name="New Terrain" tile="-1"/>

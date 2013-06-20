@@ -3,7 +3,7 @@ define_stage :player_select do
 
   curtain_up do |*args|
     create_actor(:icon, image: "title_screen.png", x: 670, y: 350)
-    print_menu_header "Foxy", "a multi-player, same keyboard, action game."
+    print_menu_header "Killbox", "a multi-player, same keyboard, action game."
 
     # add some help message for game on the menu screen
     print_menu_help_text "Game Controls: A, move left. D, move right. W, look up. S, look down. V, shield. N, jump. M, bomb."

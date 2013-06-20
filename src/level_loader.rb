@@ -1,6 +1,6 @@
 class LevelLoader
   class Level
-    attr_accessor :map, :objects, :foxy_info, :named_objects, :map_extents, :zones, :named_zones
+    attr_accessor :map, :objects, :player_info, :named_objects, :map_extents, :zones, :named_zones
     def initialize
       @named_objects = {}
       @objects = []
