@@ -64,7 +64,7 @@ define_behavior :animated_with_spritemap do
 
     def next_frame
       action_set = @frames[actor.action]
-      return if action_set.nil?
+      return unless action_set
       @frame_num = @frame_num + 1
       if @frame_num >= action_set.size
         actor.emit :action_loop_complete

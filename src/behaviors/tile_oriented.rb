@@ -29,7 +29,7 @@ define_behavior :tile_oriented do
           # log "srsly: #{tile_face.inspect}"
           face_normal = FACE_NORMALS[tile_face]
 
-          raise "Y NO FACE?" if face_normal.nil?
+          raise "Y NO FACE?" unless face_normal
           actor.ground_normal = face_normal 
 
           set_actor_rotation tile_face

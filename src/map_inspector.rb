@@ -40,11 +40,8 @@ class MapInspector
     return false if row < 0 || col < 0
 
     trow = map.tile_grid[row]
-    return false if trow.nil?
-    tile = trow[col]
-    return false if tile.nil?
-
-    true
+    return false unless trow
+    trow[col]
   end
 
   def line_tile_collision(map, line, row, col)
@@ -53,7 +50,7 @@ class MapInspector
     tile_y = row * tile_size
     tile_box = Rect.new tile_x, tile_y, tile_size, tile_size
 
-    clipped_line = line_tile_collision?(map, line, row, col)
+    clipped_line = line_tile_collision?(map, line, row, col, tile_box)
     if clipped_line
       direction = :inside
       if clipped_line.is_a? Array
@@ -74,14 +71,8 @@ class MapInspector
 
   end
 
-  def line_tile_collision?(map, line, row, col)
+  def line_tile_collision?(map, line, row, col, tile_box)
     return unless solid?(map, row, col)
-
-    tile_size = map.tile_size
-    tile_x = col * tile_size
-    tile_y = row * tile_size
-    tile_box = Rect.new tile_x, tile_y, tile_size, tile_size
-
     line_start = line[0]
     line_end = line[1]
     LineClipper.clip line_start[0], line_start[1], line_end[0], line_end[1], tile_box
@@ -92,7 +83,12 @@ class MapInspector
     bb_to_check = actor_a.bb.union(actor_b.bb)
     line = [actor_a.position.to_a, actor_b.position.to_a]
     overlap_tiles(map, bb_to_check) do |tile, row, col|
-      return false if line_tile_collision?(map, line, row, col)
+      tile_size = map.tile_size
+      tile_x = col * tile_size
+      tile_y = row * tile_size
+      tile_box = Rect.new tile_x, tile_y, tile_size, tile_size
+
+      return false if line_tile_collision?(map, line, row, col, tile_box)
     end
     true
   end

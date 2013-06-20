@@ -32,8 +32,7 @@ describe :tile_collision_detector do
       actor.has_attributes vel: vec2(0,0), 
                            bb: Rect.new(0,0,10,10), 
                            map: map,
-                           x: 5,
-                           y: 5,
+                           position: vec2(5,5),
                            rotation: 0,
                            width: 10,
                            height: 10,
@@ -50,7 +49,7 @@ describe :tile_collision_detector do
     end
 
     it 'emits w/ data when there is a basic left collision' do
-      actor.x = 12
+      actor.position = vec2(12, actor.position.y)
       actor.vel = vec2(5,0)
       subject
       
@@ -60,8 +59,7 @@ describe :tile_collision_detector do
     end
 
     it 'emits w/ data when with collision on the corner' do
-      actor.x = 30
-      actor.y = 30
+      actor.position = vec2(30, 30)
       actor.bb = Rect.new(25,25,35,35)
       actor.vel = vec2(4.1,4.1)
       subject
@@ -79,8 +77,7 @@ describe :tile_collision_detector do
       actor.has_attributes vel: vec2(0,-4), 
                            bb: Rect.new(0,0,16*3,16*8), 
                            map: map,
-                           x: 17,
-                           y: 65,
+                           position: vec2(17, 65),
                            rotation: 0.0,
                            rotation_vel: -3,
                            width: 28,

@@ -26,14 +26,14 @@ define_actor :map do
         actor.map_image = wrapped_screen.record width, height do
           map_data.bg_tile_grid.each.with_index do |row, y|
             row.each.with_index do |tile, x|
-              unless tile.nil?
+              if tile
                 target.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z
               end
             end
           end
           map_data.tile_grid.each.with_index do |row, y|
             row.each.with_index do |tile, x|
-              unless tile.nil?
+              if tile
                 target.draw_image tileset[tile.gfx_index], x*tile_size, y*tile_size, z
               end
             end
@@ -45,7 +45,7 @@ define_actor :map do
 
       map_data.fg_tile_grid.each.with_index do |row, y|
         row.each.with_index do |tile, x|
-          unless tile.nil?
+          if tile
             target.draw_image tileset[tile.gfx_index], x_off+x*tile_size, y_off+y*tile_size, ZOrder::MapForeground
           end
         end
