@@ -6,3 +6,68 @@
 :screen_resolution: 
 - 1920
 - 1080
+:controls:
+  :player1:
+    +b: :shoot
+    +n: :charging_jump
+    +m: :charging_bomb
+    +v: :shields_up
+    +w: :look_up
+    +a:
+    - :look_left
+    - :walk_left
+    +d:
+    - :look_right
+    - :walk_right
+    +s: :look_down
+  :player2:
+    +i: :shoot
+    +o: :charging_jump
+    +p: :charging_bomb
+    +u: :shields_up
+    +t: :look_up
+    +f:
+    - :look_left
+    - :walk_left
+    +h:
+    - :look_right
+    - :walk_right
+    +g: :look_down
+    +gp0_button_0: :shoot
+    +gp0_button_1: :charging_jump
+    +gp0_button_2: :charging_bomb
+    +gp0_button_3: :shields_up
+    +gp0_up: :look_up
+    +gp0_left:
+    - :look_left
+    - :walk_left
+    +gp0_right:
+    - :look_right
+    - :walk_right
+    +gp0_down: :look_down
+  :player3:
+    +gp1_button_0: :shoot
+    +gp1_button_1: :charging_jump
+    +gp1_button_2: :charging_bomb
+    +gp1_button_3: :shields_up
+    +gp1_up: :look_up
+    +gp1_left:
+    - :look_left
+    - :walk_left
+    +gp1_right:
+    - :look_right
+    - :walk_right
+    +gp1_down: :look_down
+  :player4:
+    +gp2_button_0: :shoot
+    +gp2_button_1: :charging_jump
+    +gp2_button_2: :charging_bomb
+    +gp2_button_3: :shields_up
+    +gp2_up: :look_up
+    +gp2_left:
+    - :look_left
+    - :walk_left
+    +gp2_right:
+    - :look_right
+    - :walk_right
+    +gp2_down: :look_down
