@@ -63,6 +63,7 @@ define_stage :level_play do
     end
     @console.react_to :watch, :fps do Gosu.fps end
     @console.react_to :watch, :gc_stat do GC.stat.to_s end
+    @console.react_to :watch, :vel do player.vel end
   end
 
   helpers do

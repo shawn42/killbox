@@ -20,48 +20,30 @@ define_behavior :tile_collision_detector do
       map = actor.map.map_data
       vel = actor.vel
       actor_rot_vel = actor.do_or_do_not(:rotation_vel) || 0
-
       bb = actor.bb
-      trans_bb = bb.move vel.x, vel.y
 
-      # rotate the translated bb
-      trans_center = vec2(trans_bb.centerx, trans_bb.centery)
-      points = [
-        vec2(trans_bb.l, trans_bb.t) - trans_center,
-        vec2(trans_bb.r, trans_bb.t) - trans_center,
-        vec2(trans_bb.r, trans_bb.b) - trans_center,
-        vec2(trans_bb.l, trans_bb.b) - trans_center,
-      ]
-      rotation_rads = degrees_to_radians(actor.rotation + actor_rot_vel)
-      rotated_points = points.map do |point|
-        point.rotate(rotation_rads) + trans_center
+      rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
+      moved_rotated_points = actor.collision_point_deltas.map do |delta_point| 
+        (delta_point).rotate(rotation) + actor.position + vel
       end
 
-      rotated_points.each do |point|
-        trans_bb.x = min(point.x, trans_bb.x)
-        trans_bb.y = min(point.y, trans_bb.y)
-        trans_bb.r = max(point.x, trans_bb.r)
-        trans_bb.b = max(point.y, trans_bb.b)
-      end
+      # $big_bag = trans_bb.dup
 
       lines_to_check = []
-      actor.collision_point_deltas.each do |point|
-        current_rotation = degrees_to_radians(actor.rotation)
-        next_rotation = degrees_to_radians(actor.rotation + actor_rot_vel)
-
-        from = (actor.position + point.rotate(current_rotation)).to_a
-        to = (actor.position + point.rotate(next_rotation) + vel).to_a
-        unless from == to
+      unless vel.x == 0 && vel.y == 0 && actor_rot_vel == 0
+        actor.collision_points.each.with_index do |cp, i|
+          from = cp.to_a
+          to = moved_rotated_points[i].to_a
           lines_to_check << [from, to]
         end
       end
 
-      actor.has_attribute :lines
-      actor.lines = lines_to_check.dup
+      if ENV['DEBUG']
+        actor.has_attribute :lines
+        actor.lines = lines_to_check.dup
+      end
 
-      # AAHH why do we need to do this inflate?
-      # possible bug in #overlap_tiles
-      bb_to_check = bb.union(trans_bb).inflate!(30, 30)
+      bb_to_check = actor.predicted_bb
       map_inspector.overlap_tiles(map, bb_to_check) do |tile, row, col|
 
         lines_to_check.each.with_index do |line, i|
