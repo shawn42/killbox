@@ -20,14 +20,14 @@ define_behavior :grounded do
         end
       end
     end
+  end
 
-    react_to :remove
+  remove do
+    actor.unsubscribe_all self
+    director.unsubscribe_all self
   end
   
   helpers do
-    def remove
-      director.unsubscribe_all self
-    end
 
     def on_ground?(fp)
       down_vector = vec2(0,4).rotate(degrees_to_radians(actor.rotation))

@@ -22,6 +22,7 @@ define_actor :player do
     looker
 
     accelerator speed: 20
+    mover
     gibify
 
     slicer

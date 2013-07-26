@@ -11,6 +11,10 @@ define_behavior :bomb_collision_points do
     end
   end
 
+  remove do
+    actor.unsubscribe_all self
+  end
+
   helpers do
     def points
       x = actor.x

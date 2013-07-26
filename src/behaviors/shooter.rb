@@ -16,8 +16,14 @@ define_behavior :shooter do
     actor.when(:position_changed){ update_gun_tip }
 
     actor.input.when(:shoot) { shoot_if_able }
+  end
 
-    reacts_with :remove
+  remove do
+    timer_manager.remove_timer timer_name
+    actor.can_shoot = false
+    timer_manager.remove_timer 'shot_recharge'
+    actor.input.unsubscribe_all(self)
+    actor.unsubscribe_all(self)
   end
 
   helpers do
@@ -101,13 +107,6 @@ define_behavior :shooter do
       "#{actor.object_id}:shot_recharge"
     end
 
-    def remove
-      timer_manager.remove_timer timer_name
-      actor.can_shoot = false
-      timer_manager.remove_timer 'shot_recharge'
-      actor.input.unsubscribe_all(self)
-      actor.unsubscribe_all(self)
-    end
   end
 
 end

@@ -6,14 +6,14 @@ define_behavior :emits_gravity do
     actor.has_attributes gravity_range: 150, force: 0.06
     black_hole_coordinator.register_black_hole actor
 
-    reacts_with :remove, :pull
+    reacts_with :pull
   end
 
+  remove do
+    black_hole_coordinator.unregister_black_hole actor
+  end
 
   helpers do
-    def remove
-      black_hole_coordinator.unregister_black_hole actor
-    end
 
     def pull(pullable)
       # if map_inspector.line_of_sight?(actor, bomb)

@@ -6,47 +6,42 @@ define_behavior :tile_oriented do
 
     actor.when :tile_collisions do |collisions|
       # log "info: #{actor.x}, #{actor.y} : => #{actor.vel} G #{actor.on_ground}"
-      if collisions
-        # log "lines: #{actor.lines}"
-        # log "COLLISIONS: #{collisions}"
-        map = actor.map.map_data
+      # log "lines: #{actor.lines}"
+      # log "COLLISIONS: #{collisions}"
+      map = actor.map.map_data
 
-        interesting_collisions = collisions.select do |collision|
-          face_normal = FACE_NORMALS[collision[:tile_face]]
-          # no tile next to
-          face_normal && !map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
-        end
-
-        # get collision that would occur first
-        closest_collision = interesting_collisions.min_by do |collision|
-          hit = collision[:hit]
-          hit_vector = vec2(hit[0], hit[1])
-          (hit_vector - actor.position).magnitude
-        end
-
-        if closest_collision
-          tile_face = tile_face_to_attach_to(closest_collision)
-          # log "srsly: #{tile_face.inspect}"
-          face_normal = FACE_NORMALS[tile_face]
-
-          raise "Y NO FACE?" unless face_normal
-          actor.ground_normal = face_normal 
-
-          set_actor_rotation tile_face
-          clear_actor_velocity
-          set_actor_location tile_face, closest_collision
-          actor.emit :hit_bottom
-        else
-          apply_actor_velocities
-        end
-      else
-        apply_actor_velocities
+      interesting_collisions = collisions.select do |collision|
+        face_normal = FACE_NORMALS[collision[:tile_face]]
+        # no tile next to
+        face_normal && !map_inspector.solid?(map, collision[:row] + face_normal.y, collision[:col] + face_normal.x)
       end
 
+      # get collision that would occur first
+      closest_collision = interesting_collisions.min_by do |collision|
+        hit = collision[:hit]
+        hit_vector = vec2(hit[0], hit[1])
+        (hit_vector - actor.position).magnitude
+      end
+
+      if closest_collision
+        tile_face = tile_face_to_attach_to(closest_collision)
+        # log "srsly: #{tile_face.inspect}"
+        face_normal = FACE_NORMALS[tile_face]
+
+        raise "Y NO FACE?" unless face_normal
+        actor.ground_normal = face_normal 
+
+        set_actor_rotation tile_face
+        clear_actor_velocity
+        set_actor_location tile_face, closest_collision
+      else
+        actor.emit :no_tile_collisions
+      end
     end
+  end
 
-    reacts_with :remove
-
+  remove do
+    actor.unsubscribe_all self
   end
 
   helpers do
@@ -63,13 +58,6 @@ define_behavior :tile_oriented do
       left:   270,
       right:  90
     } unless defined? ROTATIONS
-
-    def apply_actor_velocities
-      actor.rotation = actor.rotation + actor.rotation_vel
-
-      actor.update_attributes x: actor.x + actor.vel.x,
-        y: actor.y + actor.vel.y
-    end
 
     def set_actor_rotation(tile_face)
       actor.rotation_vel = 0
@@ -216,10 +204,5 @@ define_behavior :tile_oriented do
       actor.accel = vec2(0,0)
       actor.rotation_vel = 0
     end
-
-    def remove
-      actor.unsubscribe_all self
-    end
-
   end
 end

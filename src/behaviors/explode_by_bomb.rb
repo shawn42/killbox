@@ -3,7 +3,11 @@ define_behavior :explode_by_bomb do
   setup do
     bomb_coordinator.register_bombable actor
 
-    reacts_with :remove, :esplode
+    reacts_with :esplode
+  end
+
+  remove do
+    bomb_coordinator.unregister_bombable actor
   end
 
   helpers do
@@ -22,9 +26,5 @@ define_behavior :explode_by_bomb do
       end
     end
     
-    def remove
-      bomb_coordinator.unregister_bombable actor
-    end
-
   end
 end

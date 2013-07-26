@@ -9,8 +9,10 @@ define_behavior :player_collision_points do
     actor.when :rotation_changed do
       actor.collision_points = points
     end
+  end
 
-    reacts_with :remove
+  remove do
+    actor.unsubscribe_all self
   end
 
   helpers do
@@ -52,10 +54,6 @@ define_behavior :player_collision_points do
     def rotate(actor_loc, point)
       rotation = actor.do_or_do_not(:rotation) || 0
       point.rotate(degrees_to_radians(rotation)) + actor_loc
-    end
-
-    def remove
-      actor.unsubscribe_all self
     end
   end
 end

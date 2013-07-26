@@ -9,15 +9,15 @@ define_behavior :disoriented_by_bombs do
       update_shake(time_in_sec) if actor.disoriented_amount > 0
     end
 
-    reacts_with :remove, :disoriented
+    reacts_with :disoriented
   end
 
+  remove do
+    actor.input.unsubscribe_all self
+    director.unsubscribe_all self
+  end
 
   helpers do
-    def remove
-      actor.input.unsubscribe_all self
-      director.unsubscribe_all self
-    end
 
     def disoriented(bomb, distance)
       potential = (bomb.radius * 4.0)

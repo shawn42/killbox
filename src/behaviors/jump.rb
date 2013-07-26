@@ -11,8 +11,11 @@ define_behavior :jump do
     director.when :first do |time, time_secs|
       update_jump time_secs
     end
+  end
 
-    reacts_with :remove
+  remove do
+    actor.jump_power = actor.min_jump_power
+    director.unsubscribe_all self
   end
 
   helpers do
@@ -47,10 +50,6 @@ define_behavior :jump do
       end
     end
 
-    def remove
-      actor.jump_power = actor.min_jump_power
-      director.unsubscribe_all self
-    end
   end
 
 end

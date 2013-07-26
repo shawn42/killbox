@@ -4,7 +4,11 @@ define_behavior :die_by_bullet do
   setup do
     bullet_coordinator.register_shootable actor
 
-    reacts_with :remove, :shot
+    reacts_with :shot
+  end
+
+  remove do
+    bullet_coordinator.unregister_shootable actor
   end
 
   helpers do
@@ -16,10 +20,6 @@ define_behavior :die_by_bullet do
       score_keeper.player_score(bullet.player) unless actor == bullet.player
 
       # stage.create_actor :splat, x: actor.x, y: actor.y, view: :graphical_actor_view
-    end
-
-    def remove
-      bullet_coordinator.unregister_shootable actor
     end
 
   end

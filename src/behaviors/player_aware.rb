@@ -7,8 +7,10 @@ define_behavior :player_aware do
     timer_manager.add_timer proximity_check_timer_name, 100 do
       actor.emit :player_near if player_near?
     end
+  end
 
-    reacts_with :remove
+  remove do
+    timer_manager.remove_timer proximity_check_timer_name
   end
 
   helpers do
@@ -21,9 +23,6 @@ define_behavior :player_aware do
       end
     end
 
-    def remove
-      timer_manager.remove_timer proximity_check_timer_name
-    end
 
     def proximity_check_timer_name; "proximity_check_#{object_id}"; end
   end

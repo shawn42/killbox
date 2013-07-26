@@ -50,16 +50,11 @@ define_behavior :accelerator do
     director.when :last do |time, time_secs|
       actor.accel = vec2(0,0)
     end
-
-    reacts_with :remove
   end
 
-  helpers do
-    include MinMaxHelpers
-    def remove
-      # actor.vel = vec2(0,0) if actor.on_ground
-      director.unsubscribe_all self
-      actor.input.unsubscribe_all self
-    end
+  remove do
+    # actor.vel = vec2(0,0) if actor.on_ground
+    director.unsubscribe_all self
+    actor.input.unsubscribe_all self
   end
 end

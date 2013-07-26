@@ -1,20 +1,16 @@
 define_behavior :tile_collision_detector do
   requires :director, :map_inspector
   setup do
-    raise "vel required" unless actor.has_attribute? :vel
-    raise "bounding box required" unless actor.has_attribute? :bb
-    raise "map required" unless actor.has_attribute? :map
-
     director.when :update do |time|
       find_collisions time
     end
+  end
 
-    reacts_with :remove
+  remove do
+    director.unsubscribe_all self
   end
 
   helpers do
-    include MinMaxHelpers
-
     def find_collisions(time)
       collisions = nil
       map = actor.map.map_data
@@ -57,13 +53,12 @@ define_behavior :tile_collision_detector do
 
 
       end
-      # log "bb_to_check: #{bb_to_check}" if collisions
 
-      actor.emit :tile_collisions, collisions
-    end
-
-    def remove
-      director.unsubscribe_all self
+      if collisions
+        actor.emit :tile_collisions, collisions
+      else
+        actor.emit :no_tile_collisions
+      end
     end
   end
 end

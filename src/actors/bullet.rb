@@ -8,6 +8,7 @@ define_actor :bullet do
     animated_with_spritemap file: 'trippers/props.png', rows: 4, cols: 6, actions: { idle: 6..7 }
     bound_by_box
     tile_bound
+    mover
     tile_collision_detector
     trivial_collision_point
     pulled_by_black_hole

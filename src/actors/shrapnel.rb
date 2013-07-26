@@ -5,6 +5,7 @@ define_actor :shrapnel do
     layered ZOrder::Effects
     bound_by_box
     tile_bouncer
+    mover
     tile_collision_detector
     trivial_collision_point
     short_lived ttl: 400

@@ -16,18 +16,16 @@ define_behavior :looker do
         update_look_point time_in_sec
       end
     end
+  end
 
-    reacts_with :remove
+  remove do
+    actor.input.unsubscribe_all self
+    director.unsubscribe_all self
   end
 
 
   helpers do
     include MinMaxHelpers
-
-    def remove
-      actor.input.unsubscribe_all self
-      director.unsubscribe_all self
-    end
 
     def update_look_point(time_secs)
       input = actor.input

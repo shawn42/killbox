@@ -8,6 +8,10 @@ define_behavior :trivial_collision_point do
     end
   end
 
+  remove do
+    actor.unsubscribe_all self
+  end
+
   helpers do
     def points
       [actor.position]

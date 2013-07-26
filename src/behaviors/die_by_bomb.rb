@@ -3,7 +3,12 @@ define_behavior :die_by_bomb do
   setup do
     bomb_coordinator.register_bombable actor
 
-    reacts_with :remove, :esplode
+    reacts_with :esplode
+  end
+
+  remove do
+    bomb_coordinator.unregister_bombable actor
+    timer_manager.remove_timer die_timer_name
   end
 
   helpers do
@@ -22,10 +27,6 @@ define_behavior :die_by_bomb do
     end
 
     def die_timer_name; "die_timer_#{object_id}"; end
-    def remove
-      bomb_coordinator.unregister_bombable actor
-      timer_manager.remove_timer die_timer_name
-    end
 
   end
 end

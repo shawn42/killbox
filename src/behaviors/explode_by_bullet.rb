@@ -3,7 +3,11 @@ define_behavior :explode_by_bullet do
   setup do
     bullet_coordinator.register_shootable actor
 
-    reacts_with :remove, :shot
+    reacts_with :shot
+  end
+
+  remove do
+    bullet_coordinator.unregister_shootable actor
   end
 
   helpers do
@@ -15,9 +19,6 @@ define_behavior :explode_by_bullet do
       actor.remove
     end
 
-    def remove
-      bullet_coordinator.unregister_shootable actor
-    end
 
   end
 end

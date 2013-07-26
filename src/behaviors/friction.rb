@@ -15,14 +15,14 @@ define_behavior :friction do
         actor.accel += friction_force
       end
     end
-
-    reacts_with :remove
   end
+
+  remove do
+    director.unsubscribe_all self
+  end
+
   helpers do
     include MinMaxHelpers
 
-    def remove
-      director.unsubscribe_all self
-    end
   end
 end

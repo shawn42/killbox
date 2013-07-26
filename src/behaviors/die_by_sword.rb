@@ -3,7 +3,11 @@ define_behavior :die_by_sword do
   setup do
     sword_coordinator.register_sliceable actor
 
-    reacts_with :remove, :sliced
+    reacts_with :sliced
+  end
+
+  remove do
+    sword_coordinator.unregister_sliceable actor
   end
 
   helpers do
@@ -21,10 +25,6 @@ define_behavior :die_by_sword do
         score_keeper.player_score(sword)
         actor.remove
       end
-    end
-
-    def remove
-      sword_coordinator.unregister_sliceable actor
     end
 
   end

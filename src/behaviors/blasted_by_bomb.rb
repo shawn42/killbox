@@ -3,7 +3,11 @@ define_behavior :blasted_by_bomb do
   setup do
     bomb_coordinator.register_bombable actor
 
-    reacts_with :remove, :esplode
+    reacts_with :esplode
+  end
+
+  remove do
+    bomb_coordinator.unregister_bombable actor
   end
 
   helpers do
@@ -16,10 +20,6 @@ define_behavior :blasted_by_bomb do
         # TODO eewww need to keep bombs from blasting you through the floor
         actor.vel.magnitude = 12 if actor.vel.magnitude > 12
       end
-    end
-
-    def remove
-      bomb_coordinator.unregister_bombable actor
     end
 
   end

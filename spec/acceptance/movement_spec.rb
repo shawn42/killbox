@@ -160,7 +160,7 @@ describe "Killbox movement", acceptance: true do
 
   context "shields up" do
     it 'does not get stuck when glancing off the wall' do
-      start_x = tile_size + player_w / 2 + 1
+      start_x = tile_size + player_w / 2 + 3
       player.x = start_x
 
       see_actor_attrs :player, 
@@ -174,7 +174,10 @@ describe "Killbox movement", acceptance: true do
         y: floor_y.ish,
         rotation: 0.ish
 
-      jump 10
+      walk_left 15 do
+        jump 70
+      end
+
       update 20
 
       shields_up

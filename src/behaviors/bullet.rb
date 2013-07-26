@@ -11,14 +11,17 @@ define_behavior :bullet do
     # always emits the event, but will have nil collisions if we didn't collide
     # with anything
     actor.when :tile_collisions do |collisions|
-      if collisions
-        actor.remove
-      else
-        actor.emit :bullet_moved
-      end
+      actor.remove
     end
 
-    reacts_with :remove
+    actor.when :no_tile_collisions do |collisions|
+      actor.emit :bullet_moved
+    end
+  end
+
+  remove do
+    actor.unsubscribe_all self
+    timer_manager.remove_timer timer_name
   end
 
   helpers do
@@ -26,10 +29,6 @@ define_behavior :bullet do
       "#{object_id}:self:arm"
     end
 
-    def remove
-      actor.unsubscribe_all self
-      timer_manager.remove_timer timer_name
-    end
   end
 
 end

@@ -16,15 +16,11 @@ define_behavior :asphyxiate do
         end
       end
     end
-    
-    reacts_with :remove
   end
   
-  helpers do
-    def remove
-      director.unsubscribe_all self
-      actor.unsubscribe_all self
-    end
+  remove do
+    director.unsubscribe_all self
+    actor.unsubscribe_all self
   end
 end
 

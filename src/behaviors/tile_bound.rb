@@ -4,22 +4,14 @@ define_behavior :tile_bound do
     raise "vel required" unless actor.has_attribute? :vel
 
     actor.when :tile_collisions do |collisions|
-      if collisions
-        actor.vel.x = 0
-        actor.vel.y = 0
-      else
-
-        actor.x += actor.vel.x 
-        actor.y += actor.vel.y
-      end
+      actor.vel.x = 0
+      actor.vel.y = 0
     end
 
     reacts_with :remove
   end
 
-  helpers do
-    def remove
-      actor.unsubscribe_all self
-    end
+  remove do
+    actor.unsubscribe_all self
   end
 end

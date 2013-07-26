@@ -9,6 +9,11 @@ define_behavior :bound_by_box do
     # vel_bb is the bb extruded over velocity and rotation and unioned with the current bb
     actor.has_attributes bb: Rect.new, predicted_bb: Rect.new
 
+    # update_attribute(:bb, method(:update_bb)).depends_on(:position, :width, :height, :rotation)
+    # update_attribute(:predicted_bb, method(:update_predicted_bb)).depends_on(:bb, :vel, :rot_vel)
+
+    # predicted_bb: [:bb, :vel, :rot_vel]
+
     actor.when(:position_changed) { update_bb }
     actor.when(:width_changed) { update_bb }
     actor.when(:height_changed) { update_bb }
@@ -17,8 +22,10 @@ define_behavior :bound_by_box do
     actor.when(:rot_vel_changed) { update_bb }
 
     update_bb
+  end
 
-    reacts_with :remove
+  remove do
+    actor.unsubscribe_all self
   end
 
   helpers do
@@ -71,10 +78,6 @@ define_behavior :bound_by_box do
 
         actor.predicted_bb = actor.bb.union(actor.bb.move(vel.x,vel.y))
       end
-    end
-
-    def remove
-      actor.unsubscribe_all self
     end
   end
 

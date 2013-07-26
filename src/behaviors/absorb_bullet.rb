@@ -3,7 +3,11 @@ define_behavior :absorb_bullet do
   setup do
     bullet_coordinator.register_shootable actor
 
-    reacts_with :remove, :shot
+    reacts_with :shot
+  end
+
+  remove do
+    bullet_coordinator.unregister_shootable actor
   end
 
   helpers do
@@ -13,9 +17,6 @@ define_behavior :absorb_bullet do
       bullet.remove
     end
 
-    def remove
-      bullet_coordinator.unregister_shootable actor
-    end
 
   end
 end

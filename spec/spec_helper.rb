@@ -54,16 +54,17 @@ module KillboxAcceptanceHelpers
     hold_key KbM, time_held, step: 20
   end
 
-  def walk_left(time_held)
-    hold_key KbA, time_held, step: 20
+  def walk_left(time_held, &blk)
+    hold_key KbA, time_held, step: 20, &blk
   end
 
-  def walk_right(time_held)
-    hold_key KbD, time_held, step: 20
+  def walk_right(time_held, &blk)
+    hold_key KbD, time_held, step: 20, &blk
   end
 
-  def hold_key(key, time_held, opts={})
+  def hold_key(key, time_held, opts={}, &blk)
     press_key key
+    yield if block_given?
     update time_held, step: opts[:step]
     release_key key
   end

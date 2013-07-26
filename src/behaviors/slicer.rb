@@ -10,8 +10,14 @@ define_behavior :slicer do
     sword_coordinator.register_sword actor
     actor.when(:failed_to_shoot) { slice_if_able }
     actor.when(:on_ground_changed) { set_reach }
-    reacts_with :remove
     actor.can_slice = true
+  end
+
+  remove do
+    sword_coordinator.unregister_sword actor
+    actor.can_slice = false
+    timer_manager.remove_timer timer_name
+    actor.unsubscribe_all(self)
   end
 
   helpers do
@@ -46,12 +52,6 @@ define_behavior :slicer do
 
     def timer_name
       "#{actor.object_id}:slice_recharge"
-    end
-
-    def remove
-      actor.can_slice = false
-      timer_manager.remove_timer timer_name
-      actor.unsubscribe_all(self)
     end
   end
 
