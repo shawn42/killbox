@@ -27,12 +27,7 @@ end
 [GAMEBOX_PATH, APP_ROOT, File.join(APP_ROOT,'src')].each{|path| $: << path }
 require "gamebox_application"
 
-require_all Dir.glob("src/*.rb").reject{ |f| f.match("src/app.rb") }
-directory_load_order = %w(behaviors actors stages)
-directory_load_order.each do |dir|
-  require_all Dir.glob("src/#{dir}/**/*.rb")
-end
-# require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec/") || f.match("src/app.rb")}
+require_all Dir.glob("**/*.rb").reject{ |f| f.match("spec/") || f.match("src/app.rb")}
 Gosu::enable_undocumented_retrofication
 
 
