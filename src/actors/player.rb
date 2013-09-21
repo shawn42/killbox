@@ -69,7 +69,9 @@ define_actor :player do
 
       if actor.can_shoot?
         gun = actor.gun_tip + vec2(x_off, y_off)
-        target.fill gun.x, gun.y, gun.x+2, gun.y+2, Color::WHITE, ZOrder::PlayerDecoration
+        faded_red = Color.argb(187, 255, 20, 20)
+        target.fill gun.x-2, gun.y-2, gun.x+2, gun.y+2, faded_red, ZOrder::PlayerDecoration
+        target.fill gun.x, gun.y, gun.x+1, gun.y+1, Color::WHITE, ZOrder::PlayerDecoration
       end
 
       if actor.shields_up?

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="70" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="space platform" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/space_platform.png" width="859" height="396"/>
+ </tileset>
+ <tileset firstgid="254" name="player" tilewidth="64" tileheight="64">
+  <image source="../../docs/tripper.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="255" name="blackhole" tilewidth="128" tileheight="128">
+  <image source="../graphics/trippers/black_hole.png" width="384" height="128"/>
+ </tileset>
+ <layer name="bg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3OAQ0AAAgDoCe0fxxjfE5IQAIAAADwx7QDAAAAAAAAAABwzAJdRPWOgDQAAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Xyw2AIBBFURu0NcugTjeujPyHmafek7BC4YXgINv2b3tHU9Sai/xrkD+Wav5cDTmuVqoz6TZWqjy/oj5FrJfyeN7zkd9nPpXzfvTbzvUprf9I370Gtsz/tF4W58NonwXy++Sf/Y4U9v+M0nwe9WflPvTOb32OvKH+l9TyK5y/o/vf8p0Z1ncDpf8HhfG85/tC/p7Wc+fN3Z8jWPwfRCJ/LPLH6qlRAAAAAAAAAAAAAMpOsbf/ioA0AAA=
+  </data>
+ </layer>
+ <objectgroup name="zones" width="48" height="70">
+  <object type="start_location" x="682" y="75" width="42" height="64">
+   <properties>
+    <property name="rotation" value="180"/>
+   </properties>
+  </object>
+  <object type="start_location" x="1398" y="551" width="69" height="45">
+   <properties>
+    <property name="rotation" value="270"/>
+   </properties>
+  </object>
+  <object type="start_location" x="47" y="550" width="69" height="45">
+   <properties>
+    <property name="rotation" value="90"/>
+   </properties>
+  </object>
+  <object type="start_location" x="832" y="1118" width="42" height="64">
+   <properties>
+    <property name="rotation" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="actors" width="48" height="70">
+  <object type="black_hole" gid="255" x="830" y="862"/>
+  <object type="black_hole" gid="255" x="344" y="736"/>
+  <object type="black_hole" gid="255" x="630" y="450"/>
+  <object type="black_hole" gid="255" x="1026" y="618"/>
+ </objectgroup>
+ <layer name="fg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3RMQqAMBBFwVzbU9jkat5HBIs0gkmE3eAM/C7FI1sKAJlszQB4r96Lsne+rw+L8rf+S6b+Edlu0Gumf+TeX5v57wz9M1bvB2IdzQAAAAAAAACAdZwJ7OqTgDQAAA==
+  </data>
+ </layer>
+</map>

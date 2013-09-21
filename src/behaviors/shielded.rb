@@ -1,8 +1,8 @@
 define_behavior :shielded do
   requires :resource_manager, :timer_manager
   setup do
-    actor.has_attributes shield_time_in_ms: opts[:shield_time_in_ms] || 1_200,
-                         shield_recharge_time_in_ms: opts[:shield_recharge_time_in_ms] || 600,
+    actor.has_attributes shield_time_in_ms: opts[:shield_time_in_ms] || 1_100,
+                         shield_recharge_time_in_ms: opts[:shield_recharge_time_in_ms] || 700,
                          shields_up: false,
                          shields_recharging: false
 
