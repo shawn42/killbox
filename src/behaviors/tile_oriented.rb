@@ -25,7 +25,6 @@ define_behavior :tile_oriented do
 
       if closest_collision
         tile_face = tile_face_to_attach_to(closest_collision)
-        # log "srsly: #{tile_face.inspect}"
         face_normal = FACE_NORMALS[tile_face]
 
         raise "Y NO FACE?" unless face_normal

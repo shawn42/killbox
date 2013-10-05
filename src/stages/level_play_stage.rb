@@ -48,7 +48,7 @@ define_stage :level_play do
           (@players - alive_players).each do |player_that_died| 
             score_keeper.player_score(player_that_died, -1)
           end
-          round_over 
+          round_over
         end
         @computer_players.each do |npc|
           npc.take_turn time
@@ -57,28 +57,18 @@ define_stage :level_play do
     end
 
     # F1 console watch values
-    player = @players[1]
+    player = @players[0]
     if player
-      @console.react_to :watch, :p2rotvel do player.rotation_vel end
+      @console.react_to :watch, :p1rotvel do player.rotation_vel end
+      @console.react_to :watch, :p1gndnorm do player.ground_normal end
     end
-    @console.react_to :watch, :fps do Gosu.fps end
-    @console.react_to :watch, :gc_stat do GC.stat.to_s end
-    @console.react_to :watch, :vel do player.vel end
+    # @console.react_to :watch, :fps do Gosu.fps end
+    # @console.react_to :watch, :gc_stat do GC.stat.to_s end
+    # @console.react_to :watch, :vel do player.vel end
   end
 
   helpers do
     attr_accessor :players, :viewports
-
-    def levels 
-      {
-      :trippy => 4,
-      :section_a => 4,
-      :basic_jump => 1,
-      # :advanced_jump => 2,
-      # :cave => 4,
-      # :hot_pocket => 2,
-      }
-    end
 
     def setup_level(name)
       @level = LevelLoader.load self, name
@@ -99,13 +89,13 @@ define_stage :level_play do
         x = zone_rect.centerx
         y = zone_rect.centery
 
-        player = create_actor :player,
+        player = create_actor :player, {
           map: @level.map,
           x: x,
           y: y,
           rotation: 0,
-          number: number,
-          vel: player_velocity(rotation)
+          number: number}.merge(initial_position(rotation))
+          # vel: player_velocity(rotation)
 
         player.rotation = rotation # needed to trigger behaviors
         player.animation_file = "trippers/#{player_color(i)}_tripper.png"
@@ -120,12 +110,12 @@ define_stage :level_play do
       %w(red green purple blue)[index]
     end
 
-    def player_velocity(rotation)
+    def initial_position(rotation)
       {
-        0 => vec2(0,3),
-        180 => vec2(0,-3),
-        90 => vec2(-3,0),
-        270 => vec2(3,0)
+        0 => {vel: vec2(0,-0.30), ground_normal: Look::DIRECTIONS[:up]},
+        180 => {vel: vec2(0,0.30), ground_normal: Look::DIRECTIONS[:down]},
+        90 =>  {vel: vec2(-0.3,0), ground_normal: Look::DIRECTIONS[:right]},
+        270 => {vel: vec2(0.3,0), ground_normal: Look::DIRECTIONS[:left]},
       }[rotation]
     end
 

@@ -47,7 +47,7 @@ define_behavior :accelerator do
       end
     end
 
-    director.when :last do |time, time_secs|
+    director.when :last do |t, ts|
       actor.accel = vec2(0,0)
     end
   end

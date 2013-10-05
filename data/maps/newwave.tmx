@@ -22,20 +22,20 @@
   </data>
  </layer>
  <objectgroup name="zones" width="48" height="70">
-  <object type="start_location" x="762" y="44" width="34" height="53">
+  <object type="start_location" x="720" y="38" width="32" height="60">
    <properties>
     <property name="gravity" value="up"/>
     <property name="rotation" value="180"/>
    </properties>
   </object>
-  <object type="start_location" x="191" y="337" width="34" height="53"/>
-  <object type="start_location" x="293" y="960" width="48" height="35">
+  <object type="start_location" x="180" y="338" width="32" height="60"/>
+  <object type="start_location" x="295" y="972" width="60" height="32">
    <properties>
     <property name="gravity" value="left"/>
     <property name="rotation" value="90"/>
    </properties>
   </object>
-  <object type="start_location" x="1128" y="780" width="56" height="35">
+  <object type="start_location" x="1126" y="789" width="60" height="32">
    <properties>
     <property name="gravity" value="right"/>
     <property name="rotation" value="270"/>

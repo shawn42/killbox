@@ -59,7 +59,7 @@ define_behavior :bomber do
       percent = (actor.bomb_charge / actor.max_bomb_charge.to_f)
       power = 10 * percent
 
-      rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
+      # rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
       bomb_vel = actor.vel + ((actor.gun_tip - actor.position).unit * power)
 
       bomb = stage.create_actor :bomb, player: actor, x: actor.x, y: actor.y, map: actor.map, vel: bomb_vel, rotation_vel: 2.4
@@ -75,9 +75,9 @@ define_behavior :bomber do
       unless actor.on_ground?
         gun_angle = actor.gun_direction.angle
         if gun_angle == 0
-          actor.rotation_vel -= 0.3 
+          actor.rotation_vel -= 0.3
         elsif gun_angle == Math::PI
-          actor.rotation_vel += 0.3 
+          actor.rotation_vel += 0.3
         end
       end
       actor.bomb_charge = 0

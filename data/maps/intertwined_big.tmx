@@ -17,18 +17,22 @@
   </data>
  </layer>
  <objectgroup name="zones" width="70" height="70">
-  <object type="start_location" x="818" y="1101" width="56" height="78"/>
-  <object type="start_location" x="39" y="344" width="90" height="58">
+  <object type="start_location" x="822" y="1126" width="32" height="60">
+   <properties>
+    <property name="rotation" value="0"/>
+   </properties>
+  </object>
+  <object type="start_location" x="40" y="345" width="60" height="32">
    <properties>
     <property name="rotation" value="90"/>
    </properties>
   </object>
-  <object type="start_location" x="1097" y="804" width="86" height="54">
+  <object type="start_location" x="1124" y="806" width="60" height="32">
    <properties>
     <property name="rotation" value="270"/>
    </properties>
   </object>
-  <object type="start_location" x="346" y="43" width="60" height="86">
+  <object type="start_location" x="346" y="39" width="32" height="60">
    <properties>
     <property name="rotation" value="180"/>
    </properties>
