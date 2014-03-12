@@ -6,7 +6,7 @@ define_behavior :accelerator do
                          vel: vec2(0,0)
 
     director.when :before do |time, time_secs|
-      input = actor.input
+      input = actor.controller
 
       # this should live in its own behavior to modify accel
       # vvvvvvvvvvvvvvvv
@@ -55,6 +55,6 @@ define_behavior :accelerator do
   remove do
     # actor.vel = vec2(0,0) if actor.on_ground
     director.unsubscribe_all self
-    actor.input.unsubscribe_all self
+    actor.controller.unsubscribe_all self
   end
 end

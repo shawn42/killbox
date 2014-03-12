@@ -17,7 +17,7 @@ define_behavior :bomber do
   end
 
   remove do
-    actor.input.unsubscribe_all self
+    actor.controller.unsubscribe_all self
     director.unsubscribe_all self
   end
 
@@ -26,7 +26,7 @@ define_behavior :bomber do
     include Look
 
     def update_bombing(time_secs)
-      input = actor.input
+      input = actor.controller
       if actor.was_charging_bomb? && !input.charging_bomb?
         actor.was_charging_bomb = false
 

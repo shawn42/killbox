@@ -18,8 +18,8 @@ gem "rspec-expectations"
 gem "rake"
 gem "simplecov", require: false
 
-gem 'listen', '0.5.3'
-gem 'rb-fsevent', '~> 0.9.1'
+# gem 'listen', '0.5.3'
+# gem 'rb-fsevent', '~> 0.9.1'
 
 # gem 'perftools.rb'
 # gem "ruby-prof"

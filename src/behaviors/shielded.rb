@@ -6,13 +6,13 @@ define_behavior :shielded do
                          shields_up: false,
                          shields_recharging: false
 
-    actor.input.when(:shields_up) { shields_up }
+    actor.controller.when(:shields_up) { shields_up }
   end
 
   remove do
     timer_manager.remove_timer shield_enabled_timer_name
     timer_manager.remove_timer shield_recharging_timer_name
-    actor.input.unsubscribe_all self
+    actor.controller.unsubscribe_all self
   end
 
   helpers do

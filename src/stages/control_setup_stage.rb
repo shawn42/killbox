@@ -5,7 +5,7 @@ define_stage :control_setup do
   curtain_up do |*args|
 
     create_actor(:icon, image: "title_screen.png", x: 670, y: 350)
-    create_actor(:label, text: "Controls", font_size: 100, x: 900, y: 10)
+    # create_actor(:label, text: "Controls", font_size: 100, x: 900, y: 10)
 
     # not sure where this comes from
     # data_tree = backstage[:control_data_tree]

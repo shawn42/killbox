@@ -99,7 +99,7 @@ define_stage :level_play do
 
         player.rotation = rotation # needed to trigger behaviors
         player.animation_file = "trippers/#{player_color(i)}_tripper.png"
-        player.input.map_input(controls[name])
+        player.controller.map_controls(controls[name])
 
         @players << player
       end

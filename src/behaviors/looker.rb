@@ -7,7 +7,7 @@ define_behavior :looker do
                          flip_h: false, 
                          look_vector: Look::DIRECTIONS[:left]
 
-    input = actor.input
+    input = actor.controller
     input.when(:look_left) { actor.flip_h = true }
     input.when(:look_right) { actor.flip_h = false }
 
@@ -19,7 +19,7 @@ define_behavior :looker do
   end
 
   remove do
-    actor.input.unsubscribe_all self
+    actor.controller.unsubscribe_all self
     director.unsubscribe_all self
   end
 
@@ -28,7 +28,7 @@ define_behavior :looker do
     include MinMaxHelpers
 
     def update_look_point(time_secs)
-      input = actor.input
+      input = actor.controller
 
       look_vector = if input.look_left?
         Look::DIRECTIONS[:left]

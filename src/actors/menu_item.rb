@@ -9,7 +9,9 @@ define_actor :menu_item do
     requires :stage
 
     setup do
-      label = stage.create_actor :label, actor.attributes
+      label_attributes = actor.attributes.dup
+      label_attributes.delete :view
+      label = stage.create_actor :label, label_attributes
       actor.has_attributes( label: label,
                           selected: false)
 

@@ -96,7 +96,7 @@ define_actor :device_detector do
 
         if keyboard?(id) || gamepad?(id)
           log "device_detector picked up: #{name}"
-          actor.input_id = 
+          actor.input_id = id
           actor.emit :path_value_changed, actor.path, actor.input_id
           actor.emit :done
         end
@@ -149,7 +149,9 @@ define_behavior :labeled do
 
   setup do
     actor.has_attributes label_text: "", label: nil
-    actor.label = stage.create_actor :label, actor.attributes
+    label_attributes = actor.attributes.dup
+    label_attributes.delete :view
+    actor.label = stage.create_actor :label, label_attributes
     actor.when :label_text_changed do |old_label, new_label|
       actor.label.text = new_label
     end

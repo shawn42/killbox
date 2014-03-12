@@ -13,7 +13,7 @@ define_behavior :disoriented_by_bombs do
   end
 
   remove do
-    actor.input.unsubscribe_all self
+    actor.controller.unsubscribe_all self
     director.unsubscribe_all self
   end
 

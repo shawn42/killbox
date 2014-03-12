@@ -18,7 +18,7 @@ define_behavior :animated_with_spritemap do
   end
 
   remove do
-    actor.input.unsubscribe_all self
+    actor.controller.unsubscribe_all self
     actor.unsubscribe_all self
   end
   
