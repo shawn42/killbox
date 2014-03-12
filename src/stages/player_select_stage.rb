@@ -5,21 +5,23 @@ define_stage :player_select do
     create_actor(:icon, image: "title_screen.png", x: 670, y: 350)
     print_menu_header "Killbox", "a multi-player, same keyboard, action game."
 
-    # add some help message for game on the menu screen
-    print_menu_help_text "Game Controls: A, move left. D, move right. W, look up. S, look down. V, shield. N, jump. M, bomb."
+    @player_select_menu = create_actor :player_select_menu, x: 100, y: 30
 
-
-    menu = create_actor :player_select_menu, x: 100, y: 30
-
-    menu.when :start do |count|
-      fire :next_stage, player_count: count
+    @player_select_menu.when :selected do |value|
+      if value == :setup_controls
+        fire :change_stage, :control_setup
+      else
+        fire :next_stage, player_count: value
+      end
     end
+
     input_manager.reg :down, KbEscape do
       exit
     end
   end
 
   curtain_down do |*args|
+    @player_select_menu.unsubscribe_all self
     input_manager.clear_hooks
   end
 
@@ -29,12 +31,8 @@ define_stage :player_select do
       print_menu_text(sub_title, 28, 760, 120)
     end
 
-    def print_menu_help_text(text)
-      print_menu_text(text, 28, 150, 700)
-    end
-
     def print_menu_text(text, size, x, y, color=[244, 215, 227])
-      create_actor(:label, text: text, x: x, y: y, font_name: "vigilanc.ttf" , font_size: size, color: color)
+      create_actor(:label, text: text, x: x, y: y, font_size: size, color: color)
     end
   end
 end

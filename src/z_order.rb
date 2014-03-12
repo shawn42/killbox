@@ -8,6 +8,7 @@ module ZOrder
   Projectile,
   Enemy,
   Effects,
+  Menu,
   HudText,
   Debug,
   Console = *(0..100)

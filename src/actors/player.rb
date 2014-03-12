@@ -4,8 +4,7 @@ define_actor :player do
     positioned
     audible
     layered ZOrder::Player
-
-    # TODO change the interval for one animation
+# TODO change the interval for one animation
     animated_with_spritemap interval: 120, rows: 7, cols: 8, actions: {
       idle:          [8]*20 + [9],
       walking_right: 32..37,

@@ -20,6 +20,18 @@
     - :look_right
     - :walk_right
     +s: :look_down
+    +gp1_button_0: :shoot
+    +gp1_button_1: :charging_jump
+    +gp1_button_2: :charging_bomb
+    +gp1_button_3: :shields_up
+    +gp1_up: :look_up
+    +gp1_left:
+    - :look_left
+    - :walk_left
+    +gp1_right:
+    - :look_right
+    - :walk_right
+    +gp1_down: :look_down
   :player2:
     +i: :shoot
     +o: :charging_jump

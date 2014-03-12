@@ -31,8 +31,6 @@ define_behavior :animated_with_spritemap do
 
       file = actor.animation_file
       rows, cols, actions = opts[:rows], opts[:cols], opts[:actions]
-      # @spritemap = resource_manager.load_image file
-      
       # negatives means rows/cols instead of w/h 
       #   http://www.libgosu.org/rdoc/Gosu/Image.html#load_tiles-class_method
       @sprites = resource_manager.load_tiles file, -cols, -rows

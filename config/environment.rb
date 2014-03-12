@@ -18,9 +18,11 @@ Gamebox.configure do |config|
   config.gb_sound_path = GAMEBOX_PATH + "data/sounds/"
   config.gb_gfx_path = GAMEBOX_PATH + "data/graphics/"
   config.gb_fonts_path = GAMEBOX_PATH + "data/fonts/"
+
+  config.default_font_name = "vigilanc.ttf"
+  config.default_font_color = Color.argb(255, 244, 215, 227)
   
-  config.stages = [:player_select, :map_select, :level_play, :score]
-  # config.stages = [:main_menu, :level_play, :score]
+  config.stages = [:player_select, :map_select, :level_play, :score, :control_setup]
   config.game_name = "Killbox"
 end
 

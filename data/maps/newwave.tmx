@@ -6,7 +6,7 @@
  <tileset firstgid="254" name="player" tilewidth="64" tileheight="64">
   <image source="../../docs/tripper.png" width="64" height="64"/>
  </tileset>
- <layer name="bg" width="48" height="70">
+ <layer name="bg" width="48" height="70" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3UwQ2AIBBFQY6WYR3WYBv234JXLkYikK9mJuH+Qna3FICcIx0ATLHcvDVWBsxU7/nXbemATvqfGTXD/j/rzf0ts3XVv48M6fCnWw8AAAAAAAAAQLsTnZ0+6oA0AAA=
   </data>
@@ -16,12 +16,12 @@
    H4sIAAAAAAAAA+3YSw6DMAxFUS+aXdBxO2eD/aygoAapgybYqU0gukfyEPsJEUtEROeW6lpR67Mt/Tuf/G3nkz/fd+tcepy/yPx7OEP+Ya5nqiFwTlTfaa5LqilwTlRf8tvl9k/NzmmRv4T89b089Ja/tN8XR88/Sj6fyHZ+rz2h5ZnfMseLNf/W96Wd48Wa32tOVF/y6+ZE9e0p/0M+5/QltrOqmeOllP+7xh/Pae+K9tz/y3u+p2rxr2VVm4P8PnrIb72zPcJdLQAAAAAAAAAAAADgfN7zaDAZgDQAAA==
   </data>
  </layer>
- <layer name="fg" width="48" height="70">
+ <layer name="fg" width="48" height="70" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3YywnCQBSF4ZQkuBfRhWARgh24UeuwANc2YBE+evDZg4+dV3AhISSZyb0zif4fnEWUuWcwmGiSpJzDV9LHZROTa/9GspXsJHuP9dpc+4+Sk+QsuXis1+baf5PcJQ/J02O9tqr9VvvP+15mHVfpsRDqvDZ9/1b4/ON6738qmUnmxj1Wc0Pc82OcZ/ZvM8uyc/WJxqyqijpbirMsFHUOHGeF/m9QNHek0NEu0eMrxDkfGvaE2P/YsOfXfxv1JT3J0rjHau5acg3QE3qu6+/BGPeGRc57edf3Ol3/tddp+7f9dyRdj3VWXPcx8VxnJetZUPr1Oj6rBQAAAAAAAAAAAAA0zws6u9BVgDQAAA==
   </data>
  </layer>
- <objectgroup name="zones" width="48" height="70">
+ <objectgroup name="zones" width="48" height="70" visible="0">
   <object type="start_location" x="720" y="38" width="32" height="60">
    <properties>
     <property name="gravity" value="up"/>
