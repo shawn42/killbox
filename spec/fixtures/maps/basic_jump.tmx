@@ -12,6 +12,10 @@
   </data>
  </layer>
  <objectgroup name="zones" width="20" height="16">
-  <object type="start_location" x="107" y="30" width="27" height="46"/>
+  <object type="start_location" x="107" y="123" width="27" height="46">
+   <properties>
+    <property name="rotation" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -142,6 +142,8 @@ class ApproximateValue
   def to_s
     "within #{@acceptable_delta} of #{@me}"
   end
+
+  alias inspect to_s
 end
 
 # class MockImage

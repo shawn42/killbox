@@ -24,7 +24,6 @@ describe "Killbox bombing", acceptance: true do
     # See player land standing where expected:
     update 2000, step: 20
     see_actor_attrs :player, 
-      x: 504.ish, # as placed in shooting.tmx
       rotation: 0.ish,
       on_ground: true
     see_bottom_right_standing_above floor_zone.y
