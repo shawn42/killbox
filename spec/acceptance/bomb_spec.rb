@@ -22,6 +22,42 @@ describe "Killbox bombing", acceptance: true do
     configure_game_with_testing_stage  map_name: "shooting"
 
     # See player land standing where expected:
+    see_player_is_standing_on_the_ground
+  end
+
+  describe 'land mines' do
+    it 'can place and arm a land mine' do
+      place_land_mine
+      see_no_bombs_were_set
+      see_land_mine_was_placed_at_players_feet
+
+      move_player_away
+      wait_for_land_mine_to_arm
+    end
+
+    it 'blows up via player proximity' do
+      place_land_mine
+      move_player_away
+      wait_for_land_mine_to_arm
+
+      see_land_mine_does_not_blow_up_on_its_own
+
+      move_player_to_land_mine
+
+      see_land_mine_blew_up
+      player.should_not be_alive
+    end
+
+    it 'can be shot' do
+      place_land_mine
+      jump_to_ceiling
+      shoot_land_mine_above_us
+
+      see_land_mine_blew_up
+    end
+  end
+
+  def see_player_is_standing_on_the_ground
     update 2000, step: 20
     see_actor_attrs :player, 
       rotation: 0.ish,
@@ -30,60 +66,53 @@ describe "Killbox bombing", acceptance: true do
     see_bottom_left_standing_above floor_zone.y
   end
 
-  it 'can place and arm a land mine' do
-    place_land_mine
+  def see_land_mine_blew_up
+    game.actors(:land_mine).should be_empty
+  end
 
+  def shoot_land_mine_above_us
+    look_up
+    shoot
+    update 4000, step: 20
+  end
+
+  def jump_to_ceiling
+    jump 1000
+    update 4000
+  end
+
+  def move_player_away
+    player.x += 300
+  end
+
+  def move_player_to_land_mine
+    player.x -= 300
+    update 1000, step: 20
+  end
+
+  def wait_for_land_mine_to_arm
+    update 3000, step: 20
+    see_actor_attrs :land_mine,
+      armed: true
+  end
+
+  def see_land_mine_does_not_blow_up_on_its_own
+    update 10_000, step: 20
+    see_actor_attrs :land_mine,
+      armed: true
+  end
+
+  def see_no_bombs_were_set
     game.actors(:bomb).should be_empty
+  end
 
+  def see_land_mine_was_placed_at_players_feet
     see_actor_attrs :land_mine,
       armed: false,
       x: player.x.ish,
       y: (floor_zone.y - 1).ish
 
-    # warp to safety
-    player.x += 300
-
-    # wait for land mine to arm
-    update 3000, step: 20
-
-    see_actor_attrs :land_mine,
-      armed: true
   end
 
-  it 'blows up via player proximity' do
-    place_land_mine
-    player.x += 300
-
-    # wait for land mine to arm
-    update 3000, step: 20
-
-    see_actor_attrs :land_mine,
-      armed: true
-
-    # make sure it doesn't blow up on its own
-    update 10_000, step: 20
-    see_actor_attrs :land_mine,
-      armed: true
-
-    player.x -= 300
-    # wait for death delay
-    update 1000, step: 20
-
-    game.actors(:land_mine).should be_empty
-    player.should_not be_alive
-  end
-
-  it 'can be shot' do
-    place_land_mine
-    jump 1000
-    update 4000
-
-    look_up
-    shoot
-
-    update 4000, step: 20
-
-    game.actors(:land_mine).should be_empty
-  end
 end
 
