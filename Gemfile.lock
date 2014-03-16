@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:shawn42/gamebox.git
-  revision: e824dbb984e23bb7d7d38b3b601d1013d5ffa59c
+  revision: e33b07d05891faa0b8b55d8c3cdd537186448fae
   specs:
     gamebox (0.5.0)
       conject (>= 0.0.8)
