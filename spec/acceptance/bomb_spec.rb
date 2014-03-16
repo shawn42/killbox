@@ -9,20 +9,154 @@ describe "Killbox bombing", acceptance: true do
   let(:tile_size) { 36 }
   let(:map) { game.actor(:map) }
   let(:player) { game.actor(:player) }
+  let(:reticle) { game.actor(:reticle) }
 
   let(:player_w) { 32 }
   let(:player_h) { 60 }
+  let!(:props) { mock_tiles 'trippers/props.png', 32, 32 }
 
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
-    mock_image 'boxy.png' # TODO: provide width and height as 2nd and third args
-    mock_image 'bullet.png'
-    mock_image 'bomb.png'
+    # mock_image 'boxy.png' # TODO: provide width and height as 2nd and third args
+    # mock_image 'bullet.png'
+    # mock_image 'bomb.png'
 
     configure_game_with_testing_stage  map_name: "shooting"
 
     # See player land standing where expected:
     see_player_is_standing_on_the_ground
+  end
+
+  describe 'throwing bombs' do
+    context 'no aiming' do
+      let(:bomb) { game.actor(:bomb) }
+      let(:player) { game.actor(:player) }
+
+      it 'throws right when looking right' do
+        look_right
+        throw_bomb
+        see_bomb_is_right_of_player
+      end
+
+      it 'throws left when looking left' do
+        look_left
+        throw_bomb
+        see_bomb_is_left_of_player
+      end
+
+      it 'throws up when looking up' do
+        look_up
+        throw_bomb
+        see_bomb_is_above_player
+      end
+
+      it 'throws down when looking down' do
+        look_down
+        throw_bomb
+        see_bomb_is_below_player
+      end
+    end
+
+    describe 'aiming' do
+      it 'draws the reticle' do
+        look_right
+        see_no_reticle
+        while_charging_bomb do
+          see_reticle_is_right_of_player
+        end
+      end
+
+      it 'reticle moves out as bomb throw charges' do
+        look_right
+        while_charging_bomb do
+          last_reticle_position = reticle.position
+          update 20
+          see_reticle_position_right_of last_reticle_position
+        end
+      end
+
+      it 'only shows reticle if there are bombs left' do
+        look_right
+        use_all_bombs
+        while_charging_bomb do
+          see_no_reticle
+        end
+      end
+
+      it 'turns off walking when you are charging' do
+        while_charging_bomb do
+          last_position = player.position
+          walk_left 20
+          player.position.should == last_position
+        end
+      end
+
+      it 'throw faster the longer you hold' do
+        min_vel = bomb_velocity_from_min_throw
+        max_vel = bomb_velocity_from_max_throw
+        max_vel.magnitude.should > min_vel.magnitude
+      end
+
+      it 'can aim up/right'
+      it 'can aim up/right'
+      it 'can aim down/left'
+      it 'can aim down/left'
+      it 'locks to up when holding up'
+      it 'locks to right when holding right'
+      it 'locks to left when holding left'
+    end
+
+    def bomb_velocity_from_min_throw
+      throw_bomb 1
+      game.actors(:bomb).last.vel
+    end
+
+    def bomb_velocity_from_max_throw
+      throw_bomb 1_000
+      game.actors(:bomb).last.vel
+    end
+
+    def use_all_bombs
+      20.times { throw_bomb }
+    end
+
+    def see_reticle_position_right_of(position)
+      reticle.x.should > position.x
+    end
+
+    def while_charging_bomb(&blk)
+      press_key KbM
+      update 20
+      yield
+      release_key KbM
+    end
+
+    def see_no_reticle
+      reticle.should be
+      reticle.visible.should be_false
+    end
+
+    def see_reticle_is_right_of_player
+      reticle.should be
+      reticle.x.should > player.x
+      reticle.visible.should be_true
+    end
+
+    def see_bomb_is_right_of_player
+      bomb.x.should > player.x
+    end
+
+    def see_bomb_is_left_of_player
+      bomb.x.should < player.x
+    end
+
+    def see_bomb_is_above_player
+      bomb.y.should < player.y
+    end
+    
+    def see_bomb_is_below_player
+      bomb.y.should > player.y
+    end
   end
 
   describe 'land mines' do

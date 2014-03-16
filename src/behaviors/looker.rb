@@ -5,11 +5,13 @@ define_behavior :looker do
     # in pixels
     actor.has_attributes look_distance: 150,
                          flip_h: false, 
-                         look_vector: Look::DIRECTIONS[:left]
+                         look_vector: Look::DIRECTIONS[:right]
 
-    input = actor.controller
-    input.when(:look_left) { actor.flip_h = true }
-    input.when(:look_right) { actor.flip_h = false }
+    controller = actor.controller
+    controller.when(:look_left) { look_left }
+    controller.when(:look_right) { look_right }
+    controller.when(:look_up) { look_up }
+    controller.when(:look_down) { look_down }
 
     director.when :update do |t_ms, time_in_sec|
       if actor.do_or_do_not :viewport
@@ -27,23 +29,39 @@ define_behavior :looker do
   helpers do
     include MinMaxHelpers
 
-    def update_look_point(time_secs)
-      input = actor.controller
+    def look_left
+      actor.flip_h = true 
+      actor.look_vector = Look::DIRECTIONS[:left]
+    end
 
-      look_vector = if input.look_left?
+    def look_right
+      actor.flip_h = false 
+      actor.look_vector = Look::DIRECTIONS[:right]
+    end
+
+    def look_down
+      actor.look_vector = Look::DIRECTIONS[:down]
+    end
+    def look_up
+      actor.look_vector = Look::DIRECTIONS[:up]
+    end
+
+    def update_look_point(time_secs)
+      controller = actor.controller
+
+      look_vector = if controller.look_left?
         Look::DIRECTIONS[:left]
-      elsif input.look_right?
+      elsif controller.look_right?
         Look::DIRECTIONS[:right]
-      elsif input.look_up?
+      elsif controller.look_up?
         Look::DIRECTIONS[:up]
-      elsif input.look_down?
+      elsif controller.look_down?
         Look::DIRECTIONS[:down]
       end
 
       viewport = actor.viewport
       current_vec = vec2(viewport.follow_offset_x, viewport.follow_offset_y)
       if look_vector 
-        actor.look_vector = look_vector
         rot = actor.do_or_do_not(:rotation) || 0
         offset_vec = current_vec - look_vector.rotate_deg(rot) * actor.look_distance * time_secs
 

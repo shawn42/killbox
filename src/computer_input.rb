@@ -15,7 +15,9 @@ class ComputerInput
     @old_input.unsubscribe_all *args
   end
 
-  attr_accessor :charging_jump, :walk_left, :walk_right, :charging_bomb, :look_left, :look_up, :look_down, :look_right
+  attr_accessor :charging_jump, :walk_left, :walk_right, 
+    :charging_bomb, :look_left, :look_up, :look_down, :look_right
+
   def shoot
     emit :shoot
   end
