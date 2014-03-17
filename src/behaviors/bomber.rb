@@ -97,21 +97,22 @@ define_behavior :bomber do
       actor.controller.look_left?
     end
 
-    def normalize_radians(radians)
-      log "raw player rotation: #{radians}"
-      if radians <= -2*Math::PI
-        radians = radians % (-2*Math::PI)
-        2*Math::PI + radians
-      elsif radians >= 2*Math::PI
-        radians % (2*Math::PI)
-      else
-        radians
-      end
+    def reticle_on_left?
+      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
+      angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
+      angle_difference.abs > (Math::PI / 2)
     end
 
-    def relative_reticle_angle
-      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
-      actor.reticle_vector.angle_with(actor_look_right_vector)
+    def reticle_on_right?
+      !reticle_on_left?
+    end
+
+    def flip_reticle
+      actor_look_up_vector = vec2(0,-1).rotate!(degrees_to_radians(actor.rotation))
+      actor_look_up_vector.magnitude = 100
+      projection = actor.reticle_vector.projected_onto actor_look_up_vector
+      rejection = projection - actor_look_up_vector
+      actor.reticle_vector = projection + (projection - actor.reticle_vector)
     end
 
     def rotate_reticle_toward_up(time_secs)
@@ -134,24 +135,6 @@ define_behavior :bomber do
       else
         actor.reticle_vector.rotate!(-aim_speed * time_secs)
       end
-    end
-
-    def flip_reticle
-      actor_look_up_vector = vec2(0,-1).rotate!(degrees_to_radians(actor.rotation))
-      actor_look_up_vector.magnitude = 100
-      projection = actor.reticle_vector.projected_onto actor_look_up_vector
-      rejection = projection - actor_look_up_vector
-      actor.reticle_vector = projection + (projection - actor.reticle_vector)
-    end
-
-    def reticle_on_left?
-      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
-      angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
-      angle_difference.abs > (Math::PI / 2)
-    end
-
-    def reticle_on_right?
-      !reticle_on_left?
     end
 
     def rotate_reticle_toward_right(time_secs)
