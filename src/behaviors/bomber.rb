@@ -41,7 +41,6 @@ define_behavior :bomber do
       elsif started_charging_bomb?
         charge_bomb time_secs
       elsif charging_bomb?
-        actor.vel = vec2(0,0) if actor.on_ground?
         charge_bomb time_secs
       end
     end
