@@ -2,7 +2,7 @@
 # too much velocity
 # charge may be a little slow
 define_behavior :bomber do
-  requires :stage, :director, :bomb_coordinator
+  requires :stage, :director, :bomb_coordinator, :input_manager
   setup do
     # lets start with infinite bombs, fixed vel
     actor.has_attributes bomb_charge: 0,
@@ -13,8 +13,16 @@ define_behavior :bomber do
                          reticle_vector: nil,
                          bomb_kickback: opts[:kickback] || 0
                         
+    # XXX HACK for playtesting XXX
+    input_manager.reg :down, KbSpace do
+      log "10 more bombs for #{actor.object_id}!"
+      actor.bombs_left += 10
+    end
     director.when :first do |time, time_secs|
       update_bombing time_secs if has_bombs_left?
+    end
+
+    actor.when :look_dir_changed do |was_looking, now_looking|
     end
   end
 
@@ -29,11 +37,8 @@ define_behavior :bomber do
 
     def update_bombing(time_secs)
       if released_charged_bomb?
-        add_behavior :accelerator
         release_bomb
       elsif started_charging_bomb?
-        remove_behavior :accelerator
-        actor.vel = vec2(0,0) if actor.on_ground?
         charge_bomb time_secs
       elsif charging_bomb?
         actor.vel = vec2(0,0) if actor.on_ground?
@@ -49,7 +54,7 @@ define_behavior :bomber do
       actor.bomb_reticle.react_to :hide
     end
 
-    def update_reticle
+    def update_reticle(time_secs)
       actor.bomb_reticle.react_to :show
       min_dist_from_actor = 10
       max_dist_from_actor = 40
@@ -59,12 +64,123 @@ define_behavior :bomber do
         (max_dist_from_actor - min_dist_from_actor) * 
         (actor.bomb_charge / actor.max_bomb_charge.to_f)
 
-      reticle_vector = (actor.look_vector * dist_from_actor).
-        rotate(degrees_to_radians(rotation))
+      if actor.was_charging_bomb?
+        actor.reticle_vector.magnitude = dist_from_actor 
+      else
+        actor.reticle_vector = (actor.look_vector * dist_from_actor).
+          rotate(degrees_to_radians(rotation))
+      end
 
-      actor.reticle_vector = reticle_vector
+      controller = actor.controller
+      if looking_up?
+        rotate_reticle_toward_up time_secs
+      elsif looking_down?
+        rotate_reticle_toward_down time_secs
+      elsif looking_right?
+        rotate_reticle_toward_right time_secs
+      elsif looking_left?
+        rotate_reticle_toward_left time_secs
+      end
 
       actor.bomb_reticle.position = actor.position + actor.reticle_vector
+    end
+
+    def looking_up?
+      actor.controller.look_up?
+    end
+    def looking_down?
+      actor.controller.look_down?
+    end
+    def looking_right?
+      actor.controller.look_right?
+    end
+    def looking_left?
+      actor.controller.look_left?
+    end
+
+    def normalize_radians(radians)
+      log "raw player rotation: #{radians}"
+      if radians <= -2*Math::PI
+        radians = radians % (-2*Math::PI)
+        2*Math::PI + radians
+      elsif radians >= 2*Math::PI
+        radians % (2*Math::PI)
+      else
+        radians
+      end
+    end
+
+    def relative_reticle_angle
+      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
+      actor.reticle_vector.angle_with(actor_look_right_vector)
+    end
+
+    def rotate_reticle_toward_up(time_secs)
+      aim_speed = Math::PI
+      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
+      angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
+      if angle_difference.abs < (Math::PI / 2)
+        actor.reticle_vector.rotate!(-aim_speed * time_secs)
+      else
+        actor.reticle_vector.rotate!(aim_speed * time_secs)
+      end
+    end
+
+    def rotate_reticle_toward_down(time_secs)
+      aim_speed = Math::PI
+      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
+      angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
+      if angle_difference.abs < (Math::PI / 2)
+        actor.reticle_vector.rotate!(aim_speed * time_secs)
+      else
+        actor.reticle_vector.rotate!(-aim_speed * time_secs)
+      end
+    end
+
+    def flip_reticle
+      actor_look_up_vector = vec2(0,-1).rotate!(degrees_to_radians(actor.rotation))
+      actor_look_up_vector.magnitude = 100
+      projection = actor.reticle_vector.projected_onto actor_look_up_vector
+      rejection = projection - actor_look_up_vector
+      actor.reticle_vector = projection + (projection - actor.reticle_vector)
+    end
+
+    def reticle_on_left?
+      actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
+      angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
+      angle_difference.abs > (Math::PI / 2)
+    end
+
+    def reticle_on_right?
+      !reticle_on_left?
+    end
+
+    def rotate_reticle_toward_right(time_secs)
+      aim_speed = Math::PI
+
+      flip_reticle if reticle_on_left?
+
+      actor_look_up_vector = vec2(0,1).rotate!(degrees_to_radians(actor.rotation))
+      angle_difference = actor.reticle_vector.angle_with(actor_look_up_vector)
+      if angle_difference.abs < (Math::PI / 2)
+        actor.reticle_vector.rotate!(-aim_speed * time_secs)
+      else
+        actor.reticle_vector.rotate!(aim_speed * time_secs)
+      end
+    end
+
+    def rotate_reticle_toward_left(time_secs)
+      aim_speed = Math::PI
+
+      flip_reticle if reticle_on_right?
+
+      actor_look_up_vector = vec2(0,1).rotate!(degrees_to_radians(actor.rotation))
+      angle_difference = actor.reticle_vector.angle_with(actor_look_up_vector)
+      if angle_difference.abs < (Math::PI / 2)
+        actor.reticle_vector.rotate!(aim_speed * time_secs)
+      else
+        actor.reticle_vector.rotate!(-aim_speed * time_secs)
+      end
     end
 
     def plant_landmine
@@ -130,7 +246,7 @@ define_behavior :bomber do
     end
 
     def charge_bomb(time_secs)
-      update_reticle
+      update_reticle time_secs
       actor.bomb_charge += time_secs
       actor.bomb_charge = min(actor.max_bomb_charge, actor.bomb_charge)
       actor.was_charging_bomb = true

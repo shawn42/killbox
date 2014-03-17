@@ -47,21 +47,22 @@ define_behavior :looker do
     end
 
     def update_look_point(time_secs)
-      controller = actor.controller
+      input = actor.controller
 
-      look_vector = if controller.look_left?
+      look_vector = if input.look_left?
         Look::DIRECTIONS[:left]
-      elsif controller.look_right?
+      elsif input.look_right?
         Look::DIRECTIONS[:right]
-      elsif controller.look_up?
+      elsif input.look_up?
         Look::DIRECTIONS[:up]
-      elsif controller.look_down?
+      elsif input.look_down?
         Look::DIRECTIONS[:down]
       end
 
       viewport = actor.viewport
       current_vec = vec2(viewport.follow_offset_x, viewport.follow_offset_y)
       if look_vector 
+        actor.look_vector = look_vector
         rot = actor.do_or_do_not(:rotation) || 0
         offset_vec = current_vec - look_vector.rotate_deg(rot) * actor.look_distance * time_secs
 

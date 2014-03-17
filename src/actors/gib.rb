@@ -8,8 +8,14 @@ define_actor :gib do
     mover
     tile_collision_detector
     trivial_collision_point
-    short_lived ttl: 3000
   end
+
+  behavior do
+    setup do
+      add_behavior :short_lived, ttl: (500..4_000).sample
+    end
+  end
+
   has_attributes color: Color::RED
 
   view do

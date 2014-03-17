@@ -57,13 +57,8 @@ define_stage :level_play do
     end
 
     # F1 console watch values
-    player = @players[0]
-    if player
-      @console.react_to :watch, :p1rotvel do player.rotation_vel end
-      @console.react_to :watch, :p1gndnorm do player.ground_normal end
-    end
-    # @console.react_to :watch, :fps do Gosu.fps end
-    # @console.react_to :watch, :gc_stat do GC.stat.to_s end
+    @console.react_to :watch, :fps do Gosu.fps end
+    @console.react_to :watch, :gc_stat do GC.stat.to_s end
     # @console.react_to :watch, :vel do player.vel end
   end
 

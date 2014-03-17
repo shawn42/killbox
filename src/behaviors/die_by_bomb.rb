@@ -15,7 +15,7 @@ define_behavior :die_by_bomb do
     def esplode(bomb, distance)
       if distance < (bomb.radius * 0.666) && map_inspector.line_of_sight?(actor, bomb)
         blast_vel = (vec2(actor.x, actor.y) - vec2(bomb.x, bomb.y))
-        delay = blast_vel.magnitude * 4
+        delay = blast_vel.magnitude * 2
         blast_vel.magnitude = 130 / blast_vel.magnitude
 
         timer_manager.add_timer die_timer_name, delay, false do

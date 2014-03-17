@@ -13,6 +13,8 @@ describe "Killbox bombing", acceptance: true do
 
   let(:player_w) { 32 }
   let(:player_h) { 60 }
+  let(:bomb) { game.actor(:bomb) }
+  let(:player) { game.actor(:player) }
   let!(:props) { mock_tiles 'trippers/props.png', 32, 32 }
 
   before do
@@ -29,8 +31,6 @@ describe "Killbox bombing", acceptance: true do
 
   describe 'throwing bombs' do
     context 'no aiming' do
-      let(:bomb) { game.actor(:bomb) }
-      let(:player) { game.actor(:player) }
 
       it 'throws right when looking right' do
         look_right
@@ -83,27 +83,55 @@ describe "Killbox bombing", acceptance: true do
         end
       end
 
-      it 'turns off walking when you are charging' do
-        while_charging_bomb do
-          last_position = player.position
-          walk_left 20
-          player.position.should == last_position
-        end
-      end
-
       it 'throw faster the longer you hold' do
         min_vel = bomb_velocity_from_min_throw
         max_vel = bomb_velocity_from_max_throw
         max_vel.magnitude.should > min_vel.magnitude
       end
 
-      it 'can aim up/right'
-      it 'can aim up/right'
-      it 'can aim down/left'
-      it 'can aim down/left'
+      it 'can aim up/right' do
+        look_right
+        while_charging_bomb do
+          aim_up
+        end
+        see_bomb_is_up_and_right_of_player
+      end
+
+      it 'can aim up/left' do
+        look_left
+        while_charging_bomb do
+          aim_up
+        end
+        see_bomb_is_up_and_left_of_player
+      end
+
+      it 'can aim down/right' do
+        look_right
+        while_charging_bomb do
+          aim_down
+        end
+        see_bomb_is_down_and_right_of_player
+      end
+
+      it 'can aim down/left' do
+        look_left
+        while_charging_bomb do
+          aim_down
+        end
+        see_bomb_is_down_and_left_of_player
+      end
+
       it 'locks to up when holding up'
       it 'locks to right when holding right'
       it 'locks to left when holding left'
+    end
+
+    def aim_up
+      hold_key KbW, 40, step: 20
+    end
+
+    def aim_down
+      hold_key KbS, 40, step: 20
     end
 
     def bomb_velocity_from_min_throw
@@ -129,6 +157,7 @@ describe "Killbox bombing", acceptance: true do
       update 20
       yield
       release_key KbM
+      update 20
     end
 
     def see_no_reticle
@@ -140,6 +169,26 @@ describe "Killbox bombing", acceptance: true do
       reticle.should be
       reticle.x.should > player.x
       reticle.visible.should be_true
+    end
+
+    def see_bomb_is_up_and_right_of_player
+      see_bomb_is_right_of_player
+      see_bomb_is_above_player
+    end
+
+    def see_bomb_is_up_and_left_of_player
+      see_bomb_is_left_of_player
+      see_bomb_is_above_player
+    end
+
+    def see_bomb_is_down_and_right_of_player
+      see_bomb_is_right_of_player
+      see_bomb_is_below_player
+    end
+
+    def see_bomb_is_down_and_left_of_player
+      see_bomb_is_left_of_player
+      see_bomb_is_below_player
     end
 
     def see_bomb_is_right_of_player
