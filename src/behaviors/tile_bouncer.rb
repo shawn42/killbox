@@ -49,7 +49,7 @@ define_behavior :tile_bouncer do
         actor.vel = new_vel
 
         left_over_movement = new_vel.dup
-        left_over_movement.magnitude = left_over
+        left_over_movement.magnitude = max(left_over, 1)
         new_loc = hit_vector + left_over_movement + (actor.position - point_that_collided)
 
         actor.rotation_vel = 0
@@ -66,6 +66,7 @@ define_behavior :tile_bouncer do
   end
 
   helpers do
+    include MinMaxHelpers
     # TODO how to DRY this up w/ other behaviors? just define in some constants.rb?
     FACE_NORMALS = {
       top:    vec2(0, -1),
