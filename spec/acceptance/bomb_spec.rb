@@ -58,6 +58,22 @@ describe "Killbox bombing", acceptance: true do
     end
 
     describe 'aiming' do
+      it 'can aim mid air and not throw crazy acos range error' do
+        look_right
+        press_key KbD
+        update 100, step: 20
+        hold_key KbN, 100, step: 20
+        update 40, step: 20
+
+        release_key KbD
+        update 40, step: 20
+
+        press_key KbD
+        update 40, step: 20
+        press_key KbM
+        update 40, step: 20
+      end
+
       it 'draws the reticle' do
         look_right
         see_no_reticle

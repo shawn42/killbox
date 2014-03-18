@@ -8,11 +8,12 @@ define_actor :gib do
     mover
     tile_collision_detector
     trivial_collision_point
+    pulled_by_black_hole
   end
 
   behavior do
     setup do
-      add_behavior :short_lived, ttl: (500..4_000).sample
+      add_behavior :short_lived, ttl: (1_000..6_000).sample
     end
   end
 

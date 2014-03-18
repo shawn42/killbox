@@ -99,8 +99,12 @@ define_behavior :bomber do
 
     def reticle_on_left?
       actor_look_right_vector = vec2(1,0).rotate!(degrees_to_radians(actor.rotation))
-      angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
-      angle_difference.abs > (Math::PI / 2)
+      if(actor.reticle_vector.unit == actor_look_right_vector.unit)
+        return false
+      else
+        angle_difference = actor.reticle_vector.angle_with(actor_look_right_vector)
+        angle_difference.abs > (Math::PI / 2)
+      end
     end
 
     def reticle_on_right?
