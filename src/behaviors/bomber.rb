@@ -22,13 +22,12 @@ define_behavior :bomber do
       update_bombing time_secs if has_bombs_left?
     end
 
-    actor.when :look_dir_changed do |was_looking, now_looking|
-    end
   end
 
   remove do
     actor.controller.unsubscribe_all self
     director.unsubscribe_all self
+    actor.bomb_reticle.remove
   end
 
   helpers do
