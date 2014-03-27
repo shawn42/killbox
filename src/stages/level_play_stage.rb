@@ -16,20 +16,20 @@ define_stage :level_play do
       fire :change_stage, :map_select
     end
 
-    # input_manager.reg :down, KbQ do
-    #   if $profiling
-    #     result = RubyProf.stop
-    #     printer = RubyProf::GraphPrinter.new(result)
-    #     printer.print(STDOUT, min_percent: 1)
-    #     # PerfTools::CpuProfiler.stop
-    #   else
-    #     require 'ruby-prof'
-    #     RubyProf.start
-    #     # require 'perftools'
-    #     # PerfTools::CpuProfiler.start("/tmp/killbox_#{Time.now.to_i}_profile")
-    #     $profiling = true
-    #   end
-    # end
+    input_manager.reg :down, KbQ do
+      if $profiling
+        result = RubyProf.stop
+        printer = RubyProf::GraphPrinter.new(result)
+        printer.print(STDOUT, min_percent: 6)
+        # PerfTools::CpuProfiler.stop
+      else
+        require 'ruby-prof'
+        RubyProf.start
+        # require 'perftools'
+        # PerfTools::CpuProfiler.start("/tmp/killbox_#{Time.now.to_i}_profile")
+        $profiling = true
+      end
+    end
 
     director.update_slots = [:first, :before, :update, :last]
 
@@ -57,13 +57,8 @@ define_stage :level_play do
     end
 
     # F1 console watch values
-    player = @players[0]
-    if player
-      @console.react_to :watch, :p1rotvel do player.rotation_vel end
-      @console.react_to :watch, :p1gndnorm do player.ground_normal end
-    end
-    # @console.react_to :watch, :fps do Gosu.fps end
-    # @console.react_to :watch, :gc_stat do GC.stat.to_s end
+    @console.react_to :watch, :fps do Gosu.fps end
+    @console.react_to :watch, :gc_stat do GC.stat.to_s end
     # @console.react_to :watch, :vel do player.vel end
   end
 

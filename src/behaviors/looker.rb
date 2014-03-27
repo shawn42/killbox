@@ -5,11 +5,13 @@ define_behavior :looker do
     # in pixels
     actor.has_attributes look_distance: 150,
                          flip_h: false, 
-                         look_vector: Look::DIRECTIONS[:left]
+                         look_vector: Look::DIRECTIONS[:right]
 
-    input = actor.controller
-    input.when(:look_left) { actor.flip_h = true }
-    input.when(:look_right) { actor.flip_h = false }
+    controller = actor.controller
+    controller.when(:look_left) { look_left }
+    controller.when(:look_right) { look_right }
+    controller.when(:look_up) { look_up }
+    controller.when(:look_down) { look_down }
 
     director.when :update do |t_ms, time_in_sec|
       if actor.do_or_do_not :viewport
@@ -26,6 +28,23 @@ define_behavior :looker do
 
   helpers do
     include MinMaxHelpers
+
+    def look_left
+      actor.flip_h = true 
+      actor.look_vector = Look::DIRECTIONS[:left]
+    end
+
+    def look_right
+      actor.flip_h = false 
+      actor.look_vector = Look::DIRECTIONS[:right]
+    end
+
+    def look_down
+      actor.look_vector = Look::DIRECTIONS[:down]
+    end
+    def look_up
+      actor.look_vector = Look::DIRECTIONS[:up]
+    end
 
     def update_look_point(time_secs)
       input = actor.controller

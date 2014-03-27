@@ -46,6 +46,12 @@ module KillboxAcceptanceHelpers
     hold_key KbN, time_held, step: 20
   end
 
+  def throw_bomb(time_held=40)
+    # charge & throw
+    hold_key KbM, time_held, step: 10
+    update 20
+  end
+
   def max_jump
     jump 2_000
   end
@@ -73,8 +79,16 @@ module KillboxAcceptanceHelpers
     tap_key KbW
   end
 
+  def look_down
+    tap_key KbS
+  end
+
   def look_right
     tap_key KbD
+  end
+
+  def look_left
+    tap_key KbA
   end
 
   def shields_up
@@ -142,6 +156,8 @@ class ApproximateValue
   def to_s
     "within #{@acceptable_delta} of #{@me}"
   end
+
+  alias inspect to_s
 end
 
 # class MockImage

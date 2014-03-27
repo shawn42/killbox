@@ -57,7 +57,6 @@ define_behavior :shooter do
       rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(rotation))
       rotated_gun_dir.magnitude = 22
       actor.gun_tip = rotated_gun_dir + actor.position
-      # log ">> update_gun_tip: gun_tip: #{actor.gun_tip.inspect}"
 
       if ENV['DEBUG']
         # for debug drawing
@@ -75,7 +74,6 @@ define_behavior :shooter do
         actor.can_shoot = false
         rotated_gun_dir = actor.gun_direction.rotate(degrees_to_radians(actor.rotation))
 
-        # puts ">> shoot_if_able: gun_tip: #{actor.gun_tip.inspect}"
         bullet_pos = actor.position + ((actor.gun_tip - actor.position) * 1.9)
         bullet = stage.create_actor :bullet, player: actor, x: bullet_pos.x, y: bullet_pos.y, map: actor.map, vel: shot_vel
         bullet_coordinator.register_bullet bullet

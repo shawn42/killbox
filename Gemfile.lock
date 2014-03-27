@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:shawn42/gamebox.git
-  revision: 1f42e30b63d21a8e56c648f538bf997adc71a19e
+  revision: e33b07d05891faa0b8b55d8c3cdd537186448fae
   specs:
     gamebox (0.5.0)
       conject (>= 0.0.8)
@@ -30,7 +30,7 @@ GEM
     i18n (0.6.9)
     kvo (0.1.0)
       publisher
-    listen (2.7.0)
+    listen (2.7.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
       rb-fsevent (>= 0.9.3)
