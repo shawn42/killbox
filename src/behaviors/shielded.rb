@@ -19,11 +19,11 @@ define_behavior :shielded do
     def unshielded_behaviors 
       [:accelerator, :jump, :slicer, :shooter, :bomber, :friction, :grounded,
         :tile_oriented, :die_by_bomb, :die_by_bullet, :die_by_sword, :disoriented_by_bombs,
-        :pulled_by_black_hole ]
+        :pulled_by_black_hole, :player_collision_points ]
     end
 
     def shielded_behaviors 
-      [:tile_bouncer, :absorb_bullet]
+      [:tile_bouncer, :absorb_bullet, :shielded_collision_points]
     end
 
     def shield_up_sound

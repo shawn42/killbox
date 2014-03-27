@@ -20,6 +20,7 @@ define_behavior :bound_by_box do
     actor.when(:rotation_changed) { update_bb }
     actor.when(:vel_changed) { update_bb }
     actor.when(:rot_vel_changed) { update_bb }
+    actor.when(:collision_points_changed) { update_bb }
 
     update_bb
   end
@@ -33,10 +34,11 @@ define_behavior :bound_by_box do
 
     def update_bb
       collision_points = actor.do_or_do_not(:collision_points)
+      collision_point_deltas = actor.do_or_do_not(:collision_point_deltas)
       vel = actor.do_or_do_not(:vel) || ZERO_VEC_2
       rot_vel = actor.do_or_do_not(:rot_vel) || 0
 
-      if collision_points
+      if collision_points && collision_point_deltas
         min_x = actor.x
         max_x = actor.x
         min_y = actor.y
@@ -55,7 +57,7 @@ define_behavior :bound_by_box do
 
 
         rotation = degrees_to_radians(actor.rotation + rot_vel)
-        moved_rotated_points = actor.collision_point_deltas.map do |delta_point| 
+        moved_rotated_points = collision_point_deltas.map do |delta_point| 
           (delta_point).rotate(rotation) + actor.position + vel
         end
 

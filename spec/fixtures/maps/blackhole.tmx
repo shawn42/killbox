@@ -29,7 +29,11 @@
  </layer>
  <objectgroup name="zones" width="30" height="19">
   <object name="floor" x="0" y="648" width="1080" height="36"/>
-  <object type="start_location" x="464" y="584" width="42" height="62"/>
+  <object type="start_location" x="464" y="584" width="42" height="62">
+   <properties>
+    <property name="rotation" value="0"/>
+   </properties>
+  </object>
   <object name="jump_target" x="785" y="21" width="179" height="78"/>
   <object x="471" y="661" width="3"/>
   <object name="ceiling" x="0" y="-3" width="1080" height="36"/>

@@ -141,87 +141,6 @@ describe "Killbox bombing", acceptance: true do
       it 'locks to right when holding right'
       it 'locks to left when holding left'
     end
-
-    def aim_up
-      hold_key KbW, 40, step: 20
-    end
-
-    def aim_down
-      hold_key KbS, 40, step: 20
-    end
-
-    def bomb_velocity_from_min_throw
-      throw_bomb 1
-      game.actors(:bomb).last.vel
-    end
-
-    def bomb_velocity_from_max_throw
-      throw_bomb 1_000
-      game.actors(:bomb).last.vel
-    end
-
-    def use_all_bombs
-      20.times { throw_bomb }
-    end
-
-    def see_reticle_position_right_of(position)
-      reticle.x.should > position.x
-    end
-
-    def while_charging_bomb(&blk)
-      press_key KbM
-      update 20
-      yield
-      release_key KbM
-      update 20
-    end
-
-    def see_no_reticle
-      reticle.should be
-      reticle.visible.should be_false
-    end
-
-    def see_reticle_is_right_of_player
-      reticle.should be
-      reticle.x.should > player.x
-      reticle.visible.should be_true
-    end
-
-    def see_bomb_is_up_and_right_of_player
-      see_bomb_is_right_of_player
-      see_bomb_is_above_player
-    end
-
-    def see_bomb_is_up_and_left_of_player
-      see_bomb_is_left_of_player
-      see_bomb_is_above_player
-    end
-
-    def see_bomb_is_down_and_right_of_player
-      see_bomb_is_right_of_player
-      see_bomb_is_below_player
-    end
-
-    def see_bomb_is_down_and_left_of_player
-      see_bomb_is_left_of_player
-      see_bomb_is_below_player
-    end
-
-    def see_bomb_is_right_of_player
-      bomb.x.should > player.x
-    end
-
-    def see_bomb_is_left_of_player
-      bomb.x.should < player.x
-    end
-
-    def see_bomb_is_above_player
-      bomb.y.should < player.y
-    end
-    
-    def see_bomb_is_below_player
-      bomb.y.should > player.y
-    end
   end
 
   describe 'land mines' do
@@ -258,7 +177,7 @@ describe "Killbox bombing", acceptance: true do
 
   def see_player_is_standing_on_the_ground
     update 2000, step: 20
-    see_actor_attrs :player, 
+    see_actor_attrs :player,
       rotation: 0.ish,
       on_ground: true
     see_bottom_right_standing_above floor_zone.y
@@ -313,5 +232,85 @@ describe "Killbox bombing", acceptance: true do
 
   end
 
-end
+  def aim_up(hold_time=40)
+    hold_key KbW, hold_time, step: 20
+  end
 
+  def aim_down
+    hold_key KbS, 40, step: 20
+  end
+
+  def bomb_velocity_from_min_throw
+    throw_bomb 1
+    game.actors(:bomb).last.vel
+  end
+
+  def bomb_velocity_from_max_throw
+    throw_bomb 1_000
+    game.actors(:bomb).last.vel
+  end
+
+  def use_all_bombs
+    20.times { throw_bomb }
+  end
+
+  def see_reticle_position_right_of(position)
+    reticle.x.should > position.x
+  end
+
+  def while_charging_bomb(&blk)
+    press_key KbM
+    update 20
+    yield
+    release_key KbM
+    update 20
+  end
+
+  def see_no_reticle
+    reticle.should be
+    reticle.visible.should be_false
+  end
+
+  def see_reticle_is_right_of_player
+    reticle.should be
+    reticle.x.should > player.x
+    reticle.visible.should be_true
+  end
+
+  def see_bomb_is_up_and_right_of_player
+    see_bomb_is_right_of_player
+    see_bomb_is_above_player
+  end
+
+  def see_bomb_is_up_and_left_of_player
+    see_bomb_is_left_of_player
+    see_bomb_is_above_player
+  end
+
+  def see_bomb_is_down_and_right_of_player
+    see_bomb_is_right_of_player
+    see_bomb_is_below_player
+  end
+
+  def see_bomb_is_down_and_left_of_player
+    see_bomb_is_left_of_player
+    see_bomb_is_below_player
+  end
+
+  def see_bomb_is_right_of_player
+    bomb.x.should > player.x
+  end
+
+  def see_bomb_is_left_of_player
+    bomb.x.should < player.x
+  end
+
+  def see_bomb_is_above_player
+    bomb.y.should < player.y
+  end
+
+  def see_bomb_is_below_player
+    bomb.y.should > player.y
+  end
+
+end

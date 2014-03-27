@@ -38,25 +38,31 @@ define_behavior :tile_bouncer do
         point_that_collided = cps[closest_collision[:point_index]]
 
         motion = penetration - point_that_collided 
-        # motion = actor.vel
-
         reversed_vel = motion.reverse
-        
         projected = motion.projected_onto(face_normal)
 
         new_vel = (projected - motion).reverse + projected.reverse
-        # log "MODIFYING VEL: #{actor.vel} .. #{new_vel}"
+        # if actor.actor_type == :bomb
+        #   puts actor.object_id
+        #   puts "MODIFYING VEL: #{actor.vel} .. #{new_vel}" 
+        # end
         actor.vel = new_vel
 
         left_over_movement = new_vel.dup
-        left_over_movement.magnitude = max(left_over, 1)
+        left_over_movement.magnitude = left_over
         new_loc = hit_vector + left_over_movement + (actor.position - point_that_collided)
+
+        # if actor.actor_type == :bomb
+        #   puts "CP: #{point_that_collided}"
+        #   puts "MODIFYING POS: #{actor.position} .. #{new_loc}" 
+        # end
 
         actor.rotation_vel = 0
         actor.update_attributes x: new_loc.x, y: new_loc.y
 
       else
         # raise "collided, but no good collisions in [#{collisions}]"
+        actor.emit :no_tile_collisions
       end
     end
   end

@@ -1,4 +1,4 @@
-define_behavior :player_collision_points do
+define_behavior :shielded_collision_points do
   setup do
     actor.has_attributes :collision_point_deltas, 
       :collision_points
@@ -20,14 +20,6 @@ define_behavior :player_collision_points do
 
   helpers do
     def points
-      #
-      #  0     1
-      #   -----
-      # 7 | 0  | 2
-      #   |-+- |
-      # 6 |/ \ | 3
-      #   -----
-      #  5     4
       point_deltas.map do |point|
         rotate(actor.position, point)
       end
@@ -37,20 +29,26 @@ define_behavior :player_collision_points do
       w = 32#actor.width
       h = 60#actor.height
       hw = w / 2.0
+      qw = w * 0.25
       hh = h / 2.0
       qh = h * 0.25
 
       [
         vec2(-hw,-hh),
-
+        vec2(0,-hh-5),
         vec2(hw,-hh),
-        vec2(hw,-qh),
-        vec2(hw,qh),
-        vec2(hw,hh-1),
 
+        vec2(hw+qw,-qh),
+        vec2(hw+qw,0),
+        vec2(hw+qw,qh),
+
+        vec2(hw,hh-1),
+        vec2(0,hh+5-1),
         vec2(-hw,hh-1),
-        vec2(-hw,qh),
-        vec2(-hw,-qh),
+
+        vec2(-hw-qw,qh),
+        vec2(-hw-qw,0),
+        vec2(-hw-qw,-qh),
       ]
     end
 

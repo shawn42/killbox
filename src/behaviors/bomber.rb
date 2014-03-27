@@ -45,7 +45,10 @@ define_behavior :bomber do
     end
 
     def create_reticle
-      stage.create_actor :reticle, hide: true
+      # TODO bug in hide: true by default, unreg blows up in gamebox
+      stage.create_actor(:reticle).tap do |reticle|
+        reticle.react_to :hide
+      end
     end
 
     def reset_reticle

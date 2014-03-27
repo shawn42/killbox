@@ -26,8 +26,8 @@ define_behavior :bomb_collision_points do
     end
 
     def point_deltas
-      w = 30
-      h = 30
+      w = 18 #22
+      h = 6 #9
       hw = w / 2.0
       hh = h / 2.0
       [
