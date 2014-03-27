@@ -10,6 +10,9 @@ define_stage :control_setup do
     # not sure where this comes from
     # data_tree = backstage[:control_data_tree]
     @control_menu = player_control_menu_builder.build(input_manager)#, data_tree)
+    @control_menu.when :done do
+      go_back
+    end
     # @player_control_builder = create_actor :player_control_builder, x: 100, y: 30
 
     # input_manager.reg :down, KbEscape do

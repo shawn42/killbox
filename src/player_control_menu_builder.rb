@@ -1,6 +1,10 @@
 define_behavior :mmenu do
+  requires :viewport
+
   setup do
-    actor.has_attributes menu_items: [], active_item: nil, selected_item: nil
+    actor.has_attributes menu_items: [], active_item: nil, selected_item: nil,
+      root: false
+
   end
 
   remove do
@@ -39,6 +43,33 @@ define_behavior :mmenu do
       actor.selected_item.react_to :select
     end
 
+    def select_left_neighbor
+      items = actor.menu_items
+      current_item = actor.selected_item
+
+      left_neighbors = items.select{|n| n.x < current_item.x}
+      closest = left_neighbors.sort_by do |n|
+        x_diff = n.x - current_item.x
+        y_diff = n.y - current_item.y
+        x_diff**2 + y_diff**2
+      end.first
+
+      if closest.nil?
+        # keep in mind there is an x_offset on viewport (should be zero unless
+        # we are scrolling around)
+        right_edge = viewport.width
+        closest = items.sort_by do |n|
+          x_diff = n.x - right_edge
+          y_diff = n.y - current_item.y
+          x_diff**2 + y_diff**2
+        end.first
+      end
+
+      current_item.react_to :deselect
+      actor.selected_item = closest
+      actor.selected_item.react_to :select
+    end
+
     def previous
       current_index = actor.menu_items.index(actor.selected_item)
       actor.selected_item.react_to :deselect
@@ -64,6 +95,10 @@ define_behavior :mmenu do
         log "DEACTIVATING"
         menu_item.react_to :deactivate
         actor.active_item = nil
+        if actor.root
+          menu_item.react_to :select
+          actor.selected_item = menu_item 
+        end
       end
       actor.menu_items << menu_item
     end
@@ -129,14 +164,23 @@ define_actor :mmenu do
       y = actor.y + y_offset
       w = actor.do_or_do_not(:w)
       h = actor.do_or_do_not(:h)
+
+      color = nil
+      width = nil
+      
       if w && h
         if actor.selected?
-          # target.draw_box x, y, x+w, y+h, Color::RED, z
-          target.draw_box x+1, y+1, x+w-1, y+h-1, Color::RED, z
+          color = Color::RED
+          width = 4
         elsif actor.active?
-          target.draw_box x+1, y+1, x+w-1, y+h-1, Color::GREEN, z
-        else
-          target.draw_box x, y, x+w, y+h, Color::WHITE, z
+          color = Color::GREEN
+          width = 4
+        end
+
+        color = color || Color::WHITE
+        width = width || 1
+        [*0..width-1].to_a.each do |offset|
+          target.draw_box x + offset, y + offset, x + w - offset, y + h - offset, color, z
         end
       end
     end
@@ -270,7 +314,8 @@ class PlayerControlMenuBuilder
       name: "main_menu",
       x: 1, y: 1, 
       w: viewport.width, 
-      h: viewport.height
+      h: viewport.height,
+      root: true
 
     input_manager.reg :down, KbF1 do |evt|
       player_controls_menu.react_to :select_first_item
@@ -286,6 +331,12 @@ class PlayerControlMenuBuilder
     end
     input_manager.reg :down, KbUp do |evt|
       player_controls_menu.react_to :previous
+    end
+    input_manager.reg :down, KbLeft do |evt|
+      player_controls_menu.react_to :select_left_neighbor
+    end
+    input_manager.reg :down, KbRight do |evt|
+      player_controls_menu.react_to :select_right_neighbor
     end
     input_manager.reg :down do |evt|
       player_controls_menu.react_to(BUTTON_ID_TO_SYM[evt[:id]])
@@ -346,6 +397,7 @@ class PlayerControlMenuBuilder
     #   log controls_data
     # end
 
+    player_controls_menu
   end
 
 end
