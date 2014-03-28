@@ -56,7 +56,7 @@ define_stage :level_play do
       end
     end
 
-    input_manager.reg :down, F5 do
+    input_manager.reg :down, KbF5 do
       actor = @players.first
       force = vec2(0,0)
       count = 30
