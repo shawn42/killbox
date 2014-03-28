@@ -35,66 +35,37 @@ define_behavior :mmenu do
       end
     end
 
-    def select_upper_neighbor
-      # keep in mind there is an y_offset on viewport (should be zero unless
-      # we are scrolling around)
-      bottom_edge = viewport.height
-
-      items = actor.menu_items
-      current_item = actor.selected_item
-
-      up_neighbors = actor.menu_items.select{|n| n.y < current_item.y}
-      closest = closest_neighbor(current_item, up_neighbors) ||
-                closest_neighbor(vec2(current_item.x, bottom_edge), items)
-
-      select_item closest
-    end
-
-    def select_lower_neighbor
-      upper_edge = 0
-
-      items = actor.menu_items
-      current_item = actor.selected_item
-
-      down_neighbors = actor.menu_items.select{|n| n.y > current_item.y}
-      closest = closest_neighbor(current_item, down_neighbors) ||
-                closest_neighbor(vec2(current_item.x, upper_edge), items)
-
-      select_item closest
-    end
-
-    def select_left_neighbor
-      # keep in mind there is an x_offset on viewport (should be zero unless
-      # we are scrolling around)
-      right_edge = viewport.width
-
-      items = actor.menu_items
-      current_item = actor.selected_item
-
-      left_neighbors = actor.menu_items.select{|n| n.x < current_item.x}
-      closest = closest_neighbor(current_item, left_neighbors) ||
-                closest_neighbor(vec2(right_edge, current_item.y), items)
-
-      select_item closest
+    def select_up_neighbor
+      close_sort = ->(item){ item.y < actor.selected_item.y }
+      fallback_point = vec2(actor.selected_item.x, viewport.height)
+      smart_select_neighbor(close_sort, fallback_point)
     end
 
     def select_right_neighbor
-      left_edge = 0
-
-      items = actor.menu_items
-      current_item = actor.selected_item
-
-      right_neighbors = items.select{|n| n.x > current_item.x}
-      closest = closest_neighbor(current_item, right_neighbors) ||
-                closest_neighbor(vec2(left_edge, current_item.y), items)
-
-      select_item closest
+      close_sort = ->(item){ item.x > actor.selected_item.x }
+      fallback_point = vec2(0, actor.selected_item.y)
+      smart_select_neighbor(close_sort, fallback_point)
     end
 
-    def closest_neighbor(item, neighbors)
-      neighbors.sort_by do |n|
-        dist_squared n.x, n.y, item.x, item.y
-      end.first
+    def select_down_neighbor
+      close_sort = ->(item){ item.y > actor.selected_item.y }
+      fallback_point = vec2(actor.selected_item.x, 0)
+      smart_select_neighbor(close_sort, fallback_point)
+    end
+
+    def select_left_neighbor
+      close_sort = ->(item){ item.x < actor.selected_item.x }
+      fallback_point = vec2(viewport.width, actor.selected_item.y)
+      smart_select_neighbor(close_sort, fallback_point)
+    end
+
+    def smart_select_neighbor(direction_sort, fallback_point)
+      directional_neighbors = actor.menu_items.select { |item| direction_sort.call(item) }
+      puts "FINDING..."
+      closest = closest_neighbor(actor.selected_item, directional_neighbors) ||
+                closest_neighbor(fallback_point, actor.menu_items)
+
+      select_item closest
     end
 
     def select_item(item)
@@ -103,9 +74,15 @@ define_behavior :mmenu do
       actor.selected_item.react_to :select
     end
 
-    def dist_squared(x1, y1, x2, y2)
-      x_diff = x1 - x2
-      y_diff = y1 - y2
+    def closest_neighbor(target_point, items)
+      items.sort_by do |item|
+        dist_squared item, target_point
+      end.first
+    end
+
+    def dist_squared(first, second)
+      x_diff = first.x - second.x
+      y_diff = first.y - second.y
       x_diff**2 + y_diff**2
     end
 
@@ -358,10 +335,10 @@ class PlayerControlMenuBuilder
       player_controls_menu.react_to :leave
     end
     input_manager.reg :down, KbDown do |evt|
-      player_controls_menu.react_to :select_lower_neighbor
+      player_controls_menu.react_to :select_down_neighbor
     end
     input_manager.reg :down, KbUp do |evt|
-      player_controls_menu.react_to :select_upper_neighbor
+      player_controls_menu.react_to :select_up_neighbor
     end
     input_manager.reg :down, KbLeft do |evt|
       player_controls_menu.react_to :select_left_neighbor
