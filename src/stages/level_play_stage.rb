@@ -56,6 +56,17 @@ define_stage :level_play do
       end
     end
 
+    input_manager.reg :down, F5 do
+      actor = @players.first
+      force = vec2(0,0)
+      count = 30
+      count.times do
+        vel = vec2(0.5,0).rotate!(degrees_to_radians(rand(360))) * rand(4)
+        create_actor :gib, x: actor.x, y: actor.y, vel: vel + force, map: actor.map, size: rand(6)
+      end
+    end
+
+
     # F1 console watch values
     @console.react_to :watch, :fps do Gosu.fps end
     @console.react_to :watch, :gc_stat do GC.stat.to_s end
