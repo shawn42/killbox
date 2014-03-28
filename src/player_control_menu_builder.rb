@@ -43,32 +43,79 @@ define_behavior :mmenu do
       actor.selected_item.react_to :select
     end
 
-    def select_left_neighbor
-      items = actor.menu_items
-      current_item = actor.selected_item
+    def select_up_neighbor
+      close_sort = Proc.new {|item| item.y < actor.selected_item.y }
+      fallback_point = [actor.selected_item.x, viewport.height]
+      smart_select_neighbor(close_sort, fallback_point)
+    end
 
-      left_neighbors = items.select{|n| n.x < current_item.x}
-      closest = left_neighbors.sort_by do |n|
-        x_diff = n.x - current_item.x
-        y_diff = n.y - current_item.y
-        x_diff**2 + y_diff**2
-      end.first
+    def select_right_neighbor
+      close_sort = Proc.new {|item| item.x > actor.selected_item.x }
+      fallback_point = [0, actor.selected_item.y]
+      smart_select_neighbor(close_sort, fallback_point)
+    end
+
+    def select_down_neighbor
+      close_sort = Proc.new {|item| item.y > actor.selected_item.y }
+      fallback_point = [actor.selected_item.x, 0]
+      smart_select_neighbor(close_sort, fallback_point)
+    end
+
+    def select_left_neighbor
+      close_sort = Proc.new {|item| item.x < actor.selected_item.x }
+      fallback_point = [viewport.width, actor.selected_item.y]
+      smart_select_neighbor(close_sort, fallback_point)
+    end
+
+    def smart_select_neighbor(direction_sort, fallback_point)
+      directional_neighbors = actor.menu_items.select { |item| direction_sort.call(item) }
+      selected_item = actor.selected_item
+      puts "FINDING..."
+      closest = closest_neighbor(selected_item.x, selected_item.y, directional_neighbors)
 
       if closest.nil?
-        # keep in mind there is an x_offset on viewport (should be zero unless
-        # we are scrolling around)
-        right_edge = viewport.width
-        closest = items.sort_by do |n|
-          x_diff = n.x - right_edge
-          y_diff = n.y - current_item.y
-          x_diff**2 + y_diff**2
-        end.first
+        puts "ADJUSTING..."
+        closest = closest_neighbor(*fallback_point, actor.menu_items)
       end
 
-      current_item.react_to :deselect
+      selected_item.react_to :deselect
+
       actor.selected_item = closest
       actor.selected_item.react_to :select
     end
+
+    def closest_neighbor(loc_x, loc_y, items)
+      puts loc_x
+      puts loc_y
+      puts items.length
+      items.sort_by do |item|
+        x_diff = item.x - loc_x
+        y_diff = item.y - loc_y
+        x_diff**2 + y_diff**2
+      end.first
+    end
+
+    # def select_left_neighbor
+    #   items = actor.menu_items
+    #   current_item = actor.selected_item
+
+    #   left_neighbors = items.select{|n| n.x < current_item.x}
+    #   closest = left_neighbors
+    #   if closest.nil?
+    #     # keep in mind there is an x_offset on viewport (should be zero unless
+    #     # we are scrolling around)
+    #     right_edge = viewport.width
+    #     closest = items.sort_by do |n|
+    #       x_diff = n.x - right_edge
+    #       y_diff = n.y - current_item.y
+    #       x_diff**2 + y_diff**2
+    #     end.first
+    #   end
+
+    #   current_item.react_to :deselect
+    #   actor.selected_item = closest
+    #   actor.selected_item.react_to :select
+    # end
 
     def previous
       current_index = actor.menu_items.index(actor.selected_item)
@@ -327,10 +374,10 @@ class PlayerControlMenuBuilder
       player_controls_menu.react_to :leave
     end
     input_manager.reg :down, KbDown do |evt|
-      player_controls_menu.react_to :next
+      player_controls_menu.react_to :select_down_neighbor
     end
     input_manager.reg :down, KbUp do |evt|
-      player_controls_menu.react_to :previous
+      player_controls_menu.react_to :select_up_neighbor
     end
     input_manager.reg :down, KbLeft do |evt|
       player_controls_menu.react_to :select_left_neighbor
