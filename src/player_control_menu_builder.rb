@@ -35,47 +35,78 @@ define_behavior :mmenu do
       end
     end
 
-    def next
-      current_index = actor.menu_items.index(actor.selected_item)
-      actor.selected_item.react_to :deselect
-      next_index = (current_index+1)%actor.menu_items.size
-      actor.selected_item = actor.menu_items[next_index]
-      actor.selected_item.react_to :select
-    end
+    def select_upper_neighbor
+      # keep in mind there is an y_offset on viewport (should be zero unless
+      # we are scrolling around)
+      bottom_edge = viewport.height
 
-    def select_left_neighbor
       items = actor.menu_items
       current_item = actor.selected_item
 
-      left_neighbors = items.select{|n| n.x < current_item.x}
-      closest = left_neighbors.sort_by do |n|
-        x_diff = n.x - current_item.x
-        y_diff = n.y - current_item.y
-        x_diff**2 + y_diff**2
+      up_neighbors = actor.menu_items.select{|n| n.y < current_item.y}
+      closest = closest_neighbor(current_item, up_neighbors) ||
+                closest_neighbor(vec2(current_item.x, bottom_edge), items)
+
+      select_item closest
+    end
+
+    def select_lower_neighbor
+      upper_edge = 0
+
+      items = actor.menu_items
+      current_item = actor.selected_item
+
+      down_neighbors = actor.menu_items.select{|n| n.y > current_item.y}
+      closest = closest_neighbor(current_item, down_neighbors) ||
+                closest_neighbor(vec2(current_item.x, upper_edge), items)
+
+      select_item closest
+    end
+
+    def select_left_neighbor
+      # keep in mind there is an x_offset on viewport (should be zero unless
+      # we are scrolling around)
+      right_edge = viewport.width
+
+      items = actor.menu_items
+      current_item = actor.selected_item
+
+      left_neighbors = actor.menu_items.select{|n| n.x < current_item.x}
+      closest = closest_neighbor(current_item, left_neighbors) ||
+                closest_neighbor(vec2(right_edge, current_item.y), items)
+
+      select_item closest
+    end
+
+    def select_right_neighbor
+      left_edge = 0
+
+      items = actor.menu_items
+      current_item = actor.selected_item
+
+      right_neighbors = items.select{|n| n.x > current_item.x}
+      closest = closest_neighbor(current_item, right_neighbors) ||
+                closest_neighbor(vec2(left_edge, current_item.y), items)
+
+      select_item closest
+    end
+
+    def closest_neighbor(item, neighbors)
+      neighbors.sort_by do |n|
+        dist_squared n.x, n.y, item.x, item.y
       end.first
+    end
 
-      if closest.nil?
-        # keep in mind there is an x_offset on viewport (should be zero unless
-        # we are scrolling around)
-        right_edge = viewport.width
-        closest = items.sort_by do |n|
-          x_diff = n.x - right_edge
-          y_diff = n.y - current_item.y
-          x_diff**2 + y_diff**2
-        end.first
-      end
-
-      current_item.react_to :deselect
-      actor.selected_item = closest
+    def select_item(item)
+      actor.selected_item.react_to :deselect
+      actor.selected_item = item
       actor.selected_item.react_to :select
     end
 
-    def previous
-      current_index = actor.menu_items.index(actor.selected_item)
-      actor.selected_item.react_to :deselect
-      next_index = (current_index-1)%actor.menu_items.size
-      actor.selected_item = actor.menu_items[next_index]
-      actor.selected_item.react_to :select
+    def dist_squared(x1, y1, x2, y2)
+      x_diff = x1 - x2
+      y_diff = y1 - y2
+      x_diff**2 + y_diff**2
     end
 
     def leave
@@ -327,10 +358,10 @@ class PlayerControlMenuBuilder
       player_controls_menu.react_to :leave
     end
     input_manager.reg :down, KbDown do |evt|
-      player_controls_menu.react_to :next
+      player_controls_menu.react_to :select_lower_neighbor
     end
     input_manager.reg :down, KbUp do |evt|
-      player_controls_menu.react_to :previous
+      player_controls_menu.react_to :select_upper_neighbor
     end
     input_manager.reg :down, KbLeft do |evt|
       player_controls_menu.react_to :select_left_neighbor
