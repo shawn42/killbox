@@ -22,10 +22,6 @@ define_behavior :tile_bouncer do
       end
 
       if closest_collision
-        # log "ACTOR #{actor}"
-        # log "CLOSEST"
-        # log closest_collision
-
         hit = closest_collision[:hit]
         hit_vector = vec2(hit[0], hit[1])
         penetration = vec2(hit[2], hit[3])
@@ -42,22 +38,24 @@ define_behavior :tile_bouncer do
         projected = motion.projected_onto(face_normal)
 
         new_vel = (projected - motion).reverse + projected.reverse
-        # if actor.actor_type == :bomb
-        #   puts actor.object_id
-        #   puts "MODIFYING VEL: #{actor.vel} .. #{new_vel}" 
-        # end
+
+        old_vel = actor.vel
         actor.vel = new_vel
 
         left_over_movement = new_vel.dup
         left_over_movement.magnitude = left_over
         new_loc = hit_vector + left_over_movement + (actor.position - point_that_collided)
 
-        # if actor.actor_type == :bomb
-        #   puts "CP: #{point_that_collided}"
-        #   puts "MODIFYING POS: #{actor.position} .. #{new_loc}" 
-        # end
+        if cps.size > 1
+          old_unit = old_vel.unit.reverse
+          new_unit = new_vel.unit
+          dot = old_unit.dot(new_unit)
+          perp_dot = old_unit.x * new_unit.y - old_unit.y * new_unit.x
+          signed_angle = Math.atan2(perp_dot, dot)
 
-        actor.rotation_vel = 0
+          actor.rotation_vel = signed_angle*0.3
+        end
+
         actor.update_attributes x: new_loc.x, y: new_loc.y
 
       else
