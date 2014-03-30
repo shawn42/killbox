@@ -324,26 +324,29 @@ class PlayerControlMenuBuilder
       w: viewport.width, 
       h: viewport.height,
       root: true
+    all_ups = [KbUp, Gp0Up, Gp1Up, Gp2Up, Gp3Up]
+    all_downs = [KbDown, Gp0Down, Gp1Down, Gp2Down, Gp3Down]
+    all_lefts = [KbLeft, Gp0Left, Gp1Left, Gp2Left, Gp3Left]
+    all_rights = [KbRight, Gp0Right, Gp1Right, Gp2Right, Gp3Right]
+    all_triggers = [KbReturn, KbEnter, Gp0Button1, Gp1Button1, Gp2Button1, Gp3Button1]
+    all_backs = [KbEscape, Gp0Button0, Gp1Button0, Gp2Button0, Gp3Button0]
 
-    input_manager.reg :down, KbF1 do |evt|
-      player_controls_menu.react_to :select_first_item
-    end
-    input_manager.reg :down, KbReturn do |evt|
+    input_manager.reg :down, *all_triggers do |evt|
       player_controls_menu.react_to :trigger
     end
-    input_manager.reg :down, KbEscape do |evt|
+    input_manager.reg :down, *all_backs do |evt|
       player_controls_menu.react_to :leave
     end
-    input_manager.reg :down, KbDown do |evt|
+    input_manager.reg :down, *all_downs do |evt|
       player_controls_menu.react_to :select_down_neighbor
     end
-    input_manager.reg :down, KbUp do |evt|
+    input_manager.reg :down, *all_ups do |evt|
       player_controls_menu.react_to :select_up_neighbor
     end
-    input_manager.reg :down, KbLeft do |evt|
+    input_manager.reg :down, *all_lefts do |evt|
       player_controls_menu.react_to :select_left_neighbor
     end
-    input_manager.reg :down, KbRight do |evt|
+    input_manager.reg :down, *all_rights do |evt|
       player_controls_menu.react_to :select_right_neighbor
     end
     input_manager.reg :down do |evt|
