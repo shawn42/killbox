@@ -20,21 +20,13 @@ class BombCoordinator
 
           if distance < bomb.radius * 4
             disoriented_listeners << {target: target, bomb: bomb, distance: distance}
-            # target.react_to :disoriented, bomb, distance
 
             if distance < bomb.radius
               esplode_listeners << {target: target, bomb: bomb, distance: distance}
-              # target.react_to :esplode, bomb, distance
             end
           end
         end
       end
-      # disoriented_listeners.each do |opts|
-      #   unregister_bombable opts[:target]
-      # end
-      # esplode_listeners.each do |opts|
-      #   unregister_bombable opts[:target]
-      # end
 
       disoriented_listeners.each do |opts|
         target = opts[:target]
@@ -45,6 +37,7 @@ class BombCoordinator
           end
         end
       end
+
       esplode_listeners.each do |opts|
         target = opts[:target]
         distance = opts[:distance]
