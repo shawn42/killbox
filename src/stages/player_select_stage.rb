@@ -1,4 +1,5 @@
 define_stage :player_select do
+  requires :menu_builder, :viewport
 
   curtain_up do |*args|
     res_x, res_y = config_manager[:screen_resolution]
@@ -8,11 +9,51 @@ define_stage :player_select do
     scale = x_sc < y_sc ? x_sc : y_sc
     create_actor(:icon, image: "title_screen.png", x: res_x/2, y: res_y/2, x_scale: scale, y_scale: scale)
 
-    print_menu_header "Killbox", "a multi-player, same keyboard, action game."
+    print_menu_header "Killbox", "a multiplayer, same keyboard, action game."
 
     x_pos = res_x/2
     y_pos = res_y * 7.5/10
-    @player_select_menu = create_actor :player_select_menu, x: x_pos, y: y_pos
+
+    args = {
+      name: "player_select",
+      x: 1,
+      y: 1,
+      w: viewport.width,
+      h: viewport.height,
+      root: true,
+      submenus: [],
+    }
+
+    font_size = 80
+    label_x = x_pos
+
+    label_opts = {
+      y: y_pos,
+      font_size: font_size,
+      color: Colors.pink,
+      border: {
+        selected: {
+          color: Colors.pink,
+        },
+      },
+    }
+
+    4.times do |i|
+      value = i+1
+      player_select = create_actor(:menu, label_opts.merge(value: value, label_text: value, x: label_x, selected: i == 1, name: "select_#{i}_player"))
+      player_select.when :selected do
+        puts "EMITTING ACTIVATE"
+        actor.emit :selected, value
+      end
+      args[:submenus] << player_select
+      label_x += 80
+    end
+
+    # args[:submenus] << create_actor(:menu, label_opts.merge(value: :setup_controls, text: "Controls", x: x_pos, y: 900))
+    
+    @player_select_menu = menu_builder.build(args)
+
+    # @player_select_menu = create_actor :player_select_menu, x: x_pos, y: y_pos
 
     @player_select_menu.when :selected do |value|
       if value == :setup_controls

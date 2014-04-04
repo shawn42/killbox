@@ -5,29 +5,6 @@ define_actor :menu_item do
     layered ZOrder::HudText
   end
 
-  behavior do
-    requires :stage
-
-    setup do
-      label_attributes = actor.attributes.dup
-      label_attributes.delete :view
-      label = stage.create_actor :label, label_attributes
-      actor.has_attributes( label: label,
-                          selected: false)
-
-      # BUG in label
-      label.text = ""
-      label.text = actor.text
-    
-
-      reacts_with :selected
-    end
-
-    remove do
-      actor.label.remove
-    end
-
-  end
 
   view do
     draw do |target, x_off, y_off, z|

@@ -1,4 +1,3 @@
-
 define_stage :control_setup do
   requires :player_control_menu_builder
 
