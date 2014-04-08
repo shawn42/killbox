@@ -1,3 +1,7 @@
+# Actor.definitions.delete :label
+# Behavior.definitions.delete :label
+# ActorView.definitions.delete :label_view
+
 define_stage :player_select do
   requires :menu_builder, :viewport
 
@@ -30,6 +34,8 @@ define_stage :player_select do
     label_opts = {
       y: y_pos,
       font_size: font_size,
+      w: font_size,
+      h: font_size,
       color: Colors.pink,
       border: {
         selected: {
@@ -38,34 +44,45 @@ define_stage :player_select do
       },
     }
 
-    4.times do |i|
-      value = i+1
-      player_select = create_actor(:menu, label_opts.merge(value: value, label_text: value, x: label_x, selected: i == 1, name: "select_#{i}_player"))
-      player_select.when :selected do
-        puts "EMITTING ACTIVATE"
-        actor.emit :selected, value
+    menu_width = 80
+    player_menus = (1..4).map do |i|
+      player_menu_args = label_opts.merge(value: i, 
+                              label_text: i, 
+                              x: x_pos + (i-1) * menu_width, 
+                              name: "select_#{i}_player")
+
+      # create_actor(:done_on_activate_menu, player_menu_args).tap do |player_menu|
+      create_actor(:menu, player_menu_args).tap do |player_menu|
+        player_menu.when(:activated) { next_stage(player_menu.value) }
       end
-      args[:submenus] << player_select
-      label_x += 80
+
+      controls_menu_args = label_opts.merge(value: :setup_controls, 
+                              label_text: "Controls", 
+                              y: 900,
+                              x: x_pos,
+                              w: 200, # todo can you look up font size here?
+                              name: "controls_menu")
+      create_actor(:menu, controls_menu_args).tap do |controls_menu|
+        controls_menu.when(:activated) { control_setup }
+      end
+
     end
 
-    # args[:submenus] << create_actor(:menu, label_opts.merge(value: :setup_controls, text: "Controls", x: x_pos, y: 900))
-    
+    args[:submenus] = player_menus
+
     @player_select_menu = menu_builder.build(args)
+    @player_select_menu.react_to :select_item, player_menus[1]
 
-    # @player_select_menu = create_actor :player_select_menu, x: x_pos, y: y_pos
+    input_manager.reg :down, Kb1 do next_stage 1 end
+    input_manager.reg :down, Kb2 do next_stage 2 end
+    input_manager.reg :down, Kb3 do next_stage 3 end
+    input_manager.reg :down, Kb4 do next_stage 4 end
 
-    @player_select_menu.when :selected do |value|
-      if value == :setup_controls
-        fire :change_stage, :control_setup
-      else
-        fire :next_stage, player_count: value
-      end
-    end
-
+    input_manager.reg :down, KbC do setup_controls end
     input_manager.reg :down, KbEscape do
       exit
     end
+
   end
 
   curtain_down do |*args|
@@ -74,6 +91,13 @@ define_stage :player_select do
   end
 
   helpers do
+    def setup_controls
+      fire :change_stage, :control_setup
+    end
+    def next_stage(player_count)
+      fire :next_stage, player_count: player_count
+    end
+    
     def print_menu_header(title, sub_title)
       res_x, res_y = config_manager[:screen_resolution]
 

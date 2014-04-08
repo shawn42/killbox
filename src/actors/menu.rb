@@ -16,21 +16,23 @@ define_actor :menu do
       h = actor.do_or_do_not(:h)
 
       color = nil
-      width = nil
+      border_width = nil
       
       if w && h
         if actor.selected?
-          color, width = get_border('selected')
+          color, border_width = get_border(:selected)
         elsif actor.active?
-          color, width = get_border('active')
+          color, border_width = get_border(:active)
         else
-          color, width = get_border('default')
+          color, border_width = get_border(:default)
         end
 
-        if color and width
-          [*0..width-1].to_a.each do |offset|
-            target.draw_box x + offset, y + offset, x + w - offset, y + h - offset, color, z
-          end
+        if color and border_width
+          target.draw_box x, y, x + w, y + h, color, z
+
+          # [*0..border_width-1].to_a.each do |border_offset|
+          #   target.draw_box x + border_offset, y + border_offset, x + w - border_offset, y + h - border_offset, color, z
+          # end
         end
       end
     end
