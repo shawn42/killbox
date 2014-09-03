@@ -85,7 +85,7 @@ DEPENDENCIES
   conject (>= 0.0.8)
   debugger-ruby_core_source
   gamebox!
-  gosu (>= 0.7.47.1)
+  gosu (= 0.7.50)
   kvo (= 0.1.0)
   mocha
   pry
