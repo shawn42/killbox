@@ -71,12 +71,5 @@ define_behavior :tile_bouncer do
 
   helpers do
     include MinMaxHelpers
-    # TODO how to DRY this up w/ other behaviors? just define in some constants.rb?
-    FACE_NORMALS = {
-      top:    vec2(0, -1),
-      bottom: vec2(0, 1),
-      left:   vec2(-1, 0),
-      right:  vec2(1, 0),
-    } unless defined? FACE_NORMALS
   end
 end

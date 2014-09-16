@@ -26,7 +26,7 @@ GEM
     debugger-ruby_core_source (1.2.3)
     diff-lcs (1.2.4)
     ffi (1.9.3)
-    gosu (0.7.50)
+    gosu (0.8.2)
     i18n (0.6.9)
     kvo (0.1.0)
       publisher
@@ -85,7 +85,7 @@ DEPENDENCIES
   conject (>= 0.0.8)
   debugger-ruby_core_source
   gamebox!
-  gosu (= 0.7.50)
+  gosu (= 0.8.2)
   kvo (= 0.1.0)
   mocha
   pry

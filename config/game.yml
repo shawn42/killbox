@@ -4,6 +4,8 @@
 :auto_quit: KbF10
 :fullscreen: false
 :screen_resolution: 
+- 1536
+- 864
 - 1920
 - 1080
 :controls:

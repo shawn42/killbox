@@ -32,4 +32,12 @@ require "gamebox_application"
 require_all Dir.glob("src/**/*.rb").reject{ |f| f.match("src/app.rb")}
 Gosu::enable_undocumented_retrofication
 
+class Stage
+  def draw(target)
+    target.scale 0.8 do
+      renderer.draw target
+    end
+  end
+end
+
 
