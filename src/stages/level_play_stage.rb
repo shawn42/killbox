@@ -109,6 +109,7 @@ define_stage :level_play do
 
         @players << player
       end
+      score_keeper.reset(player_count)
       renderer.viewports = PlayerViewport.create_n @players, config_manager[:screen_resolution]
     end
 
