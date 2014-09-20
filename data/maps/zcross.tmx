@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="70" tilewidth="36" tileheight="36">
+ <tileset firstgid="1" name="space platform" tilewidth="36" tileheight="36">
+  <image source="../graphics/map/space_platform.png" width="859" height="396"/>
+ </tileset>
+ <tileset firstgid="254" name="player" tilewidth="64" tileheight="64">
+  <image source="../../docs/tripper.png" width="64" height="64"/>
+ </tileset>
+ <layer name="bg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3OUQkAIBAFwWukLWxh/xja4YQHMgP7v1UAAAAAAADwxrjN9ETTSg807fQAAAAAAADwnQNIPtWWgDQAAA==
+  </data>
+ </layer>
+ <layer name="terrain" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3XQQ6AIAwFUe5/Aa/r1oWCtA2/hXmJGzVhVrW2ZnMZrkxme+iPRb8W/Vp/ZmPm+fnU66+Afi36tb5mTKX+mfvRZ3t3Xm+/p6H3fGW/tWH3fs+/VcS/mac/4n0v+rUy9VvOOrm/+vzZYf57zl/VX3n/ifC2N686O4Jyf45Av1bFfsv3K5Pse+sI/Vr0a+3QP3sBAAAAAAAAAM5xA9/jbuiANAAA
+  </data>
+ </layer>
+ <layer name="fg" width="48" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3WMQqDQBAFUI8WzP3svIJX8wZJYZMVLCzGIoQ4Dr4HH5apPizMbtcBkGncUpX+ufTPVb3/sAWoZfpyfpYxSKUdU71/5NXybnkEiebL7ty3PE/q+Q/r3UV3WuXdvmr/+WCevX8gQ/W/9BV2yi/0z6U/AAAAAAAA3NMHmcMOrYA0AAA=
+  </data>
+ </layer>
+ <objectgroup name="zones" width="48" height="70">
+  <object type="start_location" x="720" y="38" width="32" height="60">
+   <properties>
+    <property name="gravity" value="up"/>
+    <property name="rotation" value="180"/>
+   </properties>
+  </object>
+  <object type="start_location" x="646" y="1370" width="32" height="60"/>
+  <object type="start_location" x="41" y="802" width="60" height="32">
+   <properties>
+    <property name="gravity" value="left"/>
+    <property name="rotation" value="90"/>
+   </properties>
+  </object>
+  <object type="start_location" x="1376" y="761" width="60" height="32">
+   <properties>
+    <property name="gravity" value="right"/>
+    <property name="rotation" value="270"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
