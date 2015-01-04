@@ -2,19 +2,20 @@ source "https://rubygems.org"
 gem "debugger-ruby_core_source"
 gem 'require_all'
 gem 'tmx', '0.1.2'
+gem 'rb-readline'
 gem 'pry'
 gem 'pry-remote'
 # gem 'pry-debugger'
-gem "gosu", '0.8.2'
+gem "gosu", '0.8.6'
 gem "gamebox", git: 'https://github.com/shawn42/gamebox.git'
 gem "conject", '>= 0.0.8'
 gem 'kvo', '0.1.0'
 
 gem "mocha"
-gem "rspec"
-gem "rspec-core"
-gem "rspec-mocks"
-gem "rspec-expectations"
+gem "rspec", '2.14.1'
+gem "rspec-core", '2.14.1'
+gem "rspec-mocks", '2.14.1'
+gem "rspec-expectations", '2.14.1'
 gem "rake"
 gem "simplecov", require: false
 
