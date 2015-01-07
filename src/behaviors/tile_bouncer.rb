@@ -1,16 +1,3 @@
-class Vector2
-  def project_onto!( vector )
-    raise "can't modify frozen object" if frozen?
-    b = vector.unit
-    @x, @y = *(b.scale(self.dot(b)))
-    @hash = nil
-    self
-  end
-
-  def dot( vector )
-    (@x * vector.at(0)) + (@y * vector.at(1))
-  end
-end
 define_behavior :tile_bouncer do
   requires :map_inspector, :stage
   setup do
@@ -36,7 +23,6 @@ define_behavior :tile_bouncer do
       end
 
       if closest_collision
-        log "have closest in bouncer"
         hit = closest_collision[:hit]
         hit_vector = vec2(hit[0], hit[1])
         penetration = vec2(hit[2], hit[3])

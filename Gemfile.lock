@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/shawn42/gamebox.git
-  revision: e49f3b9abce8769b9343d59afa7f3cda76b0bebf
+  revision: df4652bed6d7ca519cc7047b7d59b5851664c1ce
   specs:
-    gamebox (0.5.1)
+    gamebox (0.5.4)
       conject (>= 0.0.8)
       gosu
       i18n
