@@ -4,10 +4,10 @@ class MapInspector
     tile_grid = map.tile_grid
     tile_size = map.tile_size
 
-    start_x = box.x.to_i / tile_size.to_i
-    start_y = box.y.to_i / tile_size.to_i
-    end_x = (box.x + box.width).ceil / tile_size.to_i
-    end_y = (box.y + box.height).ceil / tile_size.to_i
+    start_x = box.x.floor.to_i / tile_size.to_i
+    start_y = box.y.floor.to_i / tile_size.to_i
+    end_x = box.right.ceil.to_i / tile_size.to_i
+    end_y = box.bottom.ceil.to_i / tile_size.to_i
 
     (start_x..end_x).each do |col|
       (start_y..end_y).each do |row|
@@ -36,7 +36,6 @@ class MapInspector
 
   # TODO this will come from the map import eventually
   def solid?(map, row, col)
-    # binding.pry
     return false if row < 0 || col < 0
 
     trow = map.tile_grid[row]

@@ -1,6 +1,4 @@
 require 'spec_helper'
-
-
 describe "Killbox movement", acceptance: true do
   before do
     mock_tiles 'map/tileset.png', 256/16, 208/16
