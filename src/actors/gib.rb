@@ -13,7 +13,23 @@ define_actor :gib do
 
   behavior do
     setup do
-      add_behavior :short_lived, ttl: (1_000..6_000).sample
+      actor.has_attributes bounce_count: 0, max_bounce_count: rand(1..3)
+      add_behavior :short_lived, ttl: (4_000..10_000).sample
+      reacts_with :bounced
+    end
+
+    helpers do
+      def bounced
+        actor.bounce_count += 1
+
+        # TODO make this randomized slightly
+        if actor.bounce_count > actor.max_bounce_count
+          remove_behavior :tile_bouncer 
+          # full stop
+          actor.update_attributes vel: vec2(0,0)
+        end
+
+      end
     end
   end
 

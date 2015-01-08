@@ -3,7 +3,7 @@ define_behavior :tile_bouncer do
   setup do
     raise "vel required" unless actor.has_attribute? :vel
 
-    actor.has_attribute :rotation_vel, 0
+    actor.has_attributes rotation_vel: 0
 
     actor.when :tile_collisions do |collisions|
       map = actor.map.map_data
@@ -50,6 +50,7 @@ define_behavior :tile_bouncer do
         end
 
         actor.update_attributes x: new_loc.x, y: new_loc.y, vel: new_vel
+        actor.react_to :bounced
 
       else
         binding.pry if ENV['DEBUG']
