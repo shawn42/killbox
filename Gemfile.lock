@@ -24,7 +24,7 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     ffi (1.9.6)
-    gosu (0.8.6)
+    gosu (0.13.3)
     hitimes (1.2.2)
     i18n (0.7.0)
     kvo (0.1.0)
@@ -85,7 +85,7 @@ DEPENDENCIES
   conject (>= 0.0.8)
   debugger-ruby_core_source
   gamebox!
-  gosu (= 0.8.6)
+  gosu (= 0.13.3)
   kvo (= 0.1.0)
   mocha
   pry
@@ -99,3 +99,6 @@ DEPENDENCIES
   rspec-mocks (= 2.14.1)
   simplecov
   tmx (= 0.1.2)
+
+BUNDLED WITH
+   1.10.5
