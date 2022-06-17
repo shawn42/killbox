@@ -19,6 +19,7 @@ GEM
     celluloid (0.16.0)
       timers (~> 4.0.0)
     coderay (1.1.0)
+    concurrent-ruby (1.1.10)
     conject (0.1.8)
     debugger-ruby_core_source (1.3.7)
     diff-lcs (1.2.5)
@@ -26,7 +27,8 @@ GEM
     ffi (1.9.6)
     gosu (0.13.3)
     hitimes (1.2.2)
-    i18n (0.7.0)
+    i18n (1.10.0)
+      concurrent-ruby (~> 1.0)
     kvo (0.1.0)
       publisher
     listen (2.8.4)
